@@ -2,7 +2,7 @@
 <html lang="es">
     <head>    
         <title>Pedido</title>   
-        <script>setTimeout('document.location.reload()', 10000);</script>
+        <script>setTimeout('document.location.reload()', 20000);</script>
     </head>
     <body id="container-page-index">
         <section id="container-pedido">
@@ -35,7 +35,7 @@
                                         ?>
                                         <p><h5 style="text-align: center">Confirma tu pedido escribiendonos a Whatsapp dando clic en el icono</h5></p>
                                         <a target="_blanck" href="https://api.whatsapp.com/send?phone=57<?php echo WP?>&text=Hola!,&nbsp;quiero&nbsp;confirmar&nbsp;mi&nbsp;pedido&nbsp;a&nbsp;nombre&nbsp;de&nbsp;<?php echo $_SESSION['nombreUser']; ?>" title="Whatsapp" >
-                                            <img src="assets/icons/whatsapp_108042.png" alt="Whatsapp" style="max-width: 10%">
+                                            <img src="Recursos/icons/whatsapp_108042.png" alt="Whatsapp" style="max-width: 10%">
                                         </a>
                                         <?php
                                     }
