@@ -11,6 +11,6 @@ if ($_POST['funcion'] <> "") {
         
     }
 } else {
-    echo '<img src="recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
+    echo '<img src="Recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
 }
 ?>
