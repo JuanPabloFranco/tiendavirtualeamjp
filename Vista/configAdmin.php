@@ -700,7 +700,7 @@
                                                 <div id="update-bodega">
                                                             <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
                                                             <tr style="background-color: <?php echo $color ?>">                                                            
-                                                            <td> <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id_producto'] ?>">   </td>
+                                                            <td> <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>">   </td>
                                                             <td><label><?php echo $prodBodega['codigo_prod'] ?></label></td>
                                                             <td><label><?php echo $prodBodega['nombre_prod'] ?></label></td> 
                                                             <td><label><?php echo $prodBodega['marca'] ?></label></td>
