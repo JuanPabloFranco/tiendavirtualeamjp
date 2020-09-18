@@ -29,11 +29,11 @@ if ($_POST['funcion'] <> "") {
     
 
     if ($_POST['funcion'] == "changeProductoBodega") {
-        $idProducto = $_POST['id'];
+        $idBodega = $_POST['id'];
         $precioVenta= $_POST['precio_venta'];
         $minimo = $_POST['minimo'];
-        $cantidadProducto=$_POST['cantidad'];
-        if (consultasSQL::UpdateSQL("bodega","minimo=$minimo,precio_venta=$precioVenta,cantidad= $cantidadProducto","id=$idProducto")) {
+
+        if (consultasSQL::UpdateSQL("bodega","minimo=$minimo,precio_venta=$precioVenta","id=$idBodega")) {
             ?>
             <br>
             <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
