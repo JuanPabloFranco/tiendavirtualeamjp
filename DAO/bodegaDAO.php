@@ -52,6 +52,9 @@ if ($_POST['funcion'] <> "") {
     if ($_POST['funcion'] == "changeCantidadBodega") {
         $idBodega= $_POST['idBodega'];
         $cantidadProducto=$_POST['cantidad'];
+        $consulta = ejecutarSQL::consultar("select cantidad from bodega where id=". $idBodega ."");
+        $extraido= mysqli_fetch_array($consulta);
+        $cantidadProducto+=$extraido['cantidad'];
         if (consultasSQL::UpdateSQL("bodega","cantidad=$cantidadProducto","id=$idBodega")) {
             ?>
             <br>
