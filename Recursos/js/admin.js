@@ -37,7 +37,7 @@ $(document).ready(function () {
         });
         return false;
     });
-
+    // Agregar producto a bodega
     $('#add-bodega form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#add-bodega form').serialize();
@@ -60,6 +60,31 @@ $(document).ready(function () {
         });
         return false;
     });
+    
+    // cambiar cantidad de producto en bodega
+    $('#up-bodega form').submit(function (e) {
+        e.preventDefault();
+        var informacion = $('#up-bodega form').serialize();
+        var metodo = $('#up-bodega form').attr('method');
+        var peticion = $('#up-bodega form').attr('action');
+        $.ajax({
+            type: metodo,
+            url: peticion,
+            data: informacion,
+            beforeSend: function () {
+                $("#res-form-up-bodega").html('Agregando cantidad<br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+            },
+            error: function () {
+                $("#res-form-up-bodega").html("Ha ocurrido un error en el sistema");
+            },
+            success: function (data) {
+                $("#res-form-up-bodega").html(data);
+            }
+
+        });
+        return false;
+    });
+    
     //Cambiar estado publicación
     $('#change_publicacion form').submit(function (e) {
         e.preventDefault();
