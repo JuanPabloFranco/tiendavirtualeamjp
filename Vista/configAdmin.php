@@ -710,7 +710,7 @@
                                                             <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
                                                             <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
                                                             <td class="text-center">
-                                                                <button type="submit" class="btn btn-sm btn-primary button-UPR" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>                                                    
+                                                                <button type="submit" class="btn btn-sm btn-primary button-Bodega" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>                                                    
                                                                 <div id="update-bodega-<?php echo $contPB ?>" style="width: 100%; margin:0px; padding:0px;"></div>
                                                             </td>
                                                             <td><input type="text" name="funcion" style="display: none" value="changeProductoBodega"></td>                                                                                                                
