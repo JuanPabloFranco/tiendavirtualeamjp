@@ -167,7 +167,31 @@ $(document).ready(function () {
             return false;
         });
     });
+    $('.button-Bodega').click(function () {
+        var myId = $(this).val();
+        $('#update-bodega form#' + myId).submit(function (e) {
 
+            e.preventDefault();
+            var informacion = $('#update-bodega form#' + myId).serialize();
+            var metodo = $('#update-bodega form#' + myId).attr('method');
+            var peticion = $('#update-bodega form#' + myId).attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
+                },
+                error: function () {
+                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
+                },
+                success: function (data) {
+                    $("div#" + myId).html(data);
+                }
+            });
+            return false;
+        });
+    });
     //Actualizar un pedido a proveedor
     $('.button-UPP').click(function () {
         var myId = $(this).val();

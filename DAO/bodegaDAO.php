@@ -31,9 +31,8 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
     }
     
 
-    if ($_POST['funcion'] == "UpdateProductoBodega") {// Actualizar cantidad minima y precio de venta
-        // Se obtienen los datos del formulario html por variables POST
-        $idProducto = $_POST['id'];
+    if ($_POST['funcion'] == "changeProductoBodega") {
+        $idBodega = $_POST['id'];
         $precioVenta= $_POST['precio_venta'];
         $minimo = $_POST['minimo'];
         $cantidadProducto=$_POST['cantidad'];
