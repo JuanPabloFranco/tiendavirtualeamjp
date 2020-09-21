@@ -15,6 +15,8 @@ function validarTipoPublicacion(tipo) {
 $(document).ready(function () {
     
     //Actualizar informacion empresa
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
     $('#add-inf_empresa form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#add-inf_empresa form').serialize();
@@ -38,6 +40,8 @@ $(document).ready(function () {
         return false;
     });
     // Agregar producto a bodega
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
     $('#add-bodega form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#add-bodega form').serialize();
@@ -62,6 +66,8 @@ $(document).ready(function () {
     });
     
     // cambiar cantidad de producto en bodega
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
     $('#up-bodega form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#up-bodega form').serialize();
@@ -86,6 +92,8 @@ $(document).ready(function () {
     });
     
     //Cambiar estado publicación
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
     $('#change_publicacion form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#change_publicacion form').serialize();
@@ -109,6 +117,8 @@ $(document).ready(function () {
     });
 
     //Agregar Pedido a proveedor
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
     $('#add-pedido_proveedor form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#add-pedido_proveedor form').serialize();
@@ -272,7 +282,9 @@ $(document).ready(function () {
         }
     });
 
-
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
+    //Funcion para agregar productos
     $('#divAgregarProd form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#divAgregarProd form').serialize();
@@ -296,17 +308,9 @@ $(document).ready(function () {
         return false;
     });
 
-
-    // Mostrar el modal de pedido
-    $('#verPedido').load("process/verPedido.php");
-
-//enviar valor modal ver pedido
-    $(".ver_ped").click(function () { //      
-        $('#verPedido').load("process/verPedido.php?id=" + $(this).val());
-    });
-
     //Enviar email a clientes
-
+    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+    //al hacer submit al formulario send_mail_clientes
     $('#send_email_clientes').submit(function (e) {
         e.preventDefault();
         var informacion = $('#send_email_clientes form').serialize();
@@ -330,40 +334,7 @@ $(document).ready(function () {
         return false;
     });
 
-    // Mostrar el modal de pedido
-    $('#agregarProd').load("process/agregar_a_pedido.php");
-
-//enviar valor modal ver pedido
-    $(".agProd").click(function () { //      
-        $('#agregarProd').load("process/agregar_a_pedido.php?id=" + $(this).val());
-    });
-
-    //*Envio del formulario con Ajax para buscar un producto*/
-
-    $('#search_prod').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#search_prod form').serialize();
-        var metodo = $('#search_prod form').attr('method');
-        var peticion = $('#search_prod form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res_search").html('Buscando el producto <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res_search").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res_search").html(data);
-            }
-        });
-        return false;
-    });
-
-
-    //*Envio del formulario con Ajax para cambiar estado de un repartidor*/
+    //*Envio del formulario con Ajax para cambiar estado de un domiciliario*/
 
     $('#change_repartidor').submit(function (e) {
         e.preventDefault();
@@ -375,7 +346,7 @@ $(document).ready(function () {
             url: peticion,
             data: informacion,
             beforeSend: function () {
-                $("#res-form-change-rep").html('Cambiando estado del repartidor <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
+                $("#res-form-change-rep").html('Cambiando estado del domicilario <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
             },
             error: function () {
                 $("#res-form-change-rep").html("Ha ocurrido un error en el sistema");
@@ -714,7 +685,7 @@ $(document).ready(function () {
         });
     });
 
-
+    //Registrar usuario con ajax
     $('#add-admin form').submit(function (e) {
 
         e.preventDefault();
@@ -741,7 +712,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    /*Envio del formulario con Ajax para cambiar estado administrador*/
+    /*Envio del formulario con Ajax para cambiar estado de un usuario*/
 
     $('#del-admin form').submit(function (e) {
 

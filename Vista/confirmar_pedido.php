@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>    
-        <title>Pedido</title>    
-        <?php include './inc/link.php'; ?>
-        <script type="text/javascript" src="js/admin.js"></script>
+        <title>Pedido</title>   
     </head>
     <body id="container-page-index">
-        <div id="areaNav">
-            <?php include './inc/navbar.php'; ?>
-        </div>
         <section id="container-pedido">
             <div class="container">
                 <div class="page-header">
-                   <h1>Confirmar pedido en  <small class="tittles-pages-logo">MiniMarket La avenida</small></h1>
+                   <h1>Confirmar pedido en  <small class="tittles-pages-logo"><?php echo EMPRESA ." ".NEMPRESA;?></small></h1>
                 </div>         
                 <?php
                 if (empty($_SESSION['producto'])) {
@@ -33,11 +28,13 @@
                             <div id="form-compra">
                                 <form action="process/confirmcompra.php" method="post" role="form" class="FormCatElec" data-form="save">
                                     <?php
+                                    // Si el usuario ha iniciado sesion muestra el siguiente codigo html
                                     if (!$_SESSION['nombreUsuario'] == "" && !$_SESSION['claveUser'] == "") {
                                         ?>
                                         <table class="table table-bordered">
                                             <tr style='text-align: center'><td><b>PRODUCTO</b></td><td><b>CANTIDAD</b></td><td><b>PRECIO</b></td><td><b>SUBTOTAL</b></td></tr>
                                             <?php
+                                            // Metodo para listar los productos existentes en el carrito de compras ($_SESSION['producto'])
                                             foreach ($_SESSION['producto'] as $key => $producto) {
                                                 ?>
                                                 <tr style='text-align: center'><td><?php echo $producto['nombre'] ?></td><td><?php echo $producto['cantidad'] ?></td><td>$<?php echo $producto['precio'] ?></td>
@@ -77,13 +74,7 @@
                                                 Datáfono Virtual
                                             </label>
                                         </div>
-                                        <!--                                        <div class="radio">
-                                                                                    <label>
-                                                                                        <input type="radio" name="$metodo_pago" value="Transferencia" id="pagoTCredito">
-                                                                                        Tarjeta de credito
-                                                                                    </label>
-                                                                                </div>-->
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. 865-320706-37</p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p>
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -96,23 +87,9 @@
                                         <input type="hidden" name="nombreUsuario" value="<?php echo $_SESSION['nombreUsuario'] ?>">
                                         <input type="hidden" name="claveUser" value="<?php echo $_SESSION['claveUser'] ?>">
                                         <input type="hidden"  name="clien-number" value="log">
-                                        <?php
-                                        if ($hora >= 22 || $hora <= 6) {
-                                            if ($_SESSION['sumaTotal'] >= 50000) {
-                                                ?>
-                                                <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <h4 class="text-center">Las compras entre 10 pm y 6 am deben ser mínimo de $50.000</h4>
-                                                <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
-                                            <?php
-                                        }
-                                    } else {
+                                        <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
+                                        <?php                                        
+                                    } else { // Si el usuario no ha iniciado sesion
                                         ?>
                                         <p>Para confirmar tu compra debes haber iniciar sesión o introducir tu nombre de usuario y contraseña con la cual te registraste en <span class="tittles-pages-logo"> minimarket la avenida</span>, Verifica la dirección, elije un método de pago y presiona el botón confirmar<br>
                                         <table class="table table-bordered">
@@ -155,7 +132,7 @@
                                                 Datáfono Virtual
                                             </label>
                                         </div>                                        
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. 865-320706-37</p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p> 
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -175,23 +152,7 @@
                                                 <input class="form-control all-elements-tooltip" type="password" placeholder="Introduzca su contraseña" required name="claveUser" data-toggle="tooltip" data-placement="top" title="Introduzca su contraseña">
                                             </div>
                                         </div>
-                                        <?php
-                                        if ($hora >= 22 || $hora <= 6) {
-                                            if ($_SESSION['sumaTotal'] >= 50000) {
-                                                ?>
-                                                <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <h4 class="text-center">Las compras entre 10 pm y 6 am deben ser mínimo de $50.000</h4>
-                                                <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
-                                            <?php
-                                        }
-                                        ?>
+                                        <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
                                         <input type="hidden"  name="clien-number" value="notlog"><br>
                                         <?php
                                     }
@@ -204,6 +165,6 @@
                     ?>
                 </div>     
             </div> 
-        </section>    <?php include './inc/footer.php'; ?>
+        </section> 
     </body>
 </html>

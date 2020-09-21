@@ -3,26 +3,17 @@
 /* Clase para ejecutar las consultas a la Base de Datos */
 
 class ejecutarSQL {
-
+    // Conexion a la BD
     public static function conectar() {
-        $host = "localhost";
-        $user = "root";
-        $password = "";
-        $database = "tienda_virtual";
-        //HOSTING
-//        $host = "localhost";
-//        $user = "id14781982_admin";
-//        $password = "Tvirtualeam2020";
-//        $database = "id14781982_tienda_virtual_eam";
-
-        if (!$con = mysqli_connect($host, $user, $password, $database)) {
+        include 'configServer.php'; // Incluye las variables estaticas con los valores de la bd
+        if (!$con = mysqli_connect(HOST, USER, PASS, BD)) {
             die(mysqli_error(ejecutarSQL::conectar()) . "Error en el servidor, verifique sus datos");
         }
         mysqli_set_charset($con, 'utf8');
         return $con;
     }
 
-    public static function consultar($query) {
+    public static function consultar($query) { // Funcion para ejecutar una consulta
         if (!$consul = mysqli_query(ejecutarSQL::conectar(), $query)) {
             die(mysqli_error(ejecutarSQL::conectar()) . 'Error en la consulta SQL ejecutada ' . $query);
         }

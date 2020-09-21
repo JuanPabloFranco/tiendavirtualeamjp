@@ -2,7 +2,7 @@
 <html lang="es">
     <head>    
         <title>Pedido</title>   
-        <script>setTimeout('document.location.reload()', 20000);</script>
+        <!--<script>setTimeout('document.location.reload()', 20000);</script>-->
     </head>
     <body id="container-page-index">
         <section id="container-pedido">
@@ -21,9 +21,9 @@
                 ?>
                 <div class="row">
                     <?php                    
+                    // Consulta para listar los pedidos realizados por el cliente que no esten entregados o cancelados
                     if (!$_SESSION['nombreUsuario'] == "" && !$_SESSION['claveUser'] == "" && !$_SESSION['id_user'] == "") {
-                        include './library/consulSQL.php';
-                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM venta WHERE id_cliente=" . $_SESSION['id_user'] . " AND (venta.estado_venta<>'Entregado' AND venta.estado_venta<>'Cancelado') ORDER BY venta.id DESC");
+                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Cancelado') ORDER BY factura.id DESC");
                         while ($filaVP = mysqli_fetch_array($consultaVP)) {
                             $vecRepartidor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT nombre_repartidor, foto_repartidor FROM repartidor WHERE id=" . $filaVP['id_repartidor']));
                             ?>
@@ -41,7 +41,7 @@
                                     }
                                     if ($filaVP['metodo_pago'] == "Transferencia") {
                                         ?>
-                                        <p class="text-center">Cuenta de ahorros No. 865-320706-37 <img src="Recursos/img/logo-bancolombia.png" style="max-width: 15%; text-align: center" ></p>
+                                        <p class="text-center">Cuenta de ahorros No. XXX-XXXXX-XX <img src="Recursos/img/logo-bancolombia.png" style="max-width: 15%; text-align: center" ></p>
                                         <?php
                                     }
                                     ?>
@@ -101,8 +101,8 @@
                             </div>
                             <?php
                         }
-
-                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM venta WHERE id_cliente=" . $_SESSION['id_user'] . " AND (venta.estado_venta='Entregado' OR venta.estado_venta='Cancelado') ORDER BY venta.id DESC");
+                        // Consulta para listar los pedidos realizados por el cliente que si esten entregados o cancelados
+                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura='Entregado' OR factura.estado_factura='Cancelado') ORDER BY factura.id DESC");
                         while ($filaVPV = mysqli_fetch_array($consultaVPV)) {
                             $vecRepartidor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT nombre_repartidor, foto_repartidor FROM repartidor WHERE id=" . $filaVPV['id_repartidor']));
                             ?>

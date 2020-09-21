@@ -1,5 +1,1 @@
-<?php
-define("USER", "id13050909_admin");
-define("SERVER", "localhost");
-define("BD", "id13050909_minimarket");
-define("PASS", "12345678");
+<?phpdefine("HOST", "localhost");// Datos BD Localdefine("USER", "root");define("BD", "tienda_virtual");define("PASS", "");//Datos BD Hosting//define("USER", "id14781982_admin");//define("BD", "Tvirtualeam2020");//define("PASS", "id14781982_tienda_virtual_eam");
