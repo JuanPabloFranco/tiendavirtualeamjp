@@ -1124,6 +1124,7 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
+    
 }
 .img-rounded {
     border-radius: 6px;
@@ -3078,7 +3079,7 @@ fieldset[disabled] a.btn {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-    color: #333;
+    color:#fff;
     background-color: #e6e6e6;
     border-color: #adadad;
 }
@@ -3170,7 +3171,7 @@ fieldset[disabled] .btn-primary.focus {
     border-color: #2e6da4;
 }
 .btn-primary .badge {
-    color: #337ab7;
+    color:#fff;
     background-color: #fff;
 }
 .btn-success {
@@ -4032,7 +4033,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-radius: 4px 4px 0 0;
 }
 .nav-tabs > li > a:hover {
-    border-color: #eee #eee #ddd;
+    border-color: white;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -5003,10 +5004,11 @@ a.badge:focus {
 }
 .thumbnail {
     display: block;
-    padding: 4px;
-    margin-bottom: 20px;
+    padding: 0px;
+    margin-bottom: 10px;
     line-height: 1.42857143;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.486);
+    box-shadow: 0px 0px 5px black; 
     border: 1px solid #ddd;
     border-radius: 4px;
     -webkit-transition: border .2s ease-in-out;
@@ -5024,8 +5026,9 @@ a.thumbnail.active {
     border-color: #337ab7;
 }
 .thumbnail .caption {
-    padding: 9px;
+    padding-left: 20px;
     color: #333;
+    background-color:rgba(221, 219, 219, 0.644);
 }
 .alert {
     padding: 15px;
