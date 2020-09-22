@@ -38,11 +38,20 @@ function limpiarCamposRegDomiciliario(){
     document.getElementById("txtNombreRepartidor").value = "";
 }
 
-
 function limpiarCamposRegUsuario(){
     document.getElementById("txtNombreCUsuario").value = "";
     document.getElementById("txtNombreUsuario").value = "";
     document.getElementById("txtPassUsuario").value = "";
+}
+
+function limpiarCamposCliente(){
+    document.getElementById("txtCedulaCliente").value = "";
+    document.getElementById("txtNombreCliente").value = "";
+    document.getElementById("txtDirCliente").value = "";
+    document.getElementById("txtTelCliente").value = "";
+    document.getElementById("txtEmailCliente").value = "";
+    document.getElementById("txtNomUsuario").value = "";
+    document.getElementById("txtPassCliente").value = "";
 }
 
 $(document).ready(function () {
