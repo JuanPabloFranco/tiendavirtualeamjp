@@ -39,11 +39,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nombre de producto</label>
-                                            <input type="text" class="form-control"  placeholder="Nombre" required maxlength="40" name="nombre_prod">
+                                            <input type="text" class="form-control"  placeholder="Nombre" required maxlength="40" id="txtNombreProd" name="nombre_prod">
                                         </div>
                                         <div class="form-group">
                                             <label>Categoría</label>
-                                            <select class="form-control" name="id_categoria">
+                                            <select class="form-control" name="id_categoria" id="selCatProd">
                                                 <?php
                                                 $categoriac = ejecutarSQL::consultar("SELECT * FROM categoria");
                                                 while ($catec = mysqli_fetch_array($categoriac)) {
@@ -54,15 +54,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Precio</label>
-                                            <input type="text" class="form-control"  placeholder="Precio" required maxlength="20" pattern="[0-9]{1,20}" name="precio">
+                                            <input type="text" class="form-control" id="txtPrecioProd"  placeholder="Precio" required maxlength="20" pattern="[0-9]{1,20}" name="precio">
                                         </div> 
                                         <div class="form-group">
                                             <label>Marca</label>
-                                            <input type="text" class="form-control"  placeholder="Marca" required maxlength="30" name="marca">
+                                            <input type="text" class="form-control" id="txtMarcaProd"  placeholder="Marca" required maxlength="30" name="marca">
                                         </div>                              
                                         <div class="form-group">
                                             <label>Proveedor</label>
-                                            <select class="form-control" name="id_proveedor">
+                                            <select class="form-control" name="id_proveedor" id="selProvProd">
                                                 <?php
                                                 $proveedoresc = ejecutarSQL::consultar("SELECT * FROM proveedor");
                                                 while ($provc = mysqli_fetch_array($proveedoresc)) {
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <textarea class="form-control" placeholder="Agregue una descripción del producto" name="descripcion_prod"></textarea>
+                                            <textarea class="form-control" id="txtDescProd" placeholder="Agregue una descripción del producto" name="descripcion_prod"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Imagen de producto</label>
@@ -116,96 +116,7 @@
                             </div> 
                             <div class = "col-xs-12">
                                 <br>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading text-center"><h3>ACTUALIZAR PRODUCTOS</h3><input class="form-control" id="myInput" type="text" placeholder="Buscar un valor en la tabla"></div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="tabla">
-                                            <thead class="">
-                                                <tr>
-                                                    <th class="text-center" style="width: 60px">Imagen</th>
-                                                    <th class="text-center">Código</th>
-                                                    <th class="text-center">Nombre</th>
-                                                    <th class="text-center">Categoría</th>
-                                                    <th class="text-center">Precio</th>
-                                                    <th class="text-center">Marca</th>
-                                                    <th class="text-center">Proveedor</th>
-                                                    <th class="text-center">Descripción</th>
-                                                    <th class="text-center">Actualizar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $productos = ejecutarSQL::consultar("SELECT * FROM producto ORDER BY id DESC LIMIT 100");
-                                                if ($productos) {
-                                                    $upr = 1;
-                                                    while ($prod = mysqli_fetch_array($productos)) {
-                                                        ?>
-                                                    <div id="update-product">
-                                                        <form method="post" action="DAO/productoDAO.php" id="update-product-<?php echo $upr; ?>">
-                                                            <tr>
-                                                                <td><img src="Recursos/img-products/<?php echo $prod['imagen'] ?>" style="max-width: 80px; text-align: center" ></td>
-                                                                <td>                                
-                                                                    <label style="display: none;"><?php echo $prod['codigo_prod'] ?></label>
-                                                                    <label style="display: none;"><?php echo $prod['nombre_prod'] ?></label>
-                                                                    <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prod['id'] ?>">
-                                                                    <input class="form-control" type="text" name="codigo_prod" maxlength="40" required="" value="<?php echo $prod['codigo_prod'] ?>">
-                                                                </td>
-                                                                <td><input class="form-control" type="text" name="nombre_prod" maxlength="40" required="" value="<?php echo $prod['nombre_prod'] ?>"></td>
-                                                                <td>
-                                                                    <select class="form-control" name="id_categoria">
-                                                                        <option value="Sin Categoria">Elija una opción</option>
-                                                                        <?php
-                                                                        $categoriac2 = ejecutarSQL::consultar("SELECT * FROM categoria");
-                                                                        while ($catec2 = mysqli_fetch_array($categoriac2)) {
-                                                                            if ($catec2['id'] <> $prod['id_categoria']) {
-                                                                                echo '<option value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
-                                                                            } else {
-                                                                                echo '<option  selected="selected" value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
-                                                                            }
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input class="form-control" type="text-area" name="precio" required="" value="<?php echo $prod['precio']; ?>"></td>
-                                                                <td><input class="form-control" type="text-area" name="marca" maxlength="30" required="" value="<?php echo $prod['marca'] ?>"></td>
-                                                                <td>
-                                                                    <select class="form-control" name="id_proveedor">
-                                                                        <option value="0">Elija una opción</option>
-                                                                        <?php
-                                                                        $proveedoresc2 = ejecutarSQL::consultar("SELECT id, nombre_proveedor FROM proveedor");
-
-                                                                        while ($provc2 = mysqli_fetch_array($proveedoresc2)) {
-                                                                            if ($provc2['id'] <> $prod['id_proveedor']) {
-                                                                                echo '<option value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
-                                                                            } else {
-                                                                                echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
-                                                                            }
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input class="form-control" type="text" name="descripcion_prod" value="<?php echo $prod['descripcion_prod'] ?>"></td>
-                                                                <td class="text-center">
-                                                                    <button type="submit" class="btn btn-sm btn-primary button-UPR" value="update-product-<?php echo $upr ?>">Actualizar</button>                                                    
-                                                                    <div id="update-product-<?php echo $upr ?>" style="width: 100%; padding:0px;"></div>
-                                                                </td>
-                                                                <td><input type="text" name="funcion" style="display: none" value="actualizarProducto"></td>                                                                                                                
-                                                            </tr>
-                                                        </form>
-                                                    </div>
-                                                    <?php
-                                                    $upr = $upr + 1;
-                                                }
-                                            } else {
-                                                ?>
-                                                <h4>No existen productos registrados</h4>
-                                                <?php
-                                            }
-                                            ?>
-                                            </tbody >
-                                        </table>
-                                    </div>
-                                </div>
+                                <div class="panel panel-info" id="tablaProductos"></div>
                             </div>
                         </div>
                     </div>
@@ -220,25 +131,25 @@
                                     <form action="DAO/proveedorDAO.php" method="post" role="form">
                                         <div class="form-group">
                                             <label>NIT</label>
-                                            <input class="form-control" type="text" name="prove-nit" placeholder="NIT proveedor" maxlength="30" required="">
+                                            <input class="form-control" type="text" id="txtNitProv" name="prove-nit" placeholder="NIT proveedor" maxlength="30" required="">
                                         </div >
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control" type="text" name="prove-name" placeholder="Nombre proveedor" maxlength="30" required="">
+                                            <input class="form-control" type="text" id="txtNombreProv" name="prove-name" placeholder="Nombre proveedor" maxlength="30" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Dirección</label>
-                                            <input class="form-control" type="text" name="prove-dir" placeholder="Dirección proveedor" >
+                                            <input class="form-control" type="text" id="txtDirProv" name="prove-dir" placeholder="Dirección proveedor" >
                                         </div>
                                         <div class="form-group">
                                             <label>Teléfono</label>
-                                            <input class="form-control" type="tel" name="prove-tel" placeholder="Número telefónico" pattern="[0-9] {
+                                            <input class="form-control" type="tel" id="txtTelProv" name="prove-tel" placeholder="Número telefónico" pattern="[0-9] {
                                                    1, 20
                                                    }" maxlength="20" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Página web o Email</label>
-                                            <input class="form-control" type="text" name="prove-web" placeholder="Página web proveedor" >
+                                            <input class="form-control" type="text" id="txtWebProv" name="prove-web" placeholder="Página web proveedor" >
                                         </div>
                                         <p class="text-center"><button type="submit" class="btn btn-primary">Añadir proveedor</button></p>
                                         <br>
@@ -252,60 +163,7 @@
                             </div>                            
                             <div class="col-xs-12">
                                 <br><br>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading text-center"><h3>Proveedores Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3><input class="form-control" id="myInput" type="text" placeholder="Buscar un valor en la tabla"></div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="tabla">
-                                            <thead class="">
-                                                <tr>
-                                                    <th class="text-center">NIT</th>
-                                                    <th class="text-center">Nombre</th>
-                                                    <th class="text-center">Dirección</th>
-                                                    <th class="text-center">Telefono</th>
-                                                    <th class="text-center">Página web</th>
-                                                    <th class="text-center">Opciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $proveedores = ejecutarSQL::consultar("select * from proveedor");
-
-                                                $up = 1;
-
-                                                while ($prov = mysqli_fetch_array($proveedores)) {
-                                                    echo '
-                                                      <div id="update-proveedor">
-                                                        <form method="post" action="DAO/proveedorDAO.php" id="res-update-prove-' . $up . '">
-                                                          <tr>
-                                                              <td>
-                                                              <label style="display: none;
-                                                                ">' . $prov['nombre_proveedor'] . '</label>
-                                                              <input class="form-control" type="hidden" name="id" required="" value="' . $prov['id'] . '">
-                                                              <input class="form-control" type="text" name="nit" maxlength="30" required="" value="' . $prov['nit'] . '">
-                                                              </td>
-                                                              <td><input class="form-control" type="text" name="nombre_proveedor" maxlength="30" required="" value="' . $prov['nombre_proveedor'] . '"></td>
-                                                              <td><input class="form-control" type="text-area" name="direccion_proveedor" required="" value="' . $prov['direccion_proveedor'] . '"></td>
-                                                              <td><input class="form-control" type="tel" name="telefono_proveedor" required="" maxlength="20" value="' . $prov['telefono_proveedor'] . '"></td>
-                                                              <td><input class="form-control" type="text-area" name="pagina_web" maxlength="30" required="" value="' . $prov['pagina_web'] . '"></td>
-                                                              <td class="text-center">
-                                                                  <input type="text" name="funcion" style="display: none" value="actualizarProveedor">
-                                                                  <button type="submit" class="btn btn-sm btn-primary button-UP" value="res-update-prove-' . $up . '">Actualizar</button>
-                                                                  <div id="res-update-prove-' . $up . '" style="width: 100%;
-                                                                margin:0px;
-                                                                padding:0px;
-                                                                "></div>
-                                                              </td>
-                                                          </tr>
-                                                        </form>
-                                                      </div>
-                                                      ';
-                                                    $up = $up + 1;
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <div class="panel panel-info" id="tablaProveedores"></div>
                             </div>
                         </div>
                     </div>
@@ -320,15 +178,15 @@
                                     <form action="DAO/categoriaDAO.php" method="post" role="form">
                                         <div class="form-group">
                                             <label>Código</label>
-                                            <input class="form-control" type="text" name="categ-code" placeholder="Código de categoria" maxlength="9" required="">
+                                            <input class="form-control" type="text" id="txtCodCategoria" name="categ-code" placeholder="Código de categoria" maxlength="9" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control" type="text" name="categ-name" placeholder="Nombre de categoria" maxlength="30" required="">
+                                            <input class="form-control" type="text" id="txtNomCategoria" name="categ-name" placeholder="Nombre de categoria" maxlength="30" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <input class="form-control" type="text" name="categ-descrip" placeholder="Descripcióne de categoria" required="">
+                                            <input class="form-control" type="text" id="txtDescCategoria" name="categ-descrip" placeholder="Descripcióne de categoria" required="">
                                         </div>
                                         <p class="text-center"><button type="submit" class="btn btn-primary">Agregar categoría</button></p>
                                         <br>
@@ -342,54 +200,7 @@
                             </div>                            
                             <div class="col-xs-12">
                                 <br><br>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading text-center"><h3>Categorias Registradas <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3><input class="form-control" id="myInput2" type="text" placeholder="Buscar un valor en la tabla"></div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="tabla2">
-                                            <thead class="">
-                                                <tr>
-                                                    <th class="text-center">Código</th>
-                                                    <th class="text-center">Nombre</th>
-                                                    <th class="text-center">Descripción</th>
-                                                    <th class="text-center">Opciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $categorias = ejecutarSQL::consultar("select * from categoria");
-                                                $ui = 1;
-                                                while ($cate = mysqli_fetch_array($categorias)) {
-                                                    echo '
-                                                      <div id="update-category">
-                                                        <form method="post" action="DAO/categoriaDAO.php" id="res-update-category-' . $ui . '">
-                                                          <tr>
-                                                              <td>
-                                                              <label style="display: none;
-                                                                ">' . $cate['nombre'] . '</label>
-                                                                <input class="form-control" type="hidden" name="id" maxlength="9" required="" value="' . $cate['id'] . '">
-                                                                <input class="form-control" type="text" name="codigo_categoria" maxlength="9" required="" value="' . $cate['codigo_categoria'] . '">
-                                                              </td>
-                                                              <td><input class="form-control" type="text" name="nombre" maxlength="30" required="" value="' . $cate['nombre'] . '"></td>
-                                                              <td><input class="form-control" type="text-area" name="descripcion" required="" value="' . $cate['descripcion'] . '"></td>
-                                                              <td class="text-center">
-                                                                  <input type="text" name="funcion" style="display: none" value="actualizarCategoria">
-                                                                  <button type="submit" class="btn btn-sm btn-primary button-UC" value="res-update-category-' . $ui . '">Actualizar</button>
-                                                                  <div id="res-update-category-' . $ui . '" style="width: 100%;
-                                                                margin:0px;
-                                                                padding:0px;
-                                                                "></div>
-                                                              </td>
-                                                          </tr>
-                                                        </form>
-                                                      </div>
-                                                      ';
-                                                    $ui = $ui + 1;
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <div class="panel panel-info" id="tablaCategoriasFull"></div>
                             </div>
                         </div>
                     </div>
@@ -403,17 +214,17 @@
                                     <form action="DAO/usuarioDAO.php" method="post" role="form">
                                         <div class="form-group">
                                             <label>Nombre Completo</label>
-                                            <input class="form-control" type="text" name="nombre_completo" placeholder="Nombre Completo" maxlength="50" required="">
+                                            <input class="form-control" type="text" id="txtNombreCUsuario" name="nombre_completo" placeholder="Nombre Completo" maxlength="50" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Nombre Usuario</label>
-                                            <input class="form-control" type="text" name="Nombre" placeholder="Nombre" maxlength="20" pattern="[a-zA-Z] {
+                                            <input class="form-control" type="text" id="txtNombreUsuario" name="Nombre" placeholder="Nombre" maxlength="20" pattern="[a-zA-Z] {
                                                    5, 20
                                                    }" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Contraseña</label>
-                                            <input class="form-control" type="password" name="Clave" placeholder="Contraseña" required="">
+                                            <input class="form-control" type="password" id="txtPassUsuario" name="Clave" placeholder="Contraseña" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Tipo Usuario</label>
@@ -436,7 +247,7 @@
                                 <br><br>
                                 <div id="del-admin">
                                     <h2 class="text-danger text-center"><small><i class="fa fa-user-md"></i></small>&nbsp;&nbsp;Cambiar Estado Usuario</h2>
-                                    <form action="process/cambiar_estado_admin.php" method="post" role="form">
+                                    <form action="DAO/usuarioDAO.php" method="post" role="form">
                                         <div class="form-group">
                                             <label>Administradores</label>
                                             <select class="form-control" name="id">
@@ -461,43 +272,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <br><br>
-                                <div class = "panel panel-info">
-                                    <div class = "panel-heading text-center"><h3>Usuarios Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3></div>
-                                    <div class = "table-responsive">
-                                        <table class = "table table-bordered" >
-                                            <thead class = "">
-                                                <tr>
-                                                    <th class = "text-center">#</th>
-                                                    <th class = "text-center">Cédula o Nit</th>
-                                                    <th class = "text-center">Nombre Completo</th>
-                                                    <th class = "text-center">Estado</th>
-                                                    <th class = "text-center">Tipo de Usuario</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $vendedor = ejecutarSQL::consultar("SELECT * FROM usuarios ORDER BY nombre_completo");
-                                                $cantVendedor = 0;
-                                                $upp = 1;
-                                                while ($vendedorRow = mysqli_fetch_array($vendedor)) {
-                                                    $cantVendedor = $cantVendedor + 1;
-                                                    ?>
-                                                <div id="listar_vendededores">
-                                                    <tr style="text-align: center">
-                                                        <td><?php echo $cantVendedor ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $repartidorRow['id'] ?>"></td>                                                    
-                                                        <td><?php echo $vendedorRow['nombre_completo'] ?></td>
-                                                        <td><?php echo $vendedorRow['Nombre'] ?></td>
-                                                        <td><?php echo $vendedorRow['estado'] ?></td>
-                                                        <td><?php echo $vendedorRow['tipo'] ?></td>
-                                                    </tr>
-                                                </div>
-                                                <?php
-                                            }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <div class = "panel panel-info" id="tablaUsuarios"></div>
                             </div>
                             <div class="col-xs-12"></div>
                         </div>
@@ -839,7 +614,6 @@
                     </div> 
                 </div>
         </section>
-        <?php include './inc/footer.php'; ?>
         <script>
             //Productos
             $(document).ready(function () {
@@ -858,39 +632,6 @@
             });
             $(document).ready(function () {
                 $('#productosBodega2').select2();
-            });
-
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tabla tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-            $(document).ready(function () {
-                $("#myInput2").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tabla2 tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-            $(document).ready(function () {
-                $("#myInput3").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tabla3 tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-            $(document).ready(function () {
-                $("#myInput4").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tabla4 tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
             });
         </script>
     </body>

@@ -3,10 +3,14 @@
 /* Clase para ejecutar las consultas a la Base de Datos */
 
 class ejecutarSQL {
+
     // Conexion a la BD
     public static function conectar() {
-        include 'configServer.php'; // Incluye las variables estaticas con los valores de la bd
-        if (!$con = mysqli_connect(HOST, USER, PASS, BD)) {
+        $host = "localhost";
+        $user = "root";
+        $bd = "tienda_virtual";
+        $pass = "";
+        if (!$con = mysqli_connect($host, $user, $pass, $bd)) {
             die(mysqli_error(ejecutarSQL::conectar()) . "Error en el servidor, verifique sus datos");
         }
         mysqli_set_charset($con, 'utf8');

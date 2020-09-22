@@ -12,7 +12,39 @@ function validarTipoPublicacion(tipo) {
     }
 }
 
+function limpiarCamposRegCategoria(){
+    document.getElementById("txtCodCategoria").value = "";
+    document.getElementById("txtNomCategoria").value = "";
+    document.getElementById("txtDescCategoria").value = "";
+}
+
+function limpiarCamposRegProveedor(){
+    document.getElementById("txtNitProv").value = "";
+    document.getElementById("txtNombreProv").value = "";
+    document.getElementById("txtDirProv").value = "";
+    document.getElementById("txtTelProv").value = "";
+    document.getElementById("txtWebProv").value = "";
+}
+
+function limpiarCamposRegUsuario(){
+    document.getElementById("txtNombreCUsuario").value = "";
+    document.getElementById("txtNombreUsuario").value = "";
+    document.getElementById("txtPassUsuario").value = "";
+}
+
 $(document).ready(function () {
+    
+    // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin
+    $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
+    
+    // Incluye el archivo de la tabla de proveedores dentro del DIV correspondiente en configAdmin
+    $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
+    
+    // Incluye el archivo de la tabla de productos dentro del DIV correspondiente en configAdmin
+    $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
+    
+    // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
+    $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
     
     //Actualizar informacion empresa
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
