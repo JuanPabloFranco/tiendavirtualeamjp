@@ -14,11 +14,23 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         //Se verifica que las variables a guardar no esten vacias
         if (!$cantidadProducto == "" && !$cantidadMinima == "" && !$precioVenta == "") {
             // Se verifica si ya existe el producto en bodega, 
-            $verificar = ejecutarSQL::consultar("SELECT * FROM bodega WHERE id_producto=" . $idProducto . "");
+            $verificar = ejecutarSQL::consultar("SELECT id,id_producto,cantidad,minimo,precio_venta,estado_prod_bodega FROM bodega WHERE id_producto=" . $idProducto . "");
             $verificaltotal = mysqli_num_rows($verificar);
+            
             if ($verificaltotal <= 0) { // En caso de no existir el producto en bodega se procede a registrar
-                if (consultasSQL::InsertSQL("bodega", "id_producto,cantidad,minimo,precio_venta,estado_prod_bodega","$idProducto,$cantidadProducto,$cantidadMinima,$precioVenta,'Disponible'")) {
+                if (consultasSQL::InsertSQL("bodega", "id_producto,cantidad,minimo,precio_venta,estado_prod_bodega", "$idProducto,$cantidadProducto,$cantidadMinima,$precioVenta,'Disponible'")) {
+                                        
                     echo '<img src="Recursos/img/correcto.png" class="center-all-contens"><br><p class="lead text-center">El producto se ha añadido éxitosamente a la bodega</p>';
+?>
+                    <script>
+                        
+                        $(document).ready(function() {
+                            limpiarCamposBodega();
+                            $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+                        });
+                    </script>
+            <?php
+
                 } else {
                     echo '<img src="Recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Ha ocurrido un error.<br>Por favor intente nuevamente</p>';
                 }
@@ -29,57 +41,78 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
             echo '<img src="Recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error los campos no deben de estar vacíos</p>';
         }
     }
-    
+
 
     if ($_POST['funcion'] == "changeProductoBodega") {
         $idBodega = $_POST['id'];
-        $precioVenta= $_POST['precio_venta'];
+        $precioVenta = $_POST['precio_venta'];
         $minimo = $_POST['minimo'];
-        $cantidadProducto=$_POST['cantidad'];
         // Se ejecuta la consulta para actualizar 
-        if (consultasSQL::UpdateSQL("bodega","minimo=$minimo,precio_venta=$precioVenta","id=$idProducto")) {
+        if (consultasSQL::UpdateSQL("bodega", "minimo=$minimo,precio_venta=$precioVenta", "id=$idProducto")) {
             ?>
             <br>
             <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
+            
+                    <script>
+                        
+                        $(document).ready(function() {
+                            $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+                        });
+                    </script>
+         
             <p><strong>Actualizado</strong></p>
             <p class="text-center">
             <?php
         } else {
             ?>
-            <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
-            <p><strong>Error</strong></p>
-            <p class="text-center">
-            <?php
+                <br>
+                <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
+                <p><strong>Error</strong></p>
+                <p class="text-center">
+                <?php
+            }
         }
-    }
-    if ($_POST['funcion'] == "changeCantidadBodega") { // Sumar productos en bodega
-        // Se obtienen los datos del formulario html por variables POST
-        $idBodega= $_POST['idBodega'];
-        $cantidadProducto=$_POST['cantidad'];
-        //Se obtiene la cantidad actual en bodega del producto
-        $consulta = ejecutarSQL::consultar("SELECT cantidad FROM bodega where id=". $idBodega ."");
-        $extraido= mysqli_fetch_array($consulta);
-        //Se suma la cantidad actual con la cantidad ingresada
-        $cantidadProducto+=$extraido['cantidad'];
-        // Se actualiza la cantidad en base de datos
-        if (consultasSQL::UpdateSQL("bodega","cantidad=$cantidadProducto","id=$idBodega")) {
-            ?>
-            <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
-            <p><strong>Actualizado</strong></p>
-            <p class="text-center">
-            <?php
+        if ($_POST['funcion'] == "changeCantidadBodega") { // Sumar productos en bodega
+            // Se obtienen los datos del formulario html por variables POST
+            $idBodega = $_POST['idBodega'];
+            $cantidadProducto = $_POST['cantidad'];
+            //Se obtiene la cantidad actual en bodega del producto
+            $consulta = ejecutarSQL::consultar("SELECT cantidad FROM bodega where id=" . $idBodega . "");
+            $extraido = mysqli_fetch_array($consulta); 
+                   
+            //Se suma la cantidad actual con la cantidad ingresada
+            $cantidadProducto += $extraido['cantidad'];
+            // Se actualiza la cantidad en base de datos
+            if (consultasSQL::UpdateSQL("bodega", "cantidad=$cantidadProducto", "id=$idBodega")) {
+                if ($cantidadProducto > 0) {
+                    $sqlAc = "UPDATE bodega SET estado_prod_bodega='Disponible' WHERE id=" . $idBodega;
+                } else {
+                    $sqlAc = "UPDATE bodega SET estado_prod_bodega='Agotado' WHERE id=" . $idBodega;
+                }
+                $result = ejecutarSQL::consultar($sqlAc);
+               ?>
+                    <br>
+                    <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
+                    <script>
+                        
+                        $(document).ready(function() {
+                            limpiarCamposBodega();
+                            $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+                        });
+                    </script>
+                    <p><strong>Actualizado</strong></p>
+                    <p class="text-center">
+                    <?php
+                } else {
+                    ?>
+                        <br>
+                        <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
+                        <p><strong>Error</strong></p>
+                        <p class="text-center">
+                <?php
+                }
+            }
         } else {
-            ?>
-            <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
-            <p><strong>Error</strong></p>
-            <p class="text-center">
-            <?php
+            echo '<img src="Recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
         }
-    }
-} else {
-    echo '<img src="Recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
-}
-?>
+                ?>

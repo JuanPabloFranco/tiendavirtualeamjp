@@ -116,7 +116,8 @@
                             </div> 
                             <div class = "col-xs-12">
                                 <br>
-                                <div class="panel panel-info" id="tablaProductos"></div>
+                                <div class="panel panel-info" id="tablaProductos">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -288,11 +289,11 @@
                                     <form action="DAO/domiciliarioDAO.php" method="post" role="form" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>Cédula</label>
-                                            <input class="form-control" type="number" name="cedula_repartidor" placeholder="Cédula o No. de Documento del Domiciliario" maxlength="50" required="" title="Cédula o No. de Documento del domiciliario">
+                                            <input class="form-control" type="number" id="txtCedulaRepartidor" name="cedula_repartidor" placeholder="Cédula o No. de Documento del Domiciliario" maxlength="50" required="" title="Cédula o No. de Documento del domiciliario">
                                         </div>
                                         <div class="form-group">
                                             <label>Nombre Completo</label>
-                                            <input class="form-control" type="text" name="nombre_repartidor" placeholder="Nombre completo del domiciliario" required="" title="Nombre completo del domiciliario">
+                                            <input class="form-control" type="text" id="txtNombreRepartidor" name="nombre_repartidor" placeholder="Nombre completo del domiciliario" required="" title="Nombre completo del domiciliario">
                                         </div>
                                         <div class="form-group">
                                             <label>Foto del repartidor</label>
@@ -332,42 +333,9 @@
 
                             <div class="col-xs-12">
                                 <br><br>
-                                <div class = "panel panel-info">
-                                    <div class = "panel-heading text-center"><h3>Domiciliarios Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3></div>
-                                    <div class = "table-responsive">
-                                        <table class = "table table-bordered" >
-                                            <thead class = "">
-                                                <tr>
-                                                    <th class = "text-center">#</th>
-                                                    <th class = "text-center">Cédula o Nit</th>
-                                                    <th class = "text-center">Nombre Completo</th>
-                                                    <th class = "text-center">Estado</th>
-                                                    <th class = "text-center">Foto</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $repartidor = ejecutarSQL::consultar("SELECT * FROM domiciliario ORDER BY nombre_repartidor");
-                                                $cantRep = 0;
-                                                $upp = 1;
-                                                while ($repartidorRow = mysqli_fetch_array($repartidor)) {
-                                                    $cantRep = $cantRep + 1;
-                                                    ?>
-                                                <div id="restaurar_cliente">
-                                                    <tr style="text-align: center">
-                                                        <td><?php echo $cantRep ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $repartidorRow['id'] ?>"></td>                                                    
-                                                        <td><?php echo $repartidorRow['cedula_repartidor'] ?></td>
-                                                        <td><?php echo $repartidorRow['nombre_repartidor'] ?></td>
-                                                        <td><?php echo $repartidorRow['estado_repartidor'] ?></td>
-                                                        <td><img src="Recursos/img-repartidor/<?php echo $repartidorRow['foto_repartidor'] ?>" style="width: 40px"></td>
-                                                    </tr>
-                                                </div>
-                                                <?php
-                                            }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class = "panel panel-info" id="tablaDomiciliario">
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -385,7 +353,7 @@
                                             <label>Producto</label>
                                             <select class="form-control" name="id_producto" style="width: 100%" id="productosBodega">
                                                 <?php
-                                                $sqlProdBod = ejecutarSQL::consultar("SELECT * FROM producto");
+                                                $sqlProdBod = ejecutarSQL::consultar("SELECT P.id,P.nombre_prod,P.precio FROM producto P WHERE P.id NOT IN (SELECT B.id_producto FROM bodega B )");
                                                 while ($prodBod = mysqli_fetch_array($sqlProdBod)) {
                                                     echo '<option value="' . $prodBod['id'] . '">' . $prodBod['nombre_prod'] . " ($" . $prodBod['precio'] . ")" . '</option>';
                                                 }
@@ -394,15 +362,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Cantidad en Bodega</label>
-                                            <input class="form-control" type="number" min="1" name="cantidad" placeholder="Cantidad en bodega" required="">
+                                            <input class="form-control" type="number" id="txtCantidadProductoBodega" min="1" name="cantidad" placeholder="Cantidad en bodega" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Cantidad Mínima</label>
-                                            <input class="form-control" type="number" min="1" name="minimo" placeholder="Cantidad minima en bodega" required="">
+                                            <input class="form-control" type="number" id="txtCantidadMinProductoBodega" min="1" name="minimo" placeholder="Cantidad minima en bodega" required="">
                                         </div>
                                         <div class="form-group">
                                             <label>Precio Venta $</label>
-                                            <input class="form-control" type="number" min="0" name="precio_venta" placeholder="Precio de Venta" required="">
+                                            <input class="form-control" id="txtPrecioVentaProducto" type="number" min="0" name="precio_venta" placeholder="Precio de Venta" required="">
                                         </div>
                                         <p class="text-center"><button type="submit" class="btn btn-primary">Agregar</button></p>
                                         <br>
@@ -430,10 +398,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Cantidad a agregar</label>
-                                            <input class="form-control" type="number" min="1" name="cantidad" placeholder="Cantidad en bodega" required="">
+                                            <input class="form-control" type="number"  id="txtCantidadProductoBodegaChange" min="1" name="cantidad" placeholder="Cantidad en bodega" required="">
 
                                         </div>
-                                        <p class="text-center"><button type="submit" class="btn btn-danger">Agregar cantidad a bodega</button></p>
+                                        <p class="text-center"><button type="submit"  class="btn btn-danger">Agregar cantidad a bodega</button></p>
                                         <br>
                                         <input type="text" name="funcion" style="display: none" value="changeCantidadBodega">
                                         <div id="res-form-up-bodega" style="width: 100%; text-align: center; margin: 0;"></div>
@@ -442,65 +410,8 @@
                             </div>
                             <div class="col-xs-12">
                                 <br><br>
-                                <div class = "panel panel-info">
-                                    <div class = "panel-heading text-center"><h3>Productos en bodega <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3></div>
-                                    <div class = "table-responsive">
-                                        <table class = "table table-bordered" >
-                                            <thead class = "">
-                                                <tr>
-                                                    <th class = "text-center">#</th>
-                                                    <th class = "text-center">Código Producto</th>
-                                                    <th class = "text-center">Nombre Producto</th>
-                                                    <th class = "text-center">Marca</th>
-                                                    <th class = "text-center">Proveedor</th>
-                                                    <th class = "text-center">Categoria</th>
-                                                    <th class = "text-center">Cant Bodega</th>
-                                                    <th class = "text-center">Cant Mínima</th>
-                                                    <th class = "text-center">Precio Venta</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $sqlProdBodega = ejecutarSQL::consultar("SELECT B.id_producto,P.nombre_prod,P.codigo_prod,P.marca,PRO.nombre_proveedor,C.nombre,"
-                                                                . "B.cantidad,B.minimo,B.precio_venta,B.estado_prod_bodega,B.id FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id
-                                                                 JOIN bodega B ON B.id_producto=P.id JOIN categoria C ON P.id_categoria=C.id ORDER BY nombre");
-                                                $cantVendedor = 0;
-                                                $contPB = 1;
-                                                while ($prodBodega = mysqli_fetch_array($sqlProdBodega)) {
-                                                    $color = "white";
-                                                    if ($prodBodega['estado_prod_bodega'] == "Agotado") {
-                                                        $color = "Rgb(255,0,0,0.4)";
-                                                    }
-                                                    ?>
-                                                <div id="update-bodega">
-                                                            <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
-                                                            <tr style="background-color: <?php echo $color ?>">                                                            
-                                                            <td> <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>">   </td>
-                                                            <td><label><?php echo $prodBodega['codigo_prod'] ?></label></td>
-                                                            <td><label><?php echo $prodBodega['nombre_prod'] ?></label></td> 
-                                                            <td><label><?php echo $prodBodega['marca'] ?></label></td>
-                                                            <td><label><?php echo $prodBodega['nombre_proveedor'] ?></label></td> 
-                                                            <td><label><?php echo $prodBodega['nombre'] ?></label></td>
-                                                            <td><label><?php echo $prodBodega['cantidad'] ?></label></td>
-                                                            <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
-                                                            <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
-                                                            <td class="text-center">
-                                                                <button type="submit" class="btn btn-sm btn-primary button-Bodega" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>                                                    
-                                                                <div id="update-bodega-<?php echo $contPB ?>" style="width: 100%; margin:0px; padding:0px;"></div>
-                                                            </td>
-                                                            <td><input type="text" name="funcion" style="display: none" value="changeProductoBodega"></td>                                                                                                                
-                                                        </tr>
-                                                    </form>
-                                                    </tr>
-
-                                                </div>
-                                                <?php
-                                                $contPB = $contPB + 1;
-                                            }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class = "panel panel-info" id="tablaBodega">                                    
+                                        
                                 </div>
                             </div>
                             <div class="col-xs-12"></div>

@@ -26,6 +26,19 @@ function limpiarCamposRegProveedor(){
     document.getElementById("txtWebProv").value = "";
 }
 
+function limpiarCamposBodega(){
+    document.getElementById("txtPrecioVentaProducto").value = "";
+    document.getElementById("txtCantidadMinProductoBodega").value = "";
+    document.getElementById("txtCantidadProductoBodega").value = "";
+    document.getElementById("txtCantidadProductoBodegaChange").value = "";
+}
+
+function limpiarCamposRegDomiciliario(){
+    document.getElementById("txtCedulaRepartidor").value = "";
+    document.getElementById("txtNombreRepartidor").value = "";
+}
+
+
 function limpiarCamposRegUsuario(){
     document.getElementById("txtNombreCUsuario").value = "";
     document.getElementById("txtNombreUsuario").value = "";
@@ -45,7 +58,12 @@ $(document).ready(function () {
     
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
     $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
-    
+
+    // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
+    $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+
+    // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
+    $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
     //Actualizar informacion empresa
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
