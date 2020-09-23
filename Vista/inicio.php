@@ -77,7 +77,7 @@
                             <p><i class="fa fa-users fa-4x"></i></p>
                             <h3>Registrate</h3>
                             <p>Hágase cliente de <span class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA?></span> para hacer efectivo tus pedidos en nuestra tienda virtual.</p>
-                            <p><a href="registration.php" class="btn btn-info btn-block">Registrarse</a></p> 
+                            <p><a href="index.php?page=registration" class="btn btn-info btn-block">Registrarse</a></p> 
                         </article>
                     </div>
                     <div class="col-xs-12 col-sm-6">

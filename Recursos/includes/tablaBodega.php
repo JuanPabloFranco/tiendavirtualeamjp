@@ -36,13 +36,13 @@ include '../plantillas/datos.php';
                 <div id="update-bodega">
                     <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
                         <tr style="background-color: <?php echo $color ?>">
-                            <td> <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
-                            <td><label><?php echo $prodBodega['codigo_prod'] ?></label></td>
-                            <td><label><?php echo $prodBodega['nombre_prod'] ?></label></td>
-                            <td><label><?php echo $prodBodega['marca'] ?></label></td>
-                            <td><label><?php echo $prodBodega['nombre_proveedor'] ?></label></td>
-                            <td><label><?php echo $prodBodega['nombre'] ?></label></td>
-                            <td><label><?php echo $prodBodega['cantidad'] ?></label></td>
+                            <td class="text-center"><?php echo $contPB;?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
+                            <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
+                            <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
+                            <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
+                            <td class="text-center"><?php echo $prodBodega['nombre_proveedor'] ?></td>
+                            <td class="text-center"><?php echo $prodBodega['nombre'] ?></td>
+                            <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
                             <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
                             <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
                             <td class="text-center">

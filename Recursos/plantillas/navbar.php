@@ -30,7 +30,7 @@ error_reporting(E_PARSE);
         </div>
         <div class="col-xs-10">
             <div class="contenedor-tabla pull-right">
-                <div class="contenedor-tr"> 
+                <div class="contenedor-tr" id="botones"> 
                     <a class="table-cell-td" href="index.php?page=inicio">Inicio</a>
                     <a href="index.php?page=buscar_producto" class="table-cell-td">Buscar  <i class="fa fa-search"></i></a>
                     <a href="index.php?page=product" class="table-cell-td">Productos</a>                     

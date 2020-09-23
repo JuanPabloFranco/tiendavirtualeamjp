@@ -15,12 +15,22 @@ $fecha = date("Y") . "-" . date("m") . "-" . date("d");
         </div>
         <?php
         if (isset($_GET['page'])) {
-            include "Vista/". $_GET['page'] . ".php";
+            include "Vista/" . $_GET['page'] . ".php";
         } else {
             include 'Vista/inicio.php';
         }
         ?>
-    </body>   
+        <div id="divNotificacion1"></div>
+    </body> 
+    <script>
+        $(document).ready(function () {
+            setInterval(
+                function () {
+                    $('#divNotificacion1').load("Recursos/includes/notificacion.php");
+                }, 40000
+            );
+        });
+    </script>
     <?php
     include './Recursos/plantillas/footer.php';
     ?>

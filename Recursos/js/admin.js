@@ -12,13 +12,13 @@ function validarTipoPublicacion(tipo) {
     }
 }
 
-function limpiarCamposRegCategoria(){
+function limpiarCamposRegCategoria() {
     document.getElementById("txtCodCategoria").value = "";
     document.getElementById("txtNomCategoria").value = "";
     document.getElementById("txtDescCategoria").value = "";
 }
 
-function limpiarCamposRegProveedor(){
+function limpiarCamposRegProveedor() {
     document.getElementById("txtNitProv").value = "";
     document.getElementById("txtNombreProv").value = "";
     document.getElementById("txtDirProv").value = "";
@@ -26,25 +26,25 @@ function limpiarCamposRegProveedor(){
     document.getElementById("txtWebProv").value = "";
 }
 
-function limpiarCamposBodega(){
+function limpiarCamposBodega() {
     document.getElementById("txtPrecioVentaProducto").value = "";
     document.getElementById("txtCantidadMinProductoBodega").value = "";
     document.getElementById("txtCantidadProductoBodega").value = "";
     document.getElementById("txtCantidadProductoBodegaChange").value = "";
 }
 
-function limpiarCamposRegDomiciliario(){
+function limpiarCamposRegDomiciliario() {
     document.getElementById("txtCedulaRepartidor").value = "";
     document.getElementById("txtNombreRepartidor").value = "";
 }
 
-function limpiarCamposRegUsuario(){
+function limpiarCamposRegUsuario() {
     document.getElementById("txtNombreCUsuario").value = "";
     document.getElementById("txtNombreUsuario").value = "";
     document.getElementById("txtPassUsuario").value = "";
 }
 
-function limpiarCamposCliente(){
+function limpiarCamposCliente() {
     document.getElementById("txtCedulaCliente").value = "";
     document.getElementById("txtNombreCliente").value = "";
     document.getElementById("txtDirCliente").value = "";
@@ -55,16 +55,16 @@ function limpiarCamposCliente(){
 }
 
 $(document).ready(function () {
-    
+
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin
     $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
-    
+
     // Incluye el archivo de la tabla de proveedores dentro del DIV correspondiente en configAdmin
     $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
-    
+
     // Incluye el archivo de la tabla de productos dentro del DIV correspondiente en configAdmin
     $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
-    
+
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
     $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
 
@@ -73,6 +73,10 @@ $(document).ready(function () {
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
     $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
+    
+    // Incluye el archivo de la tabla de pedidos dentro del DIV correspondiente en ventas
+    $('#tablaPedidos').load("Recursos/includes/tablaPedidos.php");
+
     //Actualizar informacion empresa
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
@@ -123,7 +127,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    
+
     // cambiar cantidad de producto en bodega
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
@@ -149,7 +153,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    
+
     //Cambiar estado publicación
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
@@ -199,7 +203,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    
+
     //Actualizar una publicacion
     $('.button-PUB').click(function () {
         var myId = $(this).val();
