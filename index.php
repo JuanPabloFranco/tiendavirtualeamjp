@@ -27,7 +27,7 @@ $fecha = date("Y") . "-" . date("m") . "-" . date("d");
             setInterval(
                 function () {
                     $('#divNotificacion1').load("Recursos/includes/notificacion.php");
-                }, 40000
+                }, 30000
             );
         });
     </script>

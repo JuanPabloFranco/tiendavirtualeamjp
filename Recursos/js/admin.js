@@ -90,7 +90,7 @@ $(document).ready(function () {
             url: peticion,
             data: informacion,
             beforeSend: function () {
-                $("#res-form-update_inf").html('Agregando<br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+                $("#res-form-update_inf").html('Agregando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
             },
             error: function () {
                 $("#res-form-update_inf").html("Ha ocurrido un error en el sistema");
@@ -115,7 +115,7 @@ $(document).ready(function () {
             url: peticion,
             data: informacion,
             beforeSend: function () {
-                $("#res-form-add-bodega").html('Agregando<br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+                $("#res-form-add-bodega").html('Agregando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
             },
             error: function () {
                 $("#res-form-add-bodega").html("Ha ocurrido un error en el sistema");
@@ -141,7 +141,7 @@ $(document).ready(function () {
             url: peticion,
             data: informacion,
             beforeSend: function () {
-                $("#res-form-up-bodega").html('Agregando cantidad<br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+                $("#res-form-up-bodega").html('Agregando cantidad<br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
             },
             error: function () {
                 $("#res-form-up-bodega").html("Ha ocurrido un error en el sistema");
@@ -879,8 +879,3 @@ $(document).ready(function () {
         return false;
     });
 });
-
-
-
-
-

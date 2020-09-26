@@ -2,6 +2,41 @@
 include '../../Conexion/consulSQL.php';
 include '../plantillas/datos.php';
 ?>
+<script>
+    $(document).ready(function () {
+        $('.button-Bodega').click(function () {
+            var myId = $(this).val();
+            $('#update-bodega form#' + myId).submit(function (e) {
+
+                e.preventDefault();
+                var informacion = $('#update-bodega form#' + myId).serialize();
+                var metodo = $('#update-bodega form#' + myId).attr('method');
+                var peticion = $('#update-bodega form#' + myId).attr('action');
+                $.ajax({
+                    type: metodo,
+                    url: peticion,
+                    data: informacion,
+                    beforeSend: function () {
+                        $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
+                    },
+                    error: function () {
+                        $("div#" + myId).html("Ha ocurrido un error en el sistema");
+                    },
+                    success: function (data) {
+                        $("div#" + myId).html(data);
+                    }
+                });
+                return false;
+            });
+        });
+        $("#myInputProv").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaProv tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 <div class="panel-heading text-center">
     <h3>Productos en bodega <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3>
 </div>
@@ -23,7 +58,7 @@ include '../plantillas/datos.php';
         <tbody>
             <?php
             $sqlProdBodega = ejecutarSQL::consultar("SELECT B.id_producto,P.nombre_prod,P.codigo_prod,P.marca,PRO.nombre_proveedor,C.nombre,"
-                . "B.cantidad,B.minimo,B.precio_venta,B.estado_prod_bodega,B.id FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id
+                            . "B.cantidad,B.minimo,B.precio_venta,B.estado_prod_bodega,B.id FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id
                                                                  JOIN bodega B ON B.id_producto=P.id JOIN categoria C ON P.id_categoria=C.id ORDER BY nombre");
             $cantVendedor = 0;
             $contPB = 1;
@@ -32,43 +67,33 @@ include '../plantillas/datos.php';
                 if ($prodBodega['estado_prod_bodega'] == "Agotado") {
                     $color = "Rgb(255,0,0,0.4)";
                 }
-            ?>
-                <div id="update-bodega">
-                    <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
-                        <tr style="background-color: <?php echo $color ?>">
-                            <td class="text-center"><?php echo $contPB;?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
-                            <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
-                            <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
-                            <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
-                            <td class="text-center"><?php echo $prodBodega['nombre_proveedor'] ?></td>
-                            <td class="text-center"><?php echo $prodBodega['nombre'] ?></td>
-                            <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
-                            <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
-                            <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
-                            <td class="text-center">
-                                <button type="submit" class="btn btn-sm btn-primary button-Bodega" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>
-                                <div id="update-bodega-<?php echo $contPB ?>" style="width: 100%; margin:0px; padding:0px;"></div>
-                            </td>
-                            <td><input type="text" name="funcion" style="display: none" value="changeProductoBodega"></td>
-                        </tr>
-                    </form>
+                ?>
+            <div id="update-bodega">
+                <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
+                    <tr style="background-color: <?php echo $color ?>">
+                        <td class="text-center"><?php echo $contPB; ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
+                        <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
+                        <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
+                        <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
+                        <td class="text-center"><?php echo $prodBodega['nombre_proveedor'] ?></td>
+                        <td class="text-center"><?php echo $prodBodega['nombre'] ?></td>
+                        <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
+                        <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
+                        <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
+                        <td class="text-center">
+                            <button type="submit" class="btn btn-sm btn-primary button-Bodega" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>
+                            <div id="update-bodega-<?php echo $contPB ?>" style="width: 100%; margin:0px; padding:0px;"></div>
+                        </td>
+                        <td><input type="text" name="funcion" style="display: none" value="changeProductoBodega"></td>
                     </tr>
+                </form>
+                </tr>
 
-                </div>
+            </div>
             <?php
-                $contPB = $contPB + 1;
-            }
-            ?>
-        </tbody>
-        <script>
-            $(document).ready(function () {
-                $("#myInputProv").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tablaProv tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
+            $contPB = $contPB + 1;
+        }
+        ?>
+        </tbody>        
     </table>
 </div>
