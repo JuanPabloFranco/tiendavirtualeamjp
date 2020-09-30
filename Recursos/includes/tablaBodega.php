@@ -2,46 +2,14 @@
 include '../../Conexion/consulSQL.php';
 include '../plantillas/datos.php';
 ?>
-<script>
-    $(document).ready(function () {
-        $('.button-Bodega').click(function () {
-            var myId = $(this).val();
-            $('#update-bodega form#' + myId).submit(function (e) {
-
-                e.preventDefault();
-                var informacion = $('#update-bodega form#' + myId).serialize();
-                var metodo = $('#update-bodega form#' + myId).attr('method');
-                var peticion = $('#update-bodega form#' + myId).attr('action');
-                $.ajax({
-                    type: metodo,
-                    url: peticion,
-                    data: informacion,
-                    beforeSend: function () {
-                        $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                    },
-                    error: function () {
-                        $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                    },
-                    success: function (data) {
-                        $("div#" + myId).html(data);
-                    }
-                });
-                return false;
-            });
-        });
-        $("#myInputProv").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tablaProv tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
 <div class="panel-heading text-center">
-    <h3>Productos en bodega <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3>
+    <h3>Productos en bodega <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3>    
+    <input class="form-control" id="myInputBodega" type="text" placeholder="Buscar un valor en la tabla">
+    <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaBodega()"></span></button>    
 </div>
-<div class="table-responsive">
-    <table class="table table-bordered">
+<div id="res_update_bodega" style="width: 100%; padding:0px;"></div>
+<div class="table-responsive" id="update-bodega">    
+    <table class="table table-bordered" id="tablaBodega">
         <thead class="">
             <tr>
                 <th class="text-center">#</th>
@@ -53,9 +21,10 @@ include '../plantillas/datos.php';
                 <th class="text-center">Cant Bodega</th>
                 <th class="text-center">Cant Mínima</th>
                 <th class="text-center">Precio Venta</th>
+                <th class="text-center">Editar</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody>                
             <?php
             $sqlProdBodega = ejecutarSQL::consultar("SELECT B.id_producto,P.nombre_prod,P.codigo_prod,P.marca,PRO.nombre_proveedor,C.nombre,"
                             . "B.cantidad,B.minimo,B.precio_venta,B.estado_prod_bodega,B.id FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id
@@ -68,32 +37,48 @@ include '../plantillas/datos.php';
                     $color = "Rgb(255,0,0,0.4)";
                 }
                 ?>
-            <div id="update-bodega">
-                <form method="post" action="DAO/bodegaDAO.php" id="update-bodega-<?php echo $contPB; ?>">
-                    <tr style="background-color: <?php echo $color ?>">
-                        <td class="text-center"><?php echo $contPB; ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
-                        <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
-                        <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
-                        <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
-                        <td class="text-center"><?php echo $prodBodega['nombre_proveedor'] ?></td>
-                        <td class="text-center"><?php echo $prodBodega['nombre'] ?></td>
-                        <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
-                        <td><input class="form-control" type="number" name="minimo" required="" value="<?php echo $prodBodega['minimo'] ?>"></td>
-                        <td><input class="form-control" type="number" name="precio_venta" required="" value="<?php echo $prodBodega['precio_venta'] ?>"></td>
-                        <td class="text-center">
-                            <button type="submit" class="btn btn-sm btn-primary button-Bodega" value="update-bodega-<?php echo $contPB ?>">Actualizar</button>
-                            <div id="update-bodega-<?php echo $contPB ?>" style="width: 100%; margin:0px; padding:0px;"></div>
-                        </td>
-                        <td><input type="text" name="funcion" style="display: none" value="changeProductoBodega"></td>
-                    </tr>
-                </form>
+            <div>
+                <tr style="background-color: <?php echo $color ?>">
+                    <td class="text-center"><?php echo $contPB; ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
+                    <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['nombre_proveedor'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['nombre'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
+                    <td class="text-center"><?php echo $prodBodega['minimo'] ?></td>
+                    <td class="text-center">$<?php echo $prodBodega['precio_venta'] ?></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-info btn-sm editar_bodega" value="<?php echo $prodBodega['id']; ?>" data-toggle="modal" data-target="#editarBodega"><span class="fa fa-pencil"></span> Editar</button>
+                    </td>
                 </tr>
-
             </div>
             <?php
             $contPB = $contPB + 1;
         }
         ?>
         </tbody>        
-    </table>
+    </table>    
 </div>
+<div class="modal fade" id="editarBodega" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
+<script>
+    function actualizarTablaBodega() {
+        $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+    }
+    $(document).ready(function () {     
+        // Mostrar el modal editar bodega
+        $('#editarBodega').load("Vista/editarBodega.php");
+
+        //enviar valor al modal editar bodega
+        $(".editar_bodega").click(function () { //      
+            $('#editarBodega').load("Vista/editarBodega.php?id=" + $(this).val());
+        });
+
+        $("#myInputBodega").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaBodega tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

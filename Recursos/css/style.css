@@ -10,6 +10,12 @@
     src: url("../fonts/SourceSansPro-Regular.otf");
 }
 
+.abs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body{
     font-family: "FontFamilySPro";
     line-height: 1.5;

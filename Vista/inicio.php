@@ -28,32 +28,36 @@
                         while ($fila = mysqli_fetch_array($consulta)) {
                             ?>
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                    <div class="thumbnail" style="width: 90%">
-                                        <!--se inserta la imagen del producto-->
-                                        <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-width: 70%" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>
-                                        <div class="caption">
-                                            <!--se inserta la información del producto-->
-                                            <h3><?php echo $fila['nombre_prod'] ?></h3>
-                                            <p><?php echo $fila['marca'] ?></p>
-                                            <p>$<?php echo $fila['precio_venta'] ?></p>
-                                            <p class="text-center">
-                                                <!--Boton que abre una ventana modal con el detalle del producto-->
-                                                <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;
-                                                <?php
-                                                // El boton de agregar al carrito solo aparece si el usuario es un cliente o no se ha logueado
-                                                if (isset($_SESSION['nombreUser']) || empty($_SESSION['nombreAdmin'])) {
-                                                    // Se verifica el estado del producto para mostrar el boton
-                                                    if ($fila['estado_prod_bodega'] <> 'Agotado') {
-                                                        ?>
-                                                        <button value="<?php echo $fila['id']; ?>" class="btn btn-success btn-sm botonCarrito"><i class="fa fa-shopping-cart"></i>&nbsp; Añadir</button>
-                                                        <?php
-                                                    }
+                                <div class="thumbnail" style="width: 90%">
+                                    <!--se inserta la imagen del producto-->
+                                    <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-width: 70%" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>
+                                    <div class="caption">
+                                        <!--se inserta la información del producto-->
+                                        <h3  class="text-center"><?php echo $fila['nombre_prod'] ?></h3>
+                                        <p  class="text-center"><?php echo $fila['marca'] ?></p>
+                                        <p  class="text-center">$<?php echo $fila['precio_venta'] ?></p>
+                                        <p class="abs-center">
+                                            <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;
+                                        </p>
+                                        <p class="abs-center">
+<!--                                            Boton que abre una ventana modal con el detalle del producto
+                                            <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;-->
+                                            <?php
+                                            // El boton de agregar al carrito solo aparece si el usuario es un cliente o no se ha logueado
+                                            if (isset($_SESSION['nombreUser']) || empty($_SESSION['nombreAdmin'])) {
+                                                // Se verifica el estado del producto para mostrar el boton
+                                                if ($fila['estado_prod_bodega'] <> 'Agotado') {
+                                                    ?>
+                                                    <input type="number" value="1" min="1" max="<?php echo $fila['cantidad'] ?>" style="width: 30%" class="form-control all-elements-tooltip">
+                                                    <button value="<?php echo $fila['id']; ?>" class="btn btn-success btn-sm botonCarrito"><i class="fa fa-shopping-cart"></i>&nbsp; Añadir</button>
+                                                    <?php
                                                 }
-                                                ?>
-                                            </p>
-                                        </div>
+                                            }
+                                            ?>
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
                             <?php
                             if ($nums % 4 == 0) {
                                 echo '<div class="clearfix"></div>';
@@ -76,7 +80,7 @@
                         <article style="margin-top:5%;">
                             <p><i class="fa fa-users fa-4x"></i></p>
                             <h3>Registrate</h3>
-                            <p>Hágase cliente de <span class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA?></span> para hacer efectivo tus pedidos en nuestra tienda virtual.</p>
+                            <p>Hágase cliente de <span class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA ?></span> para hacer efectivo tus pedidos en nuestra tienda virtual.</p>
                             <p><a href="index.php?page=registration" class="btn btn-info btn-block">Registrarse</a></p> 
                         </article>
                     </div>

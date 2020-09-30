@@ -18,6 +18,19 @@ function limpiarCamposRegCategoria() {
     document.getElementById("txtDescCategoria").value = "";
 }
 
+function minimoBodega(minimo) {
+    document.getElementById("txtMinimoBodega").value = minimo;
+}
+
+function precioBodega(precio) {
+    document.getElementById("txtPrecioBodega").value = precio;
+}
+
+function submitBodega(id, form) {
+    document.getElementById("txtidBodega").value = id;
+    form.submit;
+}
+
 function limpiarCamposRegProveedor() {
     document.getElementById("txtNitProv").value = "";
     document.getElementById("txtNombreProv").value = "";
@@ -56,23 +69,27 @@ function limpiarCamposCliente() {
 
 $(document).ready(function () {
 
+    $("[type='number']").keypress(function (evt) {
+        evt.preventDefault();
+    });
+
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin
-//    $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
+    $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
 
     // Incluye el archivo de la tabla de proveedores dentro del DIV correspondiente en configAdmin
-//    $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
+    $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
 
     // Incluye el archivo de la tabla de productos dentro del DIV correspondiente en configAdmin
-//    $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
+    $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-//    $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
+    $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-//    $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+    $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-//    $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
+    $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
 
     // Incluye el archivo de la tabla de pedidos dentro del DIV correspondiente en ventas
     $('#tablaPedidos').load("Recursos/includes/tablaPedidos.php");
@@ -152,33 +169,8 @@ $(document).ready(function () {
 
         });
         return false;
-    });
-
-    //Cambiar estado publicación
-    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
-    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
-    $('#change_publicacion form').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#change_publicacion form').serialize();
-        var metodo = $('#change_publicacion form').attr('method');
-        var peticion = $('#change_publicacion form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res-form-change-pub").html('Agregando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res-form-change-pub").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res-form-change-pub").html(data);
-            }
-        });
-        return false;
-    });
-
+    });   
+    
     //Agregar Pedido a proveedor
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
@@ -203,141 +195,7 @@ $(document).ready(function () {
         });
         return false;
     });
-
-    //Actualizar una publicacion
-    $('.button-PUB').click(function () {
-        var myId = $(this).val();
-        $('#divPublicaciones form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#divPublicaciones form#' + myId).serialize();
-            var metodo = $('#divPublicaciones form#' + myId).attr('method');
-            var peticion = $('#divPublicaciones form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-
-    //Actualizar productos en Bodega
-    $('.button-Bodega').click(function () {
-        var myId = $(this).val();
-        $('#update-bodega form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#update-bodega form#' + myId).serialize();
-            var metodo = $('#update-bodega form#' + myId).attr('method');
-            var peticion = $('#update-bodega form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-    //Actualizar un pedido a proveedor
-    $('.button-UPP').click(function () {
-        var myId = $(this).val();
-        $('#res-del-ped form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#res-del-ped form#' + myId).serialize();
-            var metodo = $('#res-del-ped form#' + myId).attr('method');
-            var peticion = $('#res-del-ped form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-
-    //Pagar un pedido a proveedor
-    $('.button-UPP2').click(function () {
-        var myId = $(this).val();
-        $('#res-change-ped form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#res-change-ped form#' + myId).serialize();
-            var metodo = $('#res-change-ped form#' + myId).attr('method');
-            var peticion = $('#res-change-ped form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-
-    //Eliminar un pedido a proveedor
-    $('.button-PD').click(function () {
-        var myId = $(this).val();
-        $('#res-update-ped form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#res-update-ped form#' + myId).serialize();
-            var metodo = $('#res-update-ped form#' + myId).attr('method');
-            var peticion = $('#res-update-ped form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-
+        
     //Verificar si se paga en efectivo, en caso de que si deshabilitar el campo de CAMBIO
     $("#pagoEfectivo").click(function () {
         if ($("#pagoEfectivo").is(':checked')) {
@@ -397,32 +255,6 @@ $(document).ready(function () {
         return false;
     });
 
-    //Enviar email a clientes
-    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
-    //al hacer submit al formulario send_mail_clientes
-    $('#send_email_clientes').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#send_email_clientes form').serialize();
-        var metodo = $('#send_email_clientes form').attr('method');
-        var peticion = $('#send_email_clientes form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res_send_clientes").html('Enviando Email a Clientes <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res_send_clientes").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res_send_clientes").html(data);
-            }
-
-        });
-        return false;
-    });
-
     //*Envio del formulario con Ajax para cambiar estado de un domiciliario*/
 
     $('#change_repartidor').submit(function (e) {
@@ -448,33 +280,6 @@ $(document).ready(function () {
         return false;
     });
 
-
-    //*Envio del formulario con Ajax para restaurar login cliente*/
-
-    $('.button_UP_res_cliente').click(function () {
-        var myId = $(this).val();
-        $('#restaurar_cliente form#' + myId).submit(function (e) {
-            e.preventDefault();
-            var informacion = $('#restaurar_cliente form#' + myId).serialize();
-            var metodo = $('#restaurar_cliente form#' + myId).attr('method');
-            var peticion = $('#restaurar_cliente form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Restaurando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
     //*Envio del formulario con Ajax para cambiar estado producto*/
 
     $('#change-prod-form form').submit(function (e) {
@@ -645,134 +450,6 @@ $(document).ready(function () {
         });
         return false;
     });
-    /*Actualizar categoria con ajax*/
-
-    $('.button-UC').click(function () {
-
-        var myId = $(this).val();
-        $('#update-category form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#update-category form#' + myId).serialize();
-            var metodo = $('#update-category form#' + myId).attr('method');
-            var peticion = $('#update-category form#' + myId).attr('action');
-            $.ajax({
-
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-
-                    $("div#" + myId).html(data);
-                }
-
-            });
-            return false;
-        });
-    });
-    /*Actualizar proveedores con ajax*/
-
-    $('.button-UP').click(function () {
-        var myId = $(this).val();
-        $('#update-proveedor form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#update-proveedor form#' + myId).serialize();
-            var metodo = $('#update-proveedor form#' + myId).attr('method');
-            var peticion = $('#update-proveedor form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-    
-    /*Actualizar producto con ajax*/
-
-    $('.button-UPR').click(function () {
-
-        var myId = $(this).val();
-        $("input#t" + myId).val(myId);
-
-        $('#update-product form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#update-product form#' + myId).serialize();
-            var metodo = $('#update-product form#' + myId).attr('method');
-            var peticion = $('#update-product form#' + myId).attr('action');
-
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
-
-    /*Actualizar producto con ajax*/
-
-    $('.button-DEL').click(function () {
-
-        var myId = $(this).val();
-        $("input#t" + myId).val(myId);
-
-        $('#del-pedido form#' + myId).submit(function (e) {
-
-            e.preventDefault();
-            var informacion = $('#del-pedido form#' + myId).serialize();
-            var metodo = $('#del-pedido form#' + myId).attr('method');
-            var peticion = $('#del-pedido form#' + myId).attr('action');
-
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
 
     //Registrar usuario con ajax
     $('#add-admin form').submit(function (e) {
@@ -825,33 +502,7 @@ $(document).ready(function () {
             }
         });
         return false;
-    });
-    /*Actualizar pedido con ajax*/
-
-    $('.button-UPPE').click(function () {
-        var myId = $(this).val();
-        $('#update-pedido form#' + myId).submit(function (e) {
-            e.preventDefault();
-            var informacion = $('#update-pedido form#' + myId).serialize();
-            var metodo = $('#update-pedido form#' + myId).attr('method');
-            var peticion = $('#update-pedido form#' + myId).attr('action');
-            $.ajax({
-                type: metodo,
-                url: peticion,
-                data: informacion,
-                beforeSend: function () {
-                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
-                },
-                error: function () {
-                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
-                },
-                success: function (data) {
-                    $("div#" + myId).html(data);
-                }
-            });
-            return false;
-        });
-    });
+    });    
     /*Envio del formulario con Ajax para eliminar pedido*/
 
     $('#del-pedido form').submit(function (e) {

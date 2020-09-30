@@ -73,9 +73,8 @@ include '../plantillas/datos.php';
                         <td>
                             <select class="form-control" name="estado_venta">
                                 <option selected="selected" value="En Proceso">En Proceso</option>
-                                <option value="Despachado">Despachado</option>
-                                <option value="Entregado">Entregado</option>
-                                <option value="Cancelado">Cancelado</option>
+                                <option value="Despachado">Cancelada</option>
+                                <option value="Cancelado">Anulada</option>
                             </select>
                         </td>
                         <?php
@@ -85,23 +84,15 @@ include '../plantillas/datos.php';
                         <td>
                             <select class="form-control" name="estado_venta">
                                 <option value="En Proceso">En Proceso</option>
-                                <option selected="selected" value="Despachado">Despachado</option>
-                                <option value="Entregado">Entregado</option>
-                                <option value="Cancelado">Cancelado</option>
+                                <option selected="selected" value="Cancelada">Cancelada</option>
+                                <option value="Cancelado">Anulada</option>
                             </select>
                         </td>
                         <?php
                     }
-                    if ($peU['estado_factura'] == "Despachado") {
+                    if ($peU['estado_factura'] == "Cancelada") {
                         ?>
-                        <td>
-                            <select class="form-control" name="estado_venta">
-                                <option value="En Proceso">En Proceso</option>
-                                <option value="Despachado">Despachado</option>
-                                <option selected="selected" value="Entregado">Entregado</option>
-                                <option value="Cancelado">Cancelado</option>
-                            </select>
-                        </td>
+                        <td>No aplica</td>
                         <?php
                     }
                     ?>                                                            

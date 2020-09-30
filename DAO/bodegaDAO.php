@@ -50,14 +50,14 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         if (consultasSQL::UpdateSQL("bodega", "minimo=$minimo,precio_venta=$precioVenta", "id=$idBodega")) {
             ?>
             <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
-            <p><strong>Actualizado</strong></p>
+            <img class="center-all-contens" style="width: 10%" src="Recursos/img/Check.png">
+            <p><strong>Actualizado</strong></p>            
             <p class="text-center">
                 <?php
             } else {
                 ?>
                 <br>
-                <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
+                <img class="center-all-contens" style="width: 10%" src="Recursos/img/cancel.png">
             <p><strong>Error</strong></p>
             <p class="text-center">
                 <?php
