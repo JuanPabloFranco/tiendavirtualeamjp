@@ -57,23 +57,23 @@ function limpiarCamposCliente() {
 $(document).ready(function () {
 
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin
-    $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
+//    $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
 
     // Incluye el archivo de la tabla de proveedores dentro del DIV correspondiente en configAdmin
-    $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
+//    $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
 
     // Incluye el archivo de la tabla de productos dentro del DIV correspondiente en configAdmin
-    $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
+//    $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-    $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
+//    $('#tablaUsuarios').load("Recursos/includes/tablaUsuarios.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-    $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
+//    $('#tablaBodega').load("Recursos/includes/tablaBodega.php");
 
     // Incluye el archivo de la tabla de usuarios dentro del DIV correspondiente en configAdmin
-    $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
-    
+//    $('#tablaDomiciliario').load("Recursos/includes/tablaDomiciliario.php");
+
     // Incluye el archivo de la tabla de pedidos dentro del DIV correspondiente en ventas
     $('#tablaPedidos').load("Recursos/includes/tablaPedidos.php");
 
@@ -230,6 +230,8 @@ $(document).ready(function () {
             return false;
         });
     });
+
+    //Actualizar productos en Bodega
     $('.button-Bodega').click(function () {
         var myId = $(this).val();
         $('#update-bodega form#' + myId).submit(function (e) {
@@ -703,7 +705,7 @@ $(document).ready(function () {
             return false;
         });
     });
-
+    
     /*Actualizar producto con ajax*/
 
     $('.button-UPR').click(function () {

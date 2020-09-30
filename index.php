@@ -22,16 +22,20 @@ $fecha = date("Y") . "-" . date("m") . "-" . date("d");
         ?>
         <div id="divNotificacion1"></div>
     </body> 
-    <script>
-        $(document).ready(function () {
-            setInterval(
-                function () {
-                    $('#divNotificacion1').load("Recursos/includes/notificacion.php");
-                }, 30000
-            );
-        });
-    </script>
     <?php
+    if (isset($_SESSION['tipo']) && ($_SESSION['tipo'] == "Vendedor" || $_SESSION['tipo'] == "Administrador")) {
+        ?>
+        <script>
+            $(document).ready(function () {
+                setInterval(
+                        function () {
+                            $('#divNotificacion1').load("Recursos/includes/notificacion.php");
+                        }, 30000
+                        );
+            });
+        </script>
+        <?php
+    }
     include './Recursos/plantillas/footer.php';
     ?>
 </html>
