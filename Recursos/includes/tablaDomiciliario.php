@@ -4,9 +4,10 @@ include '../plantillas/datos.php';
 ?>
 <div class="panel-heading text-center">
     <h3>Domiciliarios Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3>
+    <input class="form-control" id="myInputProv" type="text" placeholder="Buscar un valor en la tabla">
 </div>
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="tablaDomiciliario">
         <thead class="">
             <tr>
                 <th class="text-center">#</th>
@@ -41,7 +42,7 @@ include '../plantillas/datos.php';
             $(document).ready(function () {
                 $("#myInputProv").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
-                    $("#tablaProv tr").filter(function () {
+                    $("#tablaDomiciliario tr").filter(function () {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });

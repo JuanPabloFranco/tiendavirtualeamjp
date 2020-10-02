@@ -8,7 +8,8 @@ include '../plantillas/datos.php';
     <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaBodega()"></span></button>    
 </div>
 <div id="res_update_bodega" style="width: 100%; padding:0px;"></div>
-<div class="table-responsive" id="update-bodega">    
+
+<div class="table-responsive" >    
     <table class="table table-bordered" id="tablaBodega">
         <thead class="">
             <tr>
@@ -38,8 +39,8 @@ include '../plantillas/datos.php';
                 }
                 ?>
             <div>
-                <tr style="background-color: <?php echo $color ?>">
-                    <td class="text-center"><?php echo $contPB; ?><input class="form-control" type="hidden" name="id" required="" value="<?php echo $prodBodega['id'] ?>"> </td>
+                    <tr style="background-color: <?php echo $color ?>">
+                    <td class="text-center"><?php echo $contPB; ?> </td>
                     <td class="text-center"><?php echo $prodBodega['codigo_prod'] ?></td>
                     <td class="text-center"><?php echo $prodBodega['nombre_prod'] ?></td>
                     <td class="text-center"><?php echo $prodBodega['marca'] ?></td>
@@ -48,8 +49,7 @@ include '../plantillas/datos.php';
                     <td class="text-center"><?php echo $prodBodega['cantidad'] ?></td>
                     <td class="text-center"><?php echo $prodBodega['minimo'] ?></td>
                     <td class="text-center">$<?php echo $prodBodega['precio_venta'] ?></td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-info btn-sm editar_bodega" value="<?php echo $prodBodega['id']; ?>" data-toggle="modal" data-target="#editarBodega"><span class="fa fa-pencil"></span> Editar</button>
+                    <td class="text-center"><button type="button" class="btn btn-info btn-sm editar_bodega" value="<?php echo $prodBodega['id']; ?>" data-toggle="modal" data-target="#editarBodega"><span class="fa fa-pencil"></span> Editar</button>
                     </td>
                 </tr>
             </div>

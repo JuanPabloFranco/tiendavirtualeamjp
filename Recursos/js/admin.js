@@ -170,6 +170,9 @@ $(document).ready(function () {
         });
         return false;
     });   
+
+
+    
     
     //Agregar Pedido a proveedor
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado

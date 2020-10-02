@@ -2,93 +2,72 @@
 include '../../Conexion/consulSQL.php';
 include '../plantillas/datos.php';
 ?>
-<div class="panel panel-info">
-    <div class="panel-heading text-center"><h3>ACTUALIZAR PRODUCTOS</h3><input class="form-control" id="myInput" type="text" placeholder="Buscar un valor en la tabla"></div>
-    <div class="table-responsive">
-        <table class="table table-bordered" id="tabla">
-            <thead class="">
+<div class="panel-heading text-center">
+    <h3>PRODUCTOS REGISTRADOS</h3>
+    <input class="form-control" id="myInputProducto" type="text" placeholder="Buscar un valor en la tabla">
+    <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaProducto()"></span></button>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered" id="tablaProductos">
+        <thead class="">
+            <tr>
+                <th class="text-center" style="width: 60px">Imagen</th>
+                <th class="text-center">Código</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Categoría</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Marca</th>
+                <th class="text-center">Proveedor</th>
+                <th class="text-center">Descripción</th>
+                <th class="text-center">Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $productos = ejecutarSQL::consultar("select P.imagen,P.id,P.codigo_prod,P.nombre_prod,P.precio,P.marca,P.descripcion_prod,PRO.nombre_proveedor,C.nombre 
+                FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id JOIN categoria C ON P.id_categoria=C.id ORDER BY id_proveedor LIMIT 100");
+            $upr = 1;
+            while ($prod = mysqli_fetch_array($productos)) {
+            ?>
                 <tr>
-                    <th class="text-center" style="width: 60px">Imagen</th>
-                    <th class="text-center">Código</th>
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Categoría</th>
-                    <th class="text-center">Precio</th>
-                    <th class="text-center">Marca</th>
-                    <th class="text-center">Proveedor</th>
-                    <th class="text-center">Descripción</th>
-                    <th class="text-center">Actualizar</th>
+                    <td><img src="Recursos/img-products/<?php echo $prod['imagen'] ?>" style="max-width: 80px; text-align: center"></td>
+                    <td class="text-center"><?php echo $prod['codigo_prod'] ?></td>
+                    <td class="text-center"><?php echo $prod['nombre_prod'] ?></td>
+                    <td class="text-center"><?php echo $prod['nombre'] ?></td>
+                    <td class="text-center"><?php echo $prod['precio'] ?></td>
+                    <td class="text-center"><?php echo $prod['marca'] ?></td>
+                    <td class="text-center"><?php echo $prod['nombre_proveedor'] ?></td>
+                    <td class="text-center"><?php echo $prod['descripcion_prod'] ?></td>
+                    <td class="text-center"><button type="button" class="btn btn-info btn-sm editar_producto" value="<?php echo $prod['id']; ?>" data-toggle="modal" data-target="#editarProducto"><span class="fa fa-pencil"></span> Editar</button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php
-                $productos = ejecutarSQL::consultar("select * from producto ORDER BY id_proveedor LIMIT 100");
-                $upr = 1;
-                while ($prod = mysqli_fetch_array($productos)) {
-                    ?>                
-                    <tr>
-                        <td><img src="Recursos/img-products/' . $prod['imagen'] . '" style="max-width: 80px; text-align: center" ></td>
-                        <td>                                
-                            <label style="display: none;">' . $prod['codigo_prod'] . '</label>
-                            <label style="display: none;">' . $prod['nombre_prod'] . '</label>
-                            <input class="form-control" type="hidden" name="id" required="" value="' . $prod['id'] . '">
-                            <input class="form-control" type="text" name="codigo_prod" maxlength="40" required="" value="' . $prod['codigo_prod'] . '">
-                        </td>
-                        <td><input class="form-control" type="text" name="nombre_prod" maxlength="40" required="" value="' . $prod['nombre_prod'] . '"></td>
-                        <td>
-                            <select class="form-control" name="id_categoria">
-                                <option value="Sin Categoria">Elija una opción</option>
-                                <?php
-                                $categoriac2 = ejecutarSQL::consultar("SELECT * FROM categoria");
-                                while ($catec2 = mysqli_fetch_array($categoriac2)) {
-                                    if ($catec2['id'] <> $prod['id_categoria']) {
-                                        echo '<option value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
-                                    } else {
-                                        echo '<option  selected="selected" value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </td>
-                        <td><input class="form-control" type="text-area" name="precio" required="" value="' . $prod['precio'] . '"></td>
-                        <td><input class="form-control" type="text-area" name="marca" maxlength="30" required="" value="' . $prod['marca'] . '"></td>
-                        <td>
-                            <select class="form-control" name="id_proveedor">
-                                <option value="0">Elija una opción</option>
-                                <?php
-                                $proveedoresc2 = ejecutarSQL::consultar("SELECT id, nombre_proveedor FROM proveedor");
-                                while ($provc2 = mysqli_fetch_array($proveedoresc2)) {
+            <?php
+                $upr = $upr + 1;
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 
-                                    if ($provc2['id'] <> $prod['id_proveedor']) {
-                                        echo '<option value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
-                                    } else {
-                                        echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </td>
-                        <td><input class="form-control" type="text" name="descripcion_prod" value="' . $prod['descripcion_prod'] . '"></td>
-                        <td class="text-center">
-                            <button type="submit" class="btn btn-sm btn-primary button-UPR" value="update-product-' . $upr . '">Actualizar</button>                                                    
-                            <div id="update-product-' . $upr . '" style="width: 100%; margin:0px; padding:0px;"></div>
-                            <input type="text" name="funcion" style="display: none" value="actualizarProducto">
-                        </td>
-                    </tr>
-                    <?php
-                    $upr = $upr + 1;
-                }
-                ?>
-            </tbody >
-        </table>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $("#myInputProd").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tablaProd tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+<div class="modal fade" id="editarProducto" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
+<script>
+    function actualizarTablaProducto() {
+        $('#tablaProductos').load("Recursos/includes/tablaProductos.php");
+    }
+    $(document).ready(function() {
+        // Mostrar el modal editar bodega
+        $('#editarProducto').load("Vista/editar_producto.php");
+
+        //enviar valor al modal editar bodega
+        $(".editar_producto").click(function() { //      
+            $('#editarProducto').load("Vista/editar_producto.php?id=" + $(this).val());
+        });
+
+        $("#myInputProducto").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tablaProductos tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-    </script>
-</div>
+    });
+</script>

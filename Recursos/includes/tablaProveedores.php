@@ -2,9 +2,14 @@
 include '../../Conexion/consulSQL.php';
 include '../plantillas/datos.php';
 ?>
-<div class="panel-heading text-center"><h3>Proveedores Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3><input class="form-control" id="myInputProv" type="text" placeholder="Buscar un valor en la tabla"></div>
+<div class="panel-heading text-center">
+    <h3>Proveedores Registrados <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h3>
+    <input class="form-control" id="myInputProveedor" type="text" placeholder="Buscar un valor en la tabla">
+    <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaProveedor()"></span></button>   
+</div>
+<div id="res_update_categoria" style="width: 100%; padding:0px;"></div>
 <div class="table-responsive">
-    <table class="table table-bordered" id="tablaProv">
+    <table class="table table-bordered" id="tablaProveedores">
         <thead class="">
             <tr>
                 <th class="text-center">NIT</th>
@@ -12,7 +17,7 @@ include '../plantillas/datos.php';
                 <th class="text-center">Dirección</th>
                 <th class="text-center">Telefono</th>
                 <th class="text-center">Página web</th>
-                <th class="text-center">Opciones</th>
+                <th class="text-center">Editar</th>
             </tr>
         </thead>
         <tbody>
@@ -20,45 +25,48 @@ include '../plantillas/datos.php';
             $proveedores = ejecutarSQL::consultar("SELECT * FROM proveedor");
             $up = 1;
             while ($prov = mysqli_fetch_array($proveedores)) {
-                ?>
-            <div id="update-proveedor">
-                <form method="post" action="DAO/proveedorDAO.php" id="res-update-prove-<?php echo $up ?>">
-                    <tr>
-                        <td>
-                            <label style="display: none;
-                                   "><?php echo $prov['nombre_proveedor'] ?></label>
-                            <input class="form-control" type="hidden" name="id" required="" value="<?php echo $prov['id'] ?>">
-                            <input class="form-control" type="text" name="nit" maxlength="30" required="" value="<?php echo $prov['nit'] ?>">
-                        </td>
-                        <td><input class="form-control" type="text" name="nombre_proveedor" maxlength="30" required="" value="<?php echo $prov['nombre_proveedor'] ?>"></td>
-                        <td><input class="form-control" type="text-area" name="direccion_proveedor" required="" value="<?php echo $prov['direccion_proveedor'] ?>"></td>
-                        <td><input class="form-control" type="tel" name="telefono_proveedor" required="" maxlength="20" value="<?php echo $prov['telefono_proveedor'] ?>"></td>
-                        <td><input class="form-control" type="text-area" name="pagina_web" maxlength="30" required="" value="<?php echo $prov['pagina_web'] ?>"></td>
-                        <td class="text-center">
-                            <input type="text" name="funcion" style="display: none" value="actualizarProveedor">
-                            <button type="submit" class="btn btn-sm btn-primary button-UP" value="res-update-prove-<?php echo $up ?>">Actualizar</button>
-                            <div id="res-update-prove-<?php echo $up ?>" style="width: 100%;
-                                 margin:0px;
-                                 padding:0px;
-                                 "></div>
-                        </td>
-                    </tr>
-                </form>
-            </div>
+            ?>
+                <div id="update-proveedor">
+                    
+                        <tr>
+                            <td class="text-center"><?php echo $prov['nit'] ?></td>
+                            <td class="text-center"><?php echo $prov['nombre_proveedor'] ?></td>
+                            <td class="text-center"><?php echo $prov['direccion_proveedor'] ?></td>
+                            <td class="text-center"><?php echo $prov['telefono_proveedor'] ?></td>
+                            <td class="text-center"><?php echo $prov['pagina_web'] ?></td>
+                            <td class="text-center"><button type="button" class="btn btn-info btn-sm editar_proveedor"
+                             value="<?php echo $prov['id'] ?>" data-toggle="modal" data-target="#editarProveedor"><span class="fa fa-pencil"></span> Editar</button>
+                            </td>
+                        </tr>
+                    </form>
+                </div>
             <?php
-            $up = $up + 1;
-        }
-        ?>        
+                $up = $up + 1;
+            }
+            ?>
         </tbody>
-        <script>
-            $(document).ready(function () {
-                $("#myInputProv").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tablaProv tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
+        
     </table>
 </div>
+<div class="modal fade" id="editarProveedor" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
+<script>
+    function actualizarTablaProveedor() {
+        $('#tablaProveedores').load("Recursos/includes/tablaProveedores.php");
+    }
+    $(document).ready(function () {     
+        // Mostrar el modal editar bodega
+        $('#editarProveedor').load("Vista/editar_proveedor.php");
+
+        //enviar valor al modal editar bodega
+        $(".editar_proveedor").click(function () { //      
+            $('#editarProveedor').load("Vista/editar_proveedor.php?id=" + $(this).val());
+        });
+
+        $("#myInputProveedor").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaProveedores tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
