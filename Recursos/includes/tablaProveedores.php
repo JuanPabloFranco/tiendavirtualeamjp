@@ -22,7 +22,7 @@ include '../plantillas/datos.php';
         </thead>
         <tbody>
             <?php
-            $proveedores = ejecutarSQL::consultar("SELECT * FROM proveedor");
+            $proveedores = ejecutarSQL::consultar("SELECT * FROM proveedor ORDER BY id ");
             $up = 1;
             while ($prov = mysqli_fetch_array($proveedores)) {
             ?>

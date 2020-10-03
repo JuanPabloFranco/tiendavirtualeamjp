@@ -29,7 +29,7 @@ include '../plantillas/datos.php';
             <?php
             $sqlProdBodega = ejecutarSQL::consultar("SELECT B.id_producto,P.nombre_prod,P.codigo_prod,P.marca,PRO.nombre_proveedor,C.nombre,"
                             . "B.cantidad,B.minimo,B.precio_venta,B.estado_prod_bodega,B.id FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id
-                                                                 JOIN bodega B ON B.id_producto=P.id JOIN categoria C ON P.id_categoria=C.id ORDER BY nombre");
+                                                                 JOIN bodega B ON B.id_producto=P.id JOIN categoria C ON P.id_categoria=C.id ORDER BY B.id ");
             $cantVendedor = 0;
             $contPB = 1;
             while ($prodBodega = mysqli_fetch_array($sqlProdBodega)) {

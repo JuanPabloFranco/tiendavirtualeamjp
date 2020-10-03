@@ -110,7 +110,7 @@ $(document).ready(function() {
                 $("#respuesta_producto").html("Ha ocurrido un error en el sistema");
             },
             success: function(data) {
-                $("#respuesta_producto").html(data);
+                $("#respuesta_producto").html("Se actualizo con exito");
                 $('#editarProducto').modal('hide'); // cerrar
             }
 

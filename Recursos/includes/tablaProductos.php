@@ -5,7 +5,7 @@ include '../plantillas/datos.php';
 <div class="panel-heading text-center">
     <h3>PRODUCTOS REGISTRADOS</h3>
     <input class="form-control" id="myInputProducto" type="text" placeholder="Buscar un valor en la tabla">
-    <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaProducto()"></span></button>
+    <button type="button" class="btn btn-info btn-sm"><span class="fa fa-refresh" onclick="actualizarTablaProducto();">Actualizar</span></button>
 </div>
 <div class="table-responsive">
     <table class="table table-bordered" id="tablaProductos">
@@ -25,7 +25,7 @@ include '../plantillas/datos.php';
         <tbody>
             <?php
             $productos = ejecutarSQL::consultar("select P.imagen,P.id,P.codigo_prod,P.nombre_prod,P.precio,P.marca,P.descripcion_prod,PRO.nombre_proveedor,C.nombre 
-                FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id JOIN categoria C ON P.id_categoria=C.id ORDER BY id_proveedor LIMIT 100");
+            FROM producto P JOIN proveedor PRO ON P.id_proveedor=PRO.id JOIN categoria C ON P.id_categoria=C.id ORDER BY P.id LIMIT 100");
             $upr = 1;
             while ($prod = mysqli_fetch_array($productos)) {
             ?>

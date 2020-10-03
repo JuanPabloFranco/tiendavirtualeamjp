@@ -21,7 +21,7 @@ include '../plantillas/datos.php';
         </thead>
         <tbody>
             <?php
-            $categorias = ejecutarSQL::consultar("select * from categoria");
+            $categorias = ejecutarSQL::consultar("select * from categoria ORDER BY id");
             $ui = 1;
             while ($cate = mysqli_fetch_array($categorias)) {
             ?>
