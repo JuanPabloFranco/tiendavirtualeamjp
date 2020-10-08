@@ -68,9 +68,11 @@ function limpiarCamposCliente() {
 }
 
 $(document).ready(function () {
-
-    $("[type='number']").keypress(function (evt) {
-        evt.preventDefault();
+    //Incluye el archivo de la lista de productos en el carrito al div correspondiente
+    $('#carrito-compras-tienda').load("DAO/carritoDAO.php");
+    //Animacion boton carrito
+    $(".carrito-button-nav").click(function () {
+        $("#container-carrito-compras").animate({height: 'toggle'}, 200);
     });
 
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin
@@ -93,6 +95,36 @@ $(document).ready(function () {
 
     // Incluye el archivo de la tabla de pedidos dentro del DIV correspondiente en ventas
     $('#tablaPedidos').load("Recursos/includes/tablaPedidos.php");
+
+    //*Envio del formulario con Ajax para agregar productos al carrito*/
+
+    $('.button-carrito').click(function () {
+        var myId = $(this).val();
+        $('#divCarrito form#' + myId).submit(function (e) {
+            e.preventDefault();
+            var informacion = $('#divCarrito form#' + myId).serialize();
+            var metodo = $('#divCarrito form#' + myId).attr('method');
+            var peticion = $('#divCarrito form#' + myId).attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $('.modal-carrito').modal('show'); // Muestra el modal con progreso
+                    $("#msjCarrito").html('Agregando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
+                },
+                error: function () {
+                    $('.modal-carrito').modal('show'); // Muestra el modal diciendo que hubo un error
+                    $("#res-form-update_inf").html("Hubo un error al añadir el producto al carrito");
+                },
+                success: function (data) {
+                    $('.modal-carrito').modal('show'); // Muestra el modal diciendo que se agrego al carrito el producto
+                    $("#res-form-update_inf").html("El producto se añadió al carrito");
+                }
+            });
+            return false;
+        });
+    });
 
     //Actualizar informacion empresa
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
@@ -169,11 +201,11 @@ $(document).ready(function () {
 
         });
         return false;
-    });   
+    });
 
 
-    
-    
+
+
     //Agregar Pedido a proveedor
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
     //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
@@ -198,7 +230,7 @@ $(document).ready(function () {
         });
         return false;
     });
-        
+
     //Verificar si se paga en efectivo, en caso de que si deshabilitar el campo de CAMBIO
     $("#pagoEfectivo").click(function () {
         if ($("#pagoEfectivo").is(':checked')) {
@@ -505,7 +537,7 @@ $(document).ready(function () {
             }
         });
         return false;
-    });    
+    });
     /*Envio del formulario con Ajax para eliminar pedido*/
 
     $('#del-pedido form').submit(function (e) {

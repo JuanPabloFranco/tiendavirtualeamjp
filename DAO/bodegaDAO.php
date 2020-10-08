@@ -15,6 +15,7 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         if (!$cantidadProducto == "" && !$cantidadMinima == "" && !$precioVenta == "") {
             // Se verifica si ya existe el producto en bodega, 
             $verificar = ejecutarSQL::consultar("SELECT id,id_producto,cantidad,minimo,precio_venta,estado_prod_bodega FROM bodega WHERE id_producto=" . $idProducto . "");
+            
             $verificaltotal = mysqli_num_rows($verificar);
 
             if ($verificaltotal <= 0) { // En caso de no existir el producto en bodega se procede a registrar

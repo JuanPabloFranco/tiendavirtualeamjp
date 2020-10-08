@@ -120,7 +120,7 @@ error_reporting(E_PARSE);
             <form action="DAO/login.php" method="post" role="form" style="margin: 20px;" class="FormCatElec" data-form="login">
                 <div class="form-group">
                     <label><span class="glyphicon glyphicon-user"></span>&nbsp;Nombre</label>
-                    <input type="text" class="form-control" name="nombre-login" placeholder="Escribe tu nombre" required=""/>
+                    <input type="text" class="form-control" name="nombre-login" placeholder="Escribe tu nombre de usuario o email" required=""/>
                 </div>
                 <div class="form-group">
                     <label><span class="glyphicon glyphicon-lock"></span>&nbsp;Contraseña</label>

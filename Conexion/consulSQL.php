@@ -13,7 +13,7 @@ class ejecutarSQL {
         if (!$con = mysqli_connect($host, $user, $pass, $bd)) {
             die(mysqli_error(ejecutarSQL::conectar()) . "Error en el servidor, verifique sus datos");
         }
-        mysqli_set_charset($con, 'utf8');
+        mysqli_set_charset($con, 'utf8');        
         return $con;
     }
 
@@ -21,6 +21,7 @@ class ejecutarSQL {
         if (!$consul = mysqli_query(ejecutarSQL::conectar(), $query)) {
             die(mysqli_error(ejecutarSQL::conectar()) . 'Error en la consulta SQL ejecutada ' . $query);
         }
+//        mysqli_close($consul);
         return $consul;
     }
 

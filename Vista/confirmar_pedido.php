@@ -26,7 +26,7 @@
                         ?>
                         <div class="col-xs-12 col-sm-6">
                             <div id="form-compra">
-                                <form action="process/confirmcompra.php" method="post" role="form" class="FormCatElec" data-form="save">
+                                <form action="DAO/confirmcompra.php" method="post" role="form" class="FormCatElec" data-form="save">
                                     <?php
                                     // Si el usuario ha iniciado sesion muestra el siguiente codigo html
                                     if (!$_SESSION['nombreUsuario'] == "" && !$_SESSION['claveUser'] == "") {
@@ -68,13 +68,7 @@
                                                 Transferencia Electrónica
                                             </label>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="metodo_pago" value="datafonoVirtual" id="pagoDatafono">
-                                                Datáfono Virtual
-                                            </label>
-                                        </div>
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p>
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -91,7 +85,7 @@
                                         <?php                                        
                                     } else { // Si el usuario no ha iniciado sesion
                                         ?>
-                                        <p>Para confirmar tu compra debes haber iniciar sesión o introducir tu nombre de usuario y contraseña con la cual te registraste en <span class="tittles-pages-logo"> minimarket la avenida</span>, Verifica la dirección, elije un método de pago y presiona el botón confirmar<br>
+                                        <p>Para confirmar tu compra debes haber iniciar sesión o introducir tu nombre de usuario y contraseña con la cual te registraste en <span class="tittles-pages-logo"> <?php echo EMPRESA ." ".NEMPRESA;?></span>, Verifica la dirección, elije un método de pago y presiona el botón confirmar<br>
                                         <table class="table table-bordered">
                                             <tr style='text-align: center'><td><b>PRODUCTO</b></td><td><b>CANTIDAD</b></td><td><b>PRECIO</b></td><td><b>SUBTOTAL</b></td></tr>
                                             <?php
@@ -125,14 +119,8 @@
                                                 <input type="radio" name="metodo_pago" value="Transferencia" id="pagoTransferencia">
                                                 Transferencia Electrónica
                                             </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="metodo_pago" value="datafonoVirtual" id="pagoDatafono">
-                                                Datáfono Virtual
-                                            </label>
-                                        </div>                                        
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="assets/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
+                                        </div>                                
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p> 
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -141,7 +129,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                                <input class="form-control all-elements-tooltip" type="text" placeholder="Ingrese su nombre de usuario" required name="nombreUsuario" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre" >
+                                                <input class="form-control all-elements-tooltip" type="text" placeholder="Ingrese su nombre de usuario o email" required name="nombreUsuario" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre" >
                                             </div>
                                         </div>
                                         <div class="form-group">

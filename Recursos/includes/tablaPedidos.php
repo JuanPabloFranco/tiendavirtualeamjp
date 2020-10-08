@@ -10,7 +10,6 @@ include '../plantillas/datos.php';
             <th class="text-center">Estado</th> 
             <th class="text-center">Cliente</th>
             <th class="text-center">Direccion</th>    
-            <th class="text-center">Costo Domicilio</th>
             <th class="text-center">Total</th>                                                    
             <th class="text-center">Método Pago</th>
             <th class="text-center">Despacho</th>
@@ -20,7 +19,7 @@ include '../plantillas/datos.php';
     </thead>
     <tbody>
         <?php
-        $pedido = ejecutarSQL::consultar("SELECT factura.id, factura.fecha, factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_venta, factura.costo_domicilio, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Cancelado')");
+        $pedido = ejecutarSQL::consultar("SELECT factura.id, factura.fecha, factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_entrega, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Cancelado')");
         $upp = 1;
         while ($peU = mysqli_fetch_array($pedido)) {
             ?>
@@ -33,33 +32,14 @@ include '../plantillas/datos.php';
                     </td>
                     <td><?php echo $peU['estado_factura'] ?></td>
                     <td><?php echo $peU['nombre_completo'] ?></td>
-                    <td><?php echo $peU['direccion_venta'] ?></td>
-                    <td>                                                                
-                        <?php
-                        if ($peU['estado_factura'] <> "En Verificación") {
-                            echo "$" . $peU['costo_domicilio'];
-                        } else {
-                            ?>
-                            <select class="form-control" name="costo_domicilio">
-                                <option selected="selected" value="">Elija una opción</option>
-                                <option value="0">$0</option>
-                                <option value="1500">$1500</option>
-                                <option value="2000">$2000</option>
-                                <option value="3000">$3000</option>
-                                <option value="3500">$3500</option>
-                                <option value="4000">$4000</option>
-                            </select>
-                            <?php
-                        }
-                        ?>
-                    </td>
+                    <td><?php echo $peU['direccion_entrega'] ?></td>                    
                     <td>$<?php echo $peU['total'] ?></td>
                     <td><?php echo $peU['metodo_pago'] ?></td>              
                     <td>
                         <?php
                         if ($peU['estado_factura'] <> "En Verificación") {
                             ?>
-                            <button type="button" class="btn btn-info btn-sm ver_ped" value="<?php echo $peU['id']; ?>" data-toggle="modal" data-target="#verDespacho"><span class="fa fa-eye"></span> Despacho</button>
+                            <button type="button" class="btn btn-link btn-sm ver_ped" value="<?php echo $peU['id']; ?>" data-toggle="modal" data-target="#verDespacho"><span class="fa fa-truck"></span> Despacho</button>
                             <?php
                         } else {
                             echo "No aplica";

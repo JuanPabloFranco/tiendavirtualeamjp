@@ -17,46 +17,49 @@
             <div class="container">
                 <div class="page-header">
                     <h1>Nuevos productos<small></small></h1>
-                </div>
-                <div class="row">
+                </div>                
+                <div class="row" >
                     <?php
                     // Consulta para traer los ultimos 8 productos registrados en bodega
-                    $consulta = ejecutarSQL::consultar("SELECT producto.id, nombre_prod, marca, precio_venta, estado_prod, imagen, cantidad, estado_prod_bodega FROM producto, bodega WHERE bodega.id_producto=producto.id AND (estado_prod_bodega='Disponible' OR estado_prod_bodega='Agotado') AND (estado_prod='Disponible') ORDER BY bodega.id DESC limit 8");
+                    $consulta = ejecutarSQL::consultar("SELECT producto.id, nombre_prod, marca, precio_venta, estado_prod, imagen, cantidad, estado_prod_bodega FROM producto JOIN bodega ON bodega.id_producto=producto.id WHERE (estado_prod_bodega='Disponible' OR estado_prod_bodega='Agotado') AND (estado_prod='Disponible') ORDER BY bodega.id asc limit 8");
                     $totalproductos = mysqli_num_rows($consulta);
+                    mysqli_close($consulta);
                     if ($totalproductos > 0) {
                         $nums = 1;
                         while ($fila = mysqli_fetch_array($consulta)) {
                             ?>
-                            <div class="col-xs-12 col-sm-6 col-md-3">
-                                <div class="thumbnail" style="width: 90%">
-                                    <!--se inserta la imagen del producto-->
-                                    <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-width: 70%" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>
-                                    <div class="caption">
-                                        <!--se inserta la información del producto-->
-                                        <h3  class="text-center"><?php echo $fila['nombre_prod'] ?></h3>
-                                        <p  class="text-center"><?php echo $fila['marca'] ?></p>
-                                        <p  class="text-center">$<?php echo $fila['precio_venta'] ?></p>
-                                        <p class="abs-center">
-                                            <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;
-                                        </p>
-                                        <p class="abs-center">
-<!--                                            Boton que abre una ventana modal con el detalle del producto
-                                            <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;-->
-                                            <?php
-                                            // El boton de agregar al carrito solo aparece si el usuario es un cliente o no se ha logueado
-                                            if (isset($_SESSION['nombreUser']) || empty($_SESSION['nombreAdmin'])) {
-                                                // Se verifica el estado del producto para mostrar el boton
-                                                if ($fila['estado_prod_bodega'] <> 'Agotado') {
-                                                    ?>
-                                                    <input type="number" value="1" min="1" max="<?php echo $fila['cantidad'] ?>" style="width: 30%" class="form-control all-elements-tooltip">
-                                                    <button value="<?php echo $fila['id']; ?>" class="btn btn-success btn-sm botonCarrito"><i class="fa fa-shopping-cart"></i>&nbsp; Añadir</button>
-                                                    <?php
+                            <div class="col-xs-12 col-sm-6 col-md-3" id="divCarrito">
+                                <form method="post" action="DAO/carritoDAO.php" id="res-reg-carrito-<?php echo $nums; ?>">
+                                    <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
+                                    <input type="hidden" name="funcion" value="agregarCarrito">
+                                    <div class="thumbnail" style="width: 90%">
+                                        <!--se inserta la imagen del producto-->
+                                        <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-width: 70%" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>                                    
+                                        <div class="caption">
+                                            <!--se inserta la información del producto-->                                
+                                            <h3  class="text-center"><?php echo $fila['nombre_prod'] ?></h3>
+                                            <p  class="text-center"><?php echo $fila['marca'] ?></p>
+                                            <p  class="text-center">$<?php echo $fila['precio_venta'] ?></p>
+                                            <p class="abs-center">
+                                                <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Detalles</a>&nbsp;&nbsp;
+                                            </p>
+                                            <p class="abs-center">                           
+                                                <?php
+                                                // El boton de agregar al carrito solo aparece si el usuario es un cliente o no se ha logueado
+                                                if (isset($_SESSION['nombreUser']) || empty($_SESSION['nombreAdmin'])) {
+                                                    // Se verifica el estado del producto para mostrar el boton
+                                                    if ($fila['estado_prod_bodega'] <> 'Agotado') {
+                                                        ?>
+                                                        <input type="number" value="1" min="1" max="<?php echo $fila['cantidad'] ?>" name="cantidad" style="width: 30%" onchange="cantidadCarrito(this.value);" class="form-control all-elements-tooltip">
+                                                        <button type="submit" class="btn btn-sm btn-success button-carrito" value="res-reg-carrito-<?php echo $nums; ?>"><i class="fa fa-shopping-cart"></i>&nbsp; Añadir</button>
+                                                        <?php
+                                                    }
                                                 }
-                                            }
-                                            ?>
-                                        </p>
+                                                ?>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <?php
                             if ($nums % 4 == 0) {
@@ -95,12 +98,17 @@
         }
         ?>
         <div class="modal fade" id="verProducto" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;"></div>
-    </body>
+    </body>    
     <script>
         // Metodo para lanzar los detalles del producto en una ventana modal en el div verPrducto
         function modal_ver_producto(id) {
             $('#verProducto').load("Vista/verProducto.php?id=" + id);
             $("#verProducto").modal("toggle");
         }
+        $(document).ready(function () {
+            $("[type='number']").keypress(function (evt) {
+                evt.preventDefault();
+            });
+        });
     </script>
 </html>
