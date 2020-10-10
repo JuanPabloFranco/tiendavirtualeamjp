@@ -16,7 +16,6 @@ if ($verificaltotal > 0) {
                 body: "Pedido nuevo"
             }
             var noti = new Notification(title, extra)
-            var audio = new Audio('Recursos/pedido.mp3');
             audio.play();
             noti.onclick = (ev) => {
                 window.open("index.php?page=ventas")

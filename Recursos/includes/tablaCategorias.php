@@ -24,7 +24,7 @@ include '../plantillas/datos.php';
             $categorias = ejecutarSQL::consultar("select * from categoria ORDER BY id");
             $ui = 1;
             while ($cate = mysqli_fetch_array($categorias)) {
-            ?>
+                ?>
                 <tr>
                     <td class="text-center"><?php echo $cate['codigo_categoria'] ?></td>
                     <td class="text-center"><?php echo $cate['nombre'] ?></td>
@@ -32,31 +32,31 @@ include '../plantillas/datos.php';
                     <td class="text-center"><button type="button" class="btn btn-info btn-sm editar_Categorias" value="<?php echo $cate['id'] ?>" data-toggle="modal" data-target="#editarCategorias"><span class="fa fa-pencil"></span> Editar</button>
                 </tr>
                 </form>
-</div>
-<?php
+                </div>
+                <?php
                 $ui = $ui + 1;
             }
-?>
-</tbody>
-</table>
+            ?>
+        </tbody>
+    </table>
 </div>
 <div class="modal fade" id="editarCategorias" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
 <script>
     function actualizarTablaCategoria() {
         $('#tablaCategoriasFull').load("Recursos/includes/tablaCategorias.php");
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Mostrar el modal editar bodega
         $('#editarCategorias').load("Vista/editar_categorias.php");
 
         //enviar valor al modal editar bodega
-        $(".editar_Categorias").click(function() { //      
+        $(".editar_Categorias").click(function () { //      
             $('#editarCategorias').load("Vista/editar_categorias.php?id=" + $(this).val());
         });
 
-        $("#myInputCategorias").on("keyup", function() {
+        $("#myInputCategorias").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#tablaCategoriasFull tr").filter(function() {
+            $("#tablaCategoriasFull tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });

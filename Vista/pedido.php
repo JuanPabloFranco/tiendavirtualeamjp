@@ -23,7 +23,7 @@
                     <?php
                     // Consulta para listar los pedidos realizados por el cliente que no esten entregados o cancelados
                     if (!$_SESSION['nombreUsuario'] == "" && !$_SESSION['claveUser'] == "" && !$_SESSION['id_user'] == "") {
-                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Cancelado') ORDER BY factura.id DESC");
+                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Pagada') ORDER BY factura.id DESC");
                         while ($filaVP = mysqli_fetch_array($consultaVP)) {
 //                            $vecRepartidor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT nombre_repartidor, foto_repartidor FROM repartidor WHERE id=" . $filaVP['id_repartidor']));
                             ?>
@@ -90,7 +90,7 @@
                             <?php
                         }
                         // Consulta para listar los pedidos realizados por el cliente que si esten entregados o cancelados
-                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura='Entregado' OR factura.estado_factura='Cancelado') ORDER BY factura.id DESC");
+                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura='Entregado' OR factura.estado_factura='Pagada') ORDER BY factura.id DESC");
                         while ($filaVPV = mysqli_fetch_array($consultaVPV)) {                            
                             ?>
                             <div class="col-xs-12 col-sm-6" >
@@ -125,7 +125,7 @@
                                             <tr style="text-align: center"><td colspan="2"><p><b>Total Pedido: </b></p></td><td colspan="2"><p><b>$<?php echo $subtotal ?></p></b></td></tr>
                                         </table>
                                         <?php
-                                        if ($filaVPV['estado_venta'] == "Entregado") {
+                                        if ($filaVPV['estado_factura'] == "Entregado") {
                                             ?>
                                             <h5 style="text-align: center">Entregado en: <?php echo $filaVPV['direccion_entrega'] ?></h5>
                                             <h2 style="text-align: center">Total $<?php echo ($subtotal) ?></h2>

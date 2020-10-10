@@ -2,7 +2,7 @@
 include '../../Conexion/consulSQL.php';
 include '../plantillas/datos.php';
 ?>
-<table class="table table-bordered" id="tabla">
+<table class="table table-bordered" id="tablaPedido">
     <thead class="">
         <tr>
             <th class="text-center">#</th>
@@ -19,7 +19,7 @@ include '../plantillas/datos.php';
     </thead>
     <tbody>
         <?php
-        $pedido = ejecutarSQL::consultar("SELECT factura.id, factura.fecha, factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_entrega, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Cancelado')");
+        $pedido = ejecutarSQL::consultar("SELECT factura.id, factura.fecha, factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_entrega, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Pagada' AND factura.estado_factura<>'Anulada')");
         $upp = 1;
         while ($peU = mysqli_fetch_array($pedido)) {
             ?>
@@ -53,8 +53,7 @@ include '../plantillas/datos.php';
                         <td>
                             <select class="form-control" name="estado_venta">
                                 <option selected="selected" value="En Proceso">En Proceso</option>
-                                <option value="Despachado">Cancelada</option>
-                                <option value="Cancelado">Anulada</option>
+                                <option value="Anulada">Anulada</option>
                             </select>
                         </td>
                         <?php
@@ -63,16 +62,10 @@ include '../plantillas/datos.php';
                         ?>
                         <td>
                             <select class="form-control" name="estado_venta">
-                                <option value="En Proceso">En Proceso</option>
-                                <option selected="selected" value="Cancelada">Cancelada</option>
-                                <option value="Cancelado">Anulada</option>
+                                <option value="En despacho">En despacho</option>
+                                <option value="Anulada">Anulada</option>
                             </select>
                         </td>
-                        <?php
-                    }
-                    if ($peU['estado_factura'] == "Cancelada") {
-                        ?>
-                        <td>No aplica</td>
                         <?php
                     }
                     ?>                                                            
@@ -89,3 +82,13 @@ include '../plantillas/datos.php';
     ?>
 </tbody>
 </table>
+<script>
+    $(document).ready(function () {        
+        $("#myInputPedido").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaPedido tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

@@ -1,3 +1,40 @@
+function mostrar_items() {
+    var parametros = {"action": "ajax", "id": $('#txtId_c').val()};
+    $.ajax({
+        url: 'Recursos/ajax/items.php',
+        data: parametros,
+        beforeSend: function (objeto) {
+            $('.items').html('Cargando...');
+        },
+        success: function (data) {
+            $(".items").html(data).fadeIn('slow');
+        }
+    })
+}
+
+function limpiarCamposFactura() {
+    document.getElementById("selCliente").value = 0;
+    document.getElementById("txtDireccion").value = "";
+    document.getElementById("txtId_c").value = "";
+    document.getElementById("selMetodoPago").value = "Efectivo";
+}
+function eliminar_item(id, tipo) {
+    $.ajax({
+        type: "GET",
+        url: "Recursos/ajax/eliminar_item.php",
+        data: "action=ajax&id=" + id,
+        beforeSend: function (objeto) {
+            $('.items').html('Cargando...');
+        },
+        success: function (data) {
+            $(".items").html(data).fadeIn('slow');
+            mostrar_items();
+        }
+    });
+}
+
+
+
 function validarTipoPublicacion(tipo) {
     if (tipo == "Imagen") {
         document.getElementById("divImagen").style.display = '';
@@ -95,6 +132,35 @@ $(document).ready(function () {
 
     // Incluye el archivo de la tabla de pedidos dentro del DIV correspondiente en ventas
     $('#tablaPedidos').load("Recursos/includes/tablaPedidos.php");
+    
+    // Incluye el archivo de la tabla de facturas dentro del DIV correspondiente en facturas
+    $('#tablaFacturasFull').load("Recursos/includes/tablaFacturas.php");
+
+    //Envio de formulario para agregar un producto a la factura en la tabla de pedidos temporales
+    $('#formModalProducto form').submit(function (e) {
+        e.preventDefault();
+        var informacion = $('#formModalProducto form').serialize();
+        var metodo = $('#formModalProducto form').attr('method');
+        var peticion = $('#formModalProducto form').attr('action');
+        $.ajax({
+            type: metodo,
+            url: peticion,
+            data: informacion,
+            beforeSend: function () {
+                $("#resFormProducto").html('Añadiendo Producto <br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+            },
+            error: function () {
+                $("#resFormProducto").html("Ha ocurrido un error en el sistema");
+            },
+            success: function (data) {
+                $(".items").html(data).fadeIn('slow');
+                $("#modalProducto").modal('hide');
+                document.getElementById("txtCantidadProdFac").value = "";
+                mostrar_items();
+            }
+        });
+        return false;
+    });
 
     //*Envio del formulario con Ajax para agregar productos al carrito*/
 
@@ -198,13 +264,9 @@ $(document).ready(function () {
             success: function (data) {
                 $("#res-form-up-bodega").html(data);
             }
-
         });
         return false;
     });
-
-
-
 
     //Agregar Pedido a proveedor
     //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
@@ -244,22 +306,6 @@ $(document).ready(function () {
         if ($("#pagoTransferencia").is(':checked')) {
             $("#txtCambio").prop('readonly', true);
             $('#titleTransferencia').show();
-            $('#divCcambio').hide();
-        }
-    });
-
-    $("#pagoTCredito").click(function () {
-        if ($("#pagoTCredito").is(':checked')) {
-            $("#txtCambio").prop('readonly', true);
-            $('#titleTransferencia').hide();
-            $('#divCcambio').hide();
-        }
-    });
-
-    $("#pagoDatafono").click(function () {
-        if ($("#pagoDatafono").is(':checked')) {
-            $("#txtCambio").prop('readonly', true);
-            $('#titleTransferencia').hide();
             $('#divCcambio').hide();
         }
     });
@@ -538,6 +584,75 @@ $(document).ready(function () {
         });
         return false;
     });
+
+    //Buscador select para agregar productos a una factura
+    $('#selProductos').select2({
+        dropdownParent: $('#modalProducto')
+    });
+
+    //Metodo para buscar un cliente desde un select
+    $("#selCliente").select2({
+        ajax: {
+            url: "Recursos/ajax/clientes_json.php",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    cliente: params.term // termino de busqueda
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2
+    }).on('change', function (e) {
+        var email = $('#selCliente').select2('data')[0].email;
+        var telefono = $('#selCliente').select2('data')[0].telefono;
+        var doc_id = $('#selCliente').select2('data')[0].doc_id;
+        var id = $('#selCliente').select2('data')[0].id;
+        $('#email').html(email);
+        $('#telefono').html(telefono);
+        $('#doc_id').html(doc_id);
+        $('#txtId_c').val(id);
+        $('#txtId_cliente').val(id);
+        $('#btnProducto').show();
+        $('#btnCobrar').show();
+        mostrar_items();
+    });
+
+    //Cobrar Factura desde el panel de ventas
+    //Metodo ajax que realiza la consulta de la clase facturaDAO y la imprime en el div seleccionado
+    //al hacer submit al formulario que se encuentra dentro del div llamado resFormFactura
+    $('#divFactura form').submit(function (e) {
+        e.preventDefault();
+        var informacion = $('#divFactura form').serialize();
+        var metodo = $('#divFactura form').attr('method');
+        var peticion = $('#divFactura form').attr('action');
+        $.ajax({
+            type: metodo,
+            url: peticion,
+            data: informacion,
+            beforeSend: function () {
+                $("#resFormFactura").html('Agregando Factura <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
+            },
+            error: function () {
+                $("#resFormFactura").html("Ha ocurrido un error en el sistema");
+            },
+            success: function (data) {
+                $("#resFormFactura").html(data);
+                $('#btnProducto').hide();
+                $('#btnCobrar').hide();
+                limpiarCamposFactura();
+                mostrar_items();
+            }
+        });
+        return false;
+    });
+
     /*Envio del formulario con Ajax para eliminar pedido*/
 
     $('#del-pedido form').submit(function (e) {
