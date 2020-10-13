@@ -37,10 +37,11 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                             <?php
                             $categoriac2 = ejecutarSQL::consultar("SELECT * FROM categoria");
                             while ($catec2 = mysqli_fetch_array($categoriac2)) {
-                                if ($catec2['id'] == $Producto['id_categoria']) {
-                                    echo '<option value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
+                                if ($catec2['id'] == $Producto[5]) {
+                                    echo '<option selected="selected" value="'. $catec2['id'] .'">'. $catec2['nombre'] .'</option>';
                                 } else {
-                                    echo '<option  selected="selected" value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
+                                    echo '<option value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
+                                    
                                 }
                             }
                             ?>
@@ -58,14 +59,13 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                             <?php
                             $proveedoresc2 = ejecutarSQL::consultar("SELECT id, nombre_proveedor FROM proveedor ");
                             while ($provc2 = mysqli_fetch_array($proveedoresc2)) {
-
-                                if ($provc2['id'] == $Producto['id_proveedor']) {
-                                    echo '<option value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
+                                if ($provc2['id'] == $Producto[6]) {
+                                   echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
                                 } else {
-                                    echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
+                                    echo '<option value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
+
                                 }
-                            }
-                            ?>
+                            }?>
                         </select>
                     </div>
 
@@ -81,9 +81,9 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                     <div id="respuesta_producto" style="width: 100%; text-align: center; margin: 0;"></div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
+            <p class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                </p>
         </div>
     </div>
 </div>
