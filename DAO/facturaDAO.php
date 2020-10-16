@@ -1,7 +1,6 @@
 <?php
-
 include '../Conexion/consulSQL.php';
-sleep(1);
+
 if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proceso es diferente de vacio
     // Se verifica el valor de la variable POST, cuando es igual al deseado realiza el proceso correspondiente
     if ($_POST['funcion'] == "facturar_pedido") {
@@ -47,7 +46,29 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         <img src="Recursos/img/error.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
         <?php
     }
-} else {
+
+
+    if ($_POST['funcion'] == "actualizarFactura") {
+        // Se obtienen los datos del formulario html por variables POST
+        $idFactura = $_POST['id_factura'];
+        $Estado == $_POST['estadoFactura'];
+        // Se realiza la consulta de actualizacion de proveedor
+        $sqlReg = "UPDATE factura SET estado_factura='".$Estado." WHERE id=".$idFactura;
+        $resultado = ejecutarSQL::consultar($sqlReg);
+        if ($resultado) {
+            ?>
+            <br>
+            <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
+            <p><strong>Hecho</strong></p>
+        <?php
+        } else {
+        ?>
+            <br>
+            <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
+            <p><strong>Error</strong></p>
+<?php
+        }
+}} else {
     ?>
     <img src="Recursos/img/error.png" class="center-all-contens"><br><p class="lead text-center">Error función vacia</p>';
     <?php
