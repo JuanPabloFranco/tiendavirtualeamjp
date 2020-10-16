@@ -20,7 +20,8 @@ include '../plantillas/datos.php';
                 <th class="text-center">Valor</th>
                 <th class="text-center">Método Pago</th>
                 <th class="text-center">Vendedor</th>                
-                <th class="text-center" colspan="2">Detalle Pedido</th>
+                <th class="text-center">Detalle Pedido</th>
+                <th class="text-center">Factura</th>  
             </tr>
         </thead>
         <tbody>
@@ -37,7 +38,18 @@ include '../plantillas/datos.php';
                     <td class="text-center"><?php echo $factura['metodo_pago'] ?></td>
                     <td class="text-center"><?php echo $factura['VENDEDOR'] ?></td>
                     <td class="text-center"><button type="button" class="btn btn-info btn-sm ver_ped" value="<?php echo $factura['id']; ?>" data-toggle="modal" data-target="#verPedido"><span class="fa fa-eye"></span> Ver Detalle</button></td>
-                    <td class="text-center"><a href='Vista/facturaPDF.php?id=<?php echo $factura['id'] ?>&hoja=carta' target='_blank' ><br><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'></a></td>
+                    <?php
+                    if ($factura['estado_factura'] <> "En Proceso" && $factura['estado_factura'] <> "En Verificación") {
+                        ?>
+                        <td class="text-center"><a href='Vista/facturaPDF.php?id=<?php echo $factura['id'] ?>&hoja=carta' target='_blank' ><br><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'></a></td>
+                        <?php
+                    }else{
+                        ?>
+                        <td class="text-center">No Aplica</td>
+                        <?php
+                    }
+                    ?>
+
                 </tr>
                 </form>
                 </div>

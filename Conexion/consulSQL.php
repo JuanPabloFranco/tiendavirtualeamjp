@@ -15,14 +15,14 @@ class ejecutarSQL {
         }
         mysqli_set_charset($con, 'utf8');        
         return $con;
+        mysqli_close($con);
     }
 
     public static function consultar($query) { // Funcion para ejecutar una consulta
         if (!$consul = mysqli_query(ejecutarSQL::conectar(), $query)) {
-            die(mysqli_error(ejecutarSQL::conectar()) . 'Error en la consulta SQL ejecutada ' . $query);
-        }
-//        mysqli_close($consul);
-        return $consul;
+            die(mysqli_error(ejecutarSQL::conectar()) . 'Error en la consulta SQL ejecutada ');
+        }        
+        return $consul;        
     }
 
 }
