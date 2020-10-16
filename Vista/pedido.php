@@ -23,9 +23,10 @@
                     <?php
                     // Consulta para listar los pedidos realizados por el cliente que no esten entregados o cancelados
                     if (!$_SESSION['nombreUsuario'] == "" && !$_SESSION['claveUser'] == "" && !$_SESSION['id_user'] == "") {
-                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Pagada') ORDER BY factura.id DESC");
+                        $consultaVP = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura<>'Finalizada' AND factura.estado_factura<>'Pagada' AND factura.estado_factura<>'Anulada') ORDER BY factura.id DESC");
                         while ($filaVP = mysqli_fetch_array($consultaVP)) {
-//                            $vecRepartidor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT nombre_repartidor, foto_repartidor FROM repartidor WHERE id=" . $filaVP['id_repartidor']));
+                            $sql = "SELECT nombre_repartidor, foto_repartidor, estado_despacho, costo_domicilio FROM despacho, factura, domiciliario WHERE despacho.id_factura=factura.id AND despacho.id_domiciliario=domiciliario.id AND despacho.id_factura=" . $filaVP['id'];
+                            $filaDespVP = mysqli_fetch_row(ejecutarSQL::consultar($sql));
                             ?>
                             <div class="col-xs-12 col-sm-6" >
                                 <div class="thumbnail" style="width: 90%; background-color: #d9edf7" >
@@ -62,11 +63,30 @@
                                         ?>
                                         <tr style="text-align: center"><td colspan="2"><p><b>Total Pedido: </b></p></td><td colspan="2"><p><b>$<?php echo $subtotal ?></p></b></td></tr>
                                     </table>
-                                    <h5 style="text-align: center">Entregado en: <?php echo $filaVP['direccion_entrega'] ?></h5>
                                     <?php
+                                    if (isset($filaDespVP) && $filaDespVP[0] <> "") {                                        ?>
+                                        <h4 style="text-align: center"><b>Dirección de entrega:</b><br> <?php echo $filaVP['direccion_entrega'] ?></h4>
+
+                                        <h4 style="text-align: center"><b>Valor Domicilio:</b><br> $<?php echo $filaDespVP[3] ?></h4>
+                                        <h4 style="text-align: center"><b>Entregado por: </b><br><?php echo $filaDespVP[0] ?></h4>
+                                        <img src="Recursos/img-repartidor/<?php echo $filaDespVP[1] ?>" width="30%">
+
+                                        <br>
+                                        <h4 style="text-align: center"><b>Estado de la entrega</b><br><?php echo $filaDespVP[2]; ?></h4>
+
+                                        <?php
+                                    }
                                     if ($filaVP['estado_venta'] <> "En Verificación") {
+                                        if (isset($filaDespVP) && $filaDespVP[0] <> "") {
+                                            ?>
+                                            <h2 style="text-align: center">Total $<?php echo $subtotal + $filaDespVP[3]; ?></h2>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <h2 style="text-align: center">Total $<?php echo $subtotal; ?></h2>
+                                            <?php
+                                        }
                                         ?>
-                                        <h2 style="text-align: center">Total $<?php echo $subtotal; ?></h2>
                                         <h4 style="text-align: center">Método de pago: <?php echo $filaVP['metodo_pago'] ?></h4>
                                         <?php
                                         if ($filaVP['cambio'] <> "0") {
@@ -90,8 +110,8 @@
                             <?php
                         }
                         // Consulta para listar los pedidos realizados por el cliente que si esten entregados o cancelados
-                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura='Entregado' OR factura.estado_factura='Pagada') ORDER BY factura.id DESC");
-                        while ($filaVPV = mysqli_fetch_array($consultaVPV)) {                            
+                        $consultaVPV = ejecutarSQL::consultar("SELECT * FROM factura WHERE id_cliente=" . $_SESSION['id_user'] . " AND (factura.estado_factura='Finalizada' OR factura.estado_factura='Pagada') ORDER BY factura.id DESC");
+                        while ($filaVPV = mysqli_fetch_array($consultaVPV)) {
                             ?>
                             <div class="col-xs-12 col-sm-6" >
                                 <?php

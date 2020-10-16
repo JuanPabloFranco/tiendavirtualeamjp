@@ -56,7 +56,6 @@ if (empty($DespachoInfo)) {
 
 <?php
 } else {   ?>
-
     <div class="modal-dialog modal-lm">
         <div class="modal-content center-all-contens" id="update_despacho">
             <div class="modal-content">
@@ -163,10 +162,9 @@ if (empty($DespachoInfo)) {
                     $("#respuesta_Despacho").html("Ha ocurrido un error en el sistema");
                 },
                 success: function(data) {
-                    $("#respuesta_Despacho").html(data);
+                    $("#respuesta_Despacho").html("Se actualizó con exito");
                     $('#Add_despacho').modal('hide'); // cerrar
                 }
-
             });
             return false;
         });
@@ -189,10 +187,9 @@ if (empty($DespachoInfo)) {
                     $("#respuesta_Despacho").html("Ha ocurrido un error en el sistema");
                 },
                 success: function(data) {
-                    $("#respuesta_Despacho").html(data);
+                    $("#respuesta_Despacho").html("Se actualizó con exito");
                     $('#update_despacho').modal('hide'); // cerrar
                 }
-
             });
             return false;
         });

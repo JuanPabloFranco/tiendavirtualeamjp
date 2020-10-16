@@ -135,6 +135,32 @@ $(document).ready(function () {
     
     // Incluye el archivo de la tabla de facturas dentro del DIV correspondiente en facturas
     $('#tablaFacturasFull').load("Recursos/includes/tablaFacturas.php");
+    
+    //Envio de formulario para resaurar la contraseña de un cliente
+    $('.button_UP_res_cliente').click(function () {
+        var myId = $(this).val();
+        $('#restaurar_cliente form#' + myId).submit(function (e) {
+            e.preventDefault();
+            var informacion = $('#restaurar_cliente form#' + myId).serialize();
+            var metodo = $('#restaurar_cliente form#' + myId).attr('method');
+            var peticion = $('#restaurar_cliente form#' + myId).attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $("div#" + myId).html('<br><img src="Recursos/img/Update.gif" class="center-all-contens"><br>Actualizando...');
+                },
+                error: function () {
+                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
+                },
+                success: function (data) {
+                    $("div#" + myId).html(data);
+                }
+            });
+            return false;
+        });
+    });
 
     //Envio de formulario para agregar un producto a la factura en la tabla de pedidos temporales
     $('#formModalProducto form').submit(function (e) {
@@ -147,7 +173,7 @@ $(document).ready(function () {
             url: peticion,
             data: informacion,
             beforeSend: function () {
-                $("#resFormProducto").html('Añadiendo Producto <br><img src="recursos/img/enviando.gif" class="center-all-contens">');
+                $("#resFormProducto").html('');
             },
             error: function () {
                 $("#resFormProducto").html("Ha ocurrido un error en el sistema");
@@ -155,7 +181,7 @@ $(document).ready(function () {
             success: function (data) {
                 $(".items").html(data).fadeIn('slow');
                 $("#modalProducto").modal('hide');
-                document.getElementById("txtCantidadProdFac").value = "";
+                document.getElementById("txtCantidadProdFac").value = "1";
                 mostrar_items();
             }
         });
@@ -338,7 +364,7 @@ $(document).ready(function () {
 
     //*Envio del formulario con Ajax para cambiar estado de un domiciliario*/
 
-    $('#change_repartidor').submit(function (e) {
+    $('#change_repartidor form').submit(function (e) {
         e.preventDefault();
         var informacion = $('#change_repartidor form').serialize();
         var metodo = $('#change_repartidor form').attr('method');
@@ -651,6 +677,34 @@ $(document).ready(function () {
             }
         });
         return false;
+    });
+    
+    
+    //Actualizar un pedido
+    $('.button_ped').click(function () {
+        var myId = $(this).val();
+        $('#pdate-pedido form#' + myId).submit(function (e) {
+
+            e.preventDefault();
+            var informacion = $('#pdate-pedido form#' + myId).serialize();
+            var metodo = $('#pdate-pedido form#' + myId).attr('method');
+            var peticion = $('#pdate-pedido form#' + myId).attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $("div#" + myId).html('<br><img src="assets/img/Update.gif" class="center-all-contens"><br>Actualizando...');
+                },
+                error: function () {
+                    $("div#" + myId).html("Ha ocurrido un error en el sistema");
+                },
+                success: function (data) {
+                    $("div#" + myId).html(data);
+                }
+            });
+            return false;
+        });
     });
 
     /*Envio del formulario con Ajax para eliminar pedido*/
