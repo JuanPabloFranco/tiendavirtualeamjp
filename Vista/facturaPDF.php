@@ -111,8 +111,8 @@ require '../Recursos/fpdf/plantillas/PDFCarta.php';
                 $pdf->SetFont('Arial', '', 8);
                 $pdf->Cell(108, 5, utf8_decode($rowP['nombre_prod']), 0, 0, 'L');
                 $pdf->SetFont('Arial', '', 9);
-                $pdf->Cell(25, 5, utf8_decode("$" . $rowP['precio']), 0, 0, 'C');
-                $pdf->Cell(25, 5, utf8_decode("$" . $subtotal), 0, 0, 'C');
+                $pdf->Cell(25, 5, utf8_decode("$" . $rowP['precio']), 0, 0, 'R');
+                $pdf->Cell(25, 5, utf8_decode("$" . $subtotal), 0, 0, 'R');
                 $total = $total + $subtotal;
             }
         }
