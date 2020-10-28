@@ -34,8 +34,11 @@ include '../plantillas/datos.php';
             $contPB = 1;
             while ($prodBodega = mysqli_fetch_array($sqlProdBodega)) {
                 $color = "white";
-                if ($prodBodega['estado_prod_bodega'] == "Agotado") {
+                if ($prodBodega['cantidad'] <= $prodBodega['minimo']) {
                     $color = "Rgb(255,0,0,0.4)";
+                }
+                if ($prodBodega['estado_prod_bodega'] == "Agotado") {
+                    $color = "red";
                 }
                 ?>
             <div>
