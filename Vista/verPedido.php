@@ -4,7 +4,9 @@ $id = $_GET['id'];
 $sql = "SELECT factura.id,factura.estado_factura,cliente.nombre_completo,cliente.nit,cliente.telefono,factura.direccion_entrega,factura.metodo_pago,factura.cambio FROM factura,cliente WHERE factura.id_cliente=cliente.id AND factura.id=$id ";
 $vecId = mysqli_fetch_row(ejecutarSQL::consultar($sql));
 $consultaCostoDomicilio = mysqli_fetch_row(ejecutarSQL::consultar("SELECT costo_domicilio FROM despacho WHERE id_factura=" . $vecId[0]));
-if ($consultaCostoDomicilio[0] == null ) {   $consultaCostoDomicilio[0] =0;   }
+if ($consultaCostoDomicilio[0] == null) {
+    $consultaCostoDomicilio[0] = 0;
+}
 ?>
 
 <div class="modal-dialog modal-lg">
@@ -29,7 +31,7 @@ if ($consultaCostoDomicilio[0] == null ) {   $consultaCostoDomicilio[0] =0;   }
                 $totalPedido = 0;
                 $consultaPedVP = ejecutarSQL::consultar("SELECT pedido.precio, pedido.cantidad, producto.nombre_prod, producto.imagen,producto.descripcion_prod FROM pedido, producto,factura
                      WHERE pedido.id_factura=factura.id AND pedido.id_producto=producto.id AND estado_prod<>'Entregado' AND factura.id=" . $vecId[0]);
-                
+
 
                 ?>
                 <tr style="text-align: center">
@@ -90,13 +92,17 @@ if ($consultaCostoDomicilio[0] == null ) {   $consultaCostoDomicilio[0] =0;   }
             }
             $sqlTotal = "UPDATE factura SET total=" . $total . " WHERE id=" . $_GET['id'];
             ejecutarSQL::consultar($sqlTotal);
-            if ($vecId[7] <> "0") {
-                $vecRep = mysqli_fetch_row(ejecutarSQL::consultar("SELECT DO.nombre_repartidor FROM domiciliario DO JOIN despacho D ON D.id_domiciliario=DO.id WHERE D.id_factura=$id"));
+
+            $vecRep = mysqli_fetch_row(ejecutarSQL::consultar("SELECT domiciliario.nombre_repartidor FROM domiciliario,despacho WHERE despacho.id_domiciliario=domiciliario.id AND despacho.id_factura=$id"));
+            if (!empty($vecRep)) {
                 ?>
                 <h5 style="text-align: center"><b>Domiciliario Asignado: </b><?php echo $vecRep[0]; ?></h5>
             <?php
-            }
-            ?>
+            } else { ?>
+
+                <h5 style="text-align: center"><b>Domiciliario Asignado: </b> No tiene domiciliario </h5>
+
+            <?php   }            ?>
 
         </div>
         <?php
