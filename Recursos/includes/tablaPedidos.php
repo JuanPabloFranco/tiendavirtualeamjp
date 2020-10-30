@@ -78,11 +78,6 @@ include '../plantillas/datos.php';
 
 
         //enviar valor al modal editar bodega
-        $(".ver_pedido").click(function () { //      
-            $('#VerPedido').load("Vista/verPedido.php?id=" + $(this).val());
-        });
-
-        //enviar valor al modal editar bodega
         $(".cambiarEstado").click(function () { //      
             $('#cambiarEstado').load("Vista/cambiarEstadoFactura.php?id=" + $(this).val());
         });

@@ -37,13 +37,13 @@ include '../plantillas/datos.php';
                     <td class="text-center"><?php echo $factura['total'] ?></td>
                     <td class="text-center"><?php echo $factura['metodo_pago'] ?></td>
                     <td class="text-center"><?php echo $factura['VENDEDOR'] ?></td>
-                    <td class="text-center"><button type="button" class="btn btn-info btn-sm ver_ped" value="<?php echo $factura['id']; ?>" data-toggle="modal" data-target="#verPedido"><span class="fa fa-eye"></span> Ver Detalle</button></td>
+                    <td class="text-center"><button type="button" class="btn btn-info btn-sm VerPedidoFac" value="<?php echo $factura['id']; ?>" data-toggle="modal" data-target="#VerPedidoFac"><span class="fa fa-eye"></span> Ver Detalle</button></td>
                     <?php
                     if ($factura['estado_factura'] <> "En Proceso" && $factura['estado_factura'] <> "En Verificación") {
                         ?>
-                        <td class="text-center"><a href='Vista/facturaPDF.php?id=<?php echo $factura['id'] ?>&hoja=carta' target='_blank' ><br><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'></a></td>
+                        <td class="text-center"><a href='Vista/facturaPDF.php?id=<?php echo $factura['id'] ?>&hoja=carta' target='_blank' ><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'></a></td>
                         <?php
-                    }else{
+                    } else {
                         ?>
                         <td class="text-center">No Aplica</td>
                         <?php
@@ -59,12 +59,20 @@ include '../plantillas/datos.php';
         </tbody>
     </table>
 </div>
+<div class="modal fade" id="VerPedidoFac" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
 <div class="modal fade" id="editarCategorias" tabindex="-2" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 20px;" data-dismiss="modal"></div>
 <script>
     function actualizarTablaFacturas() {
         $('#tablaFacturasFull').load("Recursos/includes/tablaFacturas.php");
     }
     $(document).ready(function () {
+        //Mabrir modal ver pedido
+        $('#VerPedidoFac').load("Vista/VerPedido.php");
+        //Enviar id a la vista de ver pedido
+        $(".VerPedidoFac").click(function () { //      
+            $('#VerPedidoFac').load("Vista/verPedido.php?id=" + $(this).val());
+        });
+
         $("#myInputFacturas").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#tablaFacturas tr").filter(function () {
