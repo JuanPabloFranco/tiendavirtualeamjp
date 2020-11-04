@@ -21,6 +21,7 @@
                 <div class="row">
                     <?php
                     if (count($_SESSION['producto']) > 0) {
+                        include '../Recursos/plantillas/datos.php';
                         ini_set('date.timezone', 'America/Bogota');
                         $hora = date("G");
                         ?>
@@ -68,7 +69,7 @@
                                                 Transferencia Electrónica
                                             </label>
                                         </div>
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA;?></p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p>
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -120,7 +121,7 @@
                                                 Transferencia Electrónica
                                             </label>
                                         </div>                                
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. XXX-XXXXXX-XX</p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA;?></p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p> 
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>

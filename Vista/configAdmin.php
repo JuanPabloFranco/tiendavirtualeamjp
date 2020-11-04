@@ -476,7 +476,7 @@
                             <br><br>
                             <div id="add-inf_empresa">
                                 <?php
-                                $sqlInf = "SELECT nit, representante_legal, telefonos, whatsapp, direccion, pagina_web, facebook, instagram, email, cuenta_bancaria FROM informacion_empresa WHERE id=1";
+                                $sqlInf = "SELECT nit, representante_legal, telefonos, whatsapp, direccion, pagina_web, facebook, instagram, email, cuenta_bancaria, iva FROM informacion_empresa WHERE id=1";
                                 $VecInf = mysqli_fetch_row(ejecutarSQL::consultar($sqlInf));
                                 ?>
                                 <h2 class="text-info text-center"><small><i class="fa fa-edit"></i></small>&nbsp;&nbsp;Actualizar Informacion </h2>
@@ -520,6 +520,10 @@
                                     <div class="form-group">
                                         <label>No. Cuenta Bancaria</label>
                                         <input class="form-control" type="text" name="cuenta_bancaria" value="<?php echo $VecInf[9]; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>IVA</label>
+                                        <input class="form-control" type="number" name="iva" value="<?php echo $VecInf[10]; ?>">
                                     </div>
                                     <p class="text-center"><button type="submit" class="btn btn-primary">Actualizar</button></p>
                                     <br>

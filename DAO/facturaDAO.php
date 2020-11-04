@@ -1,10 +1,11 @@
 <?php
 include '../Conexion/consulSQL.php';
+include '../Recursos/plantillas/datos.php';
 
 if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proceso es diferente de vacio
     // Se verifica el valor de la variable POST, cuando es igual al deseado realiza el proceso correspondiente
     if ($_POST['funcion'] == "facturar_pedido") {
-
+        
         // Se obtienen los datos del formulario html por variables POST
         $fecha = $_POST['fecha'];
         $id_cliente = $_POST['id_cliente'];
@@ -13,9 +14,10 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         $id_vendedor = $_POST['id_vendedor'];
         $estado_factura = "En Verificación";
         $descuento = 0;
-        $total = $_POST['total'];
+        $total = $_POST['total']; 
+        $iva = IVA;
 
-        if (consultasSQL::InsertSQL("factura", "fecha, id_cliente, descuento, total, direccion_entrega, metodo_pago, estado_factura, cambio, id_vendedor", "'" . $fecha . "'," . $id_cliente . "," . $descuento . "," . $total . ",'" . $direccion_entrega . "','" . $metodo_pago . "','" . $estado_factura . "',0,$id_vendedor")) {
+        if (consultasSQL::InsertSQL("factura", "fecha, id_cliente, descuento, total, direccion_entrega, metodo_pago, estado_factura, cambio, id_vendedor, iva_factura", "'" . $fecha . "'," . $id_cliente . "," . $descuento . "," . $total . ",'" . $direccion_entrega . "','" . $metodo_pago . "','" . $estado_factura . "',0,$id_vendedor,$iva")) {
             /* recuperando el id de la factura actual */
             $sql = "SELECT id FROM factura WHERE fecha='" . $fecha . "' AND total=" . $total . " AND id_cliente=" . $id_cliente . " ORDER BY id DESC limit 1";
             $vecId = mysqli_fetch_row(ejecutarSQL::consultar($sql));

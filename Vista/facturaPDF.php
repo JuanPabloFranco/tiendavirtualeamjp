@@ -8,7 +8,7 @@ require '../Recursos/fpdf/plantillas/PDFCarta.php';
     <body>
         <?php
         // Consulta para los datos de la empresa
-        $sqlFactura = "SELECT factura.fecha, cliente.nit, cliente.nombre_completo, cliente.telefono, cliente.email, factura.total, factura.direccion_entrega, factura.metodo_pago, factura.descuento, factura.estado_factura FROM factura JOIN cliente ON factura.id_cliente=cliente.id AND factura.id=" . $_GET['id'];
+        $sqlFactura = "SELECT factura.fecha, cliente.nit, cliente.nombre_completo, cliente.telefono, cliente.email, factura.total, factura.direccion_entrega, factura.metodo_pago, factura.descuento, factura.estado_factura, factura.iva_factura FROM factura JOIN cliente ON factura.id_cliente=cliente.id AND factura.id=" . $_GET['id'];
         $vecFactura = mysqli_fetch_row(ejecutarSQL::consultar($sqlFactura));
         $sqlPedido = "SELECT pedido.cantidad, producto.nombre_prod, pedido.precio FROM pedido JOIN factura ON pedido.id_factura=factura.id JOIN producto ON pedido.id_producto=producto.id WHERE pedido.id_factura=" . $_GET['id'];
         $productos_factura = ejecutarSQL::consultar($sqlPedido);
@@ -86,43 +86,57 @@ require '../Recursos/fpdf/plantillas/PDFCarta.php';
         $pdf->SetFont('Arial', '', 10);
         $pdf->SetTextColor(1, 1, 1);
         $pdf->Cell(40, 5, utf8_decode("$" . $vecFactura[8]), 0, 0, 'L');
-        
-        if($vecFactura[9]=="Anulada"){
-            $pdf->RotatedImage('../Recursos/img/anulada.png', 30,170, 180, 40, 45);
+
+        if ($vecFactura[9] == "Anulada") {
+            $pdf->RotatedImage('../Recursos/img/anulada.png', 30, 170, 180, 40, 45);
         }
 
         $pdf->Ln(12);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(34, 79, 147);
-        $pdf->Cell(16, 5, "", 0, 0, 'L');
-        $pdf->Cell(13, 5, utf8_decode("CANT"), 1, 0, 'C');
-        $pdf->Cell(108, 5, utf8_decode("DESCRIPCIÓN"), 1, 0, 'C');
+        $pdf->Cell(16, 5, "", 0, 0, 'L');        
+        $pdf->Cell(98, 5, utf8_decode("DESCRIPCIÓN"), 1, 0, 'C');
         $pdf->Cell(25, 5, utf8_decode("V UNITARIO"), 1, 0, 'C');
+        $pdf->Cell(13, 5, utf8_decode("CANT"), 1, 0, 'C');
+        $pdf->Cell(10, 5, utf8_decode("IVA"), 1, 0, 'C');
         $pdf->Cell(25, 5, utf8_decode("SUBTOTAL"), 1, 0, 'C');
         $total = 0;
+        $totalSinIva = 0;
         if ($productos_factura->num_rows > 0) { //si la variable tiene al menos 1 fila entonces seguimos con el codigo
             while ($rowP = $productos_factura->fetch_array(MYSQLI_ASSOC)) {
+                $precioSinIva = $rowP['precio']-($rowP['precio']*($vecFactura[10]*0.01));
                 $subtotal = $rowP['cantidad'] * $rowP['precio'];
                 $pdf->Ln(5);
                 $pdf->SetFont('Arial', '', 9);
                 $pdf->SetTextColor(1, 1, 1);
-                $pdf->Cell(16, 5, "", 0, 0, 'L');
-                $pdf->Cell(13, 5, utf8_decode($rowP['cantidad']), 0, 0, 'C');
+                $pdf->Cell(16, 5, "", 0, 0, 'L');                
                 $pdf->SetFont('Arial', '', 8);
-                $pdf->Cell(108, 5, utf8_decode($rowP['nombre_prod']), 0, 0, 'L');
-                $pdf->SetFont('Arial', '', 9);
-                $pdf->Cell(25, 5, utf8_decode("$" . $rowP['precio']), 0, 0, 'R');
+                $pdf->Cell(98, 5, utf8_decode($rowP['nombre_prod']), 0, 0, 'L');
+                $pdf->SetFont('Arial', '', 9);               
+                $pdf->Cell(25, 5, utf8_decode("$".$precioSinIva), 0, 0, 'R');
+                $pdf->Cell(13, 5, utf8_decode($rowP['cantidad']), 0, 0, 'C');
+                $pdf->Cell(10, 5, utf8_decode($vecFactura[10]."%"), 0, 0, 'R');
                 $pdf->Cell(25, 5, utf8_decode("$" . $subtotal), 0, 0, 'R');
                 $total = $total + $subtotal;
-            }
+                $totalSinIva = $totalSinIva + ($precioSinIva*$rowP['cantidad']);
+            } 
         }
+//        $TOTAL_IVA = $total+($total*$IVA);
         $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 11);
         $pdf->SetTextColor(34, 79, 147);
         $pdf->Cell(140, 5, "", 0, 0, 'C');
-        $pdf->Cell(20, 5, "TOTAL", 0, 0, 'R');
+        $pdf->Cell(20, 5, "TOTAL SIN IVA", 0, 0, 'R');
         $pdf->SetTextColor(1, 1, 1);
-        $pdf->Cell(25, 5, utf8_decode("$".$total), 0, 0, 'C');
+        $pdf->Cell(25, 5, utf8_decode("$" . $totalSinIva), 0, 0, 'R');
+        
+        $pdf->Ln(10);
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->SetTextColor(34, 79, 147);
+        $pdf->Cell(140, 5, "", 0, 0, 'C');
+        $pdf->Cell(20, 5, "TOTAL IVA ".$vecFactura[10]."%", 0, 0, 'R');
+        $pdf->SetTextColor(1, 1, 1);
+        $pdf->Cell(25, 5, utf8_decode("$" . $total), 0, 0, 'R');
 
 
 

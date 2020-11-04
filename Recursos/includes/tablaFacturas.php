@@ -49,7 +49,6 @@ include '../plantillas/datos.php';
                         <?php
                     }
                     ?>
-
                 </tr>
                 </form>
                 </div>
