@@ -44,23 +44,22 @@ if ($_POST['funcion'] <> "") { // Verificar si la variable con el tipo de proces
         $recibeDomicilio = "No Entregado";
         if ($Estado == 'Entregado') {
             $recibeDomicilio = "Entregado";
+            $i=1;
+            $consulta= ejecutarSQL::consultar("SELECT id_producto,cantidad FROM pedido WHERE id_factura=$idFactura");
+            while($pedido = mysqli_fetch_array($consulta)){
+                $estadoProdBodega="Disponible";
+                $productos= mysqli_fetch_row(ejecutarSQL::consultar("SELECT id_producto,cantidad FROM bodega WHERE id_producto=".$pedido[0]));
+                $cantidad=$productos[1]-$pedido[1];
+                if($cantidad==0||$cantidad<0){  $estadoProdBodega="Agotado";             }
+                $sqlBodega = "UPDATE bodega SET cantidad=".$cantidad.",estado_prod_bodega='".$estadoProdBodega."' WHERE id_producto=".$pedido[0];
+                ejecutarSQL::consultar($sqlBodega);
+                $i++;
+            }
         }
         // Se realiza la consulta de actualizacion de proveedor
         $sqlReg = "UPDATE despacho SET id_domiciliario=".$idDomiciliario.",estado_despacho='".$Estado."',costo_domicilio=".$costoDomicilio.",recibe='".$recibeDomicilio."' WHERE id=".$id;
         $resultado = ejecutarSQL::consultar($sqlReg);
-        if ($resultado) {
-            ?>
-            <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/Check.png">
-            <p><strong>Hecho</strong></p>
-        <?php
-        } else {
-        ?>
-            <br>
-            <img class="center-all-contens" style="width: 20%" src="Recursos/img/cancel.png">
-            <p><strong>Error</strong></p>
-<?php
-        }
+       
     }
 } else {
     echo '<img src="recursos/img/incorrecto.png" class="center-all-contens"><br><p class="lead text-center">Error al leer de función ejecutada</p>';
