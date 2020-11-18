@@ -15,20 +15,17 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                 <form action="DAO/productoDAO.php" method="post" role="form">
                     <div class="form-group">
                         <label>Codigo del producto</label>
-                        <input type="text" class="form-control" type="text" id="txtCodigoProducto" name="codigo_prod"
-                            value="<?php echo $Producto[0]; ?>">
+                        <input type="text" class="form-control" type="text" id="txtCodigoProducto" pattern="[0-9]{1,20}" name="codigo_prod" value="<?php echo $Producto[0]; ?>">
                         <input type="hidden" value="<?php echo $id ?>" name="id">
                         <input type="hidden" name="funcion" value="actualizarProducto">
                     </div>
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input class="form-control" type="text" id="txtNombreProducto" name="nombre_prod"
-                            placeholder="Nombre del Producto" required="" value="<?php echo $Producto[1]; ?>">
+                        <input class="form-control" type="text" id="txtNombreProducto" name="nombre_prod" placeholder="Nombre del Producto" required="" value="<?php echo $Producto[1]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Precio</label>
-                        <input class="form-control" type="text" id="txtPrecioProducto" name="precio"
-                            placeholder="Precio del Producto" required="" value="<?php echo $Producto[2]; ?>">
+                        <input class="form-control" type="text" id="txtPrecioProducto" name="precio" pattern="[0-9]{1,20}" placeholder="Precio del Producto" required="" value="<?php echo $Producto[2]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Categoria</label>

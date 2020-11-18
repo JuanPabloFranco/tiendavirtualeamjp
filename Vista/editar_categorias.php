@@ -15,8 +15,7 @@ $CategoriasInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nombre,codi
                 <form action="DAO/categoriaDAO.php" method="post" role="form">
                     <div class="form-group">
                         <label>Codigo</label>
-                        <input type="text" class="form-control" name="codigo_categoria"
-                            value="<?php echo $CategoriasInfo[2]; ?>" readonly>
+                        <input type="text" class="form-control" name="codigo_categoria" pattern="[0-9]{1,20}" value="<?php echo $CategoriasInfo[2]; ?>" readonly>
                         <input type="hidden" value="<?php echo $id ?>" name="id">
                         <input type="hidden" name="funcion" value="actualizarCategoria">
                     </div>
@@ -28,8 +27,7 @@ $CategoriasInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nombre,codi
                     <div class="form-group">
                         <label>Descripción</label>
                         <input class="form-control" id="txtDescripcionCategorias" type="text" name="descripcion"
-                            placeholder="Descripcion de la categoria" required=""
-                            value="<?php echo $CategoriasInfo[3]; ?>">
+                            placeholder="Descripcion de la categoria" required="" value="<?php echo $CategoriasInfo[3]; ?>">
                     </div>
                     <p class="text-center"><button type="submit" class="btn btn-primary">Actualizar</button></p>
                     <br>
