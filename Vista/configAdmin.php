@@ -37,7 +37,7 @@
                                 <form role="form" action="DAO/productoDAO.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label>Código de producto</label>
-                                        <input type="text" class="form-control" id="txtCodigo_prod" placeholder="Código" required maxlength="40" name="codigo_prod">
+                                        <input type="text" class="form-control" id="txtCodigo_prod" placeholder="Código" pattern="[0-9]{1,20}" required maxlength="40" name="codigo_prod">
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre de producto</label>
@@ -137,7 +137,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input class="form-control" type="text" id="txtNombreProv" name="prove-name" placeholder="Nombre proveedor" maxlength="30" required="">
+                                        <input class="form-control" type="text" id="txtNombreProv" pattern="[A-Za-z ]+" name="prove-name" placeholder="Nombre proveedor" maxlength="30" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Dirección</label>
@@ -180,7 +180,7 @@
                                 <form action="DAO/categoriaDAO.php" method="post" role="form">
                                     <div class="form-group">
                                         <label>Código</label>
-                                        <input class="form-control" type="text" id="txtCodCategoria" name="categ-code" placeholder="Código de categoria" maxlength="9" required="">
+                                        <input class="form-control" type="text" id="txtCodCategoria" pattern="[0-9]{1,20}" name="categ-code" placeholder="Código de categoria" maxlength="9" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre</label>
@@ -218,13 +218,11 @@
                                 <form action="DAO/usuarioDAO.php" method="post" role="form">
                                     <div class="form-group">
                                         <label>Nombre Completo</label>
-                                        <input class="form-control" type="text" id="txtNombreCUsuario" name="nombre_completo" placeholder="Nombre Completo" maxlength="50" required="">
+                                        <input class="form-control" type="text" id="txtNombreCUsuario" pattern="[A-Za-z ]+" name="nombre_completo" placeholder="Nombre Completo" maxlength="50" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre Usuario</label>
-                                        <input class="form-control" type="text" id="txtNombreUsuario" name="Nombre" placeholder="Nombre" maxlength="20" pattern="[a-zA-Z] {
-                                                   5, 20
-                                                   }" required="">
+                                        <input class="form-control" type="text" id="txtNombreUsuario" pattern="^@?(\\w){1,15}$" name="Nombre" placeholder="Nombre" maxlength="20" required="">
                                     </div>
                                     <div class="form-group">
                                         <label>Contraseña</label>
@@ -293,11 +291,11 @@
                                 <form action="DAO/domiciliarioDAO.php" method="post" role="form" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label>Cédula</label>
-                                        <input class="form-control" type="number" id="txtCedulaRepartidor" name="cedula_repartidor" placeholder="Cédula o No. de Documento del Domiciliario" maxlength="50" required="" title="Cédula o No. de Documento del domiciliario">
+                                        <input class="form-control" type="number" id="txtCedulaRepartidor" pattern="[0-9]{1,20}" name="cedula_repartidor" placeholder="Cédula o No. de Documento del Domiciliario" maxlength="50" required="" title="Cédula o No. de Documento del domiciliario">
                                     </div>
                                     <div class="form-group">
                                         <label>Nombre Completo</label>
-                                        <input class="form-control" type="text" id="txtNombreRepartidor" name="nombre_repartidor" placeholder="Nombre completo del domiciliario" required="" title="Nombre completo del domiciliario">
+                                        <input class="form-control" type="text" id="txtNombreRepartidor" name="nombre_repartidor" pattern="[A-Za-z ]+" placeholder="Nombre completo del domiciliario" required="" title="Nombre completo del domiciliario">
                                     </div>
                                     <div class="form-group">
                                         <label>Foto del repartidor</label>

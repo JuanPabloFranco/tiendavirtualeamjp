@@ -28,7 +28,7 @@ $Proveedor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nit,nombre_prove
                     </div>
                     <div class="form-group">
                         <label>Telefono</label>
-                        <input class="form-control" type="text" id="txtTelefonoProveedor"  name="telefono_proveedor" placeholder="Ingrese la pagina web" required="" value="<?php echo $Proveedor[4]; ?>">
+                        <input class="form-control" type="text" id="txtTelefonoProveedor" pattern="[0-9]{1,20}" name="telefono_proveedor" placeholder="Ingrese la pagina web" required="" value="<?php echo $Proveedor[4]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Pagina web</label>
