@@ -11,6 +11,7 @@
                     <h1>Mis Pedidos</h1>
                 </div>         
                 <?php
+                include '../Recursos/plantillas/datos.php';
                 if (empty($_SESSION['producto'])) {
                     ?>
                     <div class="page-header">
@@ -42,7 +43,7 @@
                                     }
                                     if ($filaVP['metodo_pago'] == "Transferencia") {
                                         ?>
-                                        <p class="text-center">Cuenta de ahorros No. XXX-XXXXX-XX <img src="Recursos/img/logo-bancolombia.png" style="max-width: 15%; text-align: center" ></p>
+                                        <p class="text-center">Cuenta de ahorros No. <?php echo CUENTA; ?> <img src="Recursos/img/logo-bancolombia.png" style="max-width: 15%; text-align: center" ></p>
                                         <?php
                                     }
                                     ?>
@@ -63,8 +64,7 @@
                                         ?>
                                         <tr style="text-align: center"><td colspan="2"><p><b>Total Pedido: </b></p></td><td colspan="2"><p><b>$<?php echo $subtotal ?></p></b></td></tr>
                                     </table>
-                                    <?php
-                                    if (isset($filaDespVP) && $filaDespVP[0] <> "") {                                        ?>
+                                    <?php if (isset($filaDespVP) && $filaDespVP[0] <> "") { ?>
                                         <h4 style="text-align: center"><b>Dirección de entrega:</b><br> <?php echo $filaVP['direccion_entrega'] ?></h4>
 
                                         <h4 style="text-align: center"><b>Valor Domicilio:</b><br> $<?php echo $filaDespVP[3] ?></h4>
@@ -96,6 +96,9 @@
                                                 <?php
                                             }
                                         }
+                                        ?>
+                                        <a href='Vista/facturaPDF.php?id=<?php echo $filaVP['id'] ?>&hoja=carta' target='_blank' ><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'><h5 style="text-align: center">Descarga tu factura aqui</h5></a>
+                                        <?php
                                     } else {
                                         ?>
                                         <h4 style="text-align: center">Costo Domicilio pendiente</h4>
@@ -115,7 +118,7 @@
                             ?>
                             <div class="col-xs-12 col-sm-6" >
                                 <?php
-                                if ($filaVPV['estado_factura'] == "Entregado") {
+                                if ($filaVPV['estado_factura'] == "Finalizada") {
                                     ?>
                                     <div class="thumbnail" style="width: 90%; background-color: #a0f197" >
                                         <?php
@@ -125,7 +128,7 @@
                                             <?php
                                         }
                                         ?>
-                                        <img style="max-width: 20%" src="Recursos/img/logo_eam.png" ><h3 style="text-align: center">Pedido <?php echo $filaVPV['estado_factura'] ?></h3>
+                                        <img style="max-width: 20%" src="Recursos/img/logo_eam.png" ></h3>
                                         <h5 style="text-align: center">Fecha <?php echo $filaVPV['fecha'] ?></h5>
                                         <table class="table table-bordered; background-color: #e4c6e2" >
                                             <?php
@@ -145,11 +148,13 @@
                                             <tr style="text-align: center"><td colspan="2"><p><b>Total Pedido: </b></p></td><td colspan="2"><p><b>$<?php echo $subtotal ?></p></b></td></tr>
                                         </table>
                                         <?php
-                                        if ($filaVPV['estado_factura'] == "Entregado") {
+                                        if ($filaVPV['estado_factura'] == "Finalizada") {
                                             ?>
                                             <h5 style="text-align: center">Entregado en: <?php echo $filaVPV['direccion_entrega'] ?></h5>
                                             <h2 style="text-align: center">Total $<?php echo ($subtotal) ?></h2>
                                             <h4 style="text-align: center">Método de pago: <?php echo $filaVPV['metodo_pago'] ?></h4>
+                                            <a href='Vista/facturaPDF.php?id=<?php echo $filaVPV['id'] ?>&hoja=carta' target='_blank' ><img src='Recursos/img/pdf.png' style='width: 25px' title='Factura PDF'><h5 style="text-align: center">Descarga tu factura aqui</h5></a>
+
                                             <?php
                                             if ($filaVP['cambio'] <> "0") {
                                                 if ($filaVP['metodo_pago'] == "Efectivo") {
@@ -157,11 +162,6 @@
                                                     <h4 style="text-align: center">Cambio de $<?php echo $filaVP['cambio'] . " = ($" . ($filaVP['cambio'] - ($subtotal + $filaVP['costo_domicilio'])) . ")" ?></h4>                                           
                                                     <?php
                                                 }
-                                            }
-                                            if ($filaVP['metodo_pago'] == "Transferencia") {
-                                                ?>
-                                                <p class="text-center">Cuenta de ahorros No. 865-320706-37 <img src="Recursos/img/logo-bancolombia.png" style="max-width: 15%; text-align: center" ></p>
-                                                <?php
                                             }
                                         } else {
                                             ?>

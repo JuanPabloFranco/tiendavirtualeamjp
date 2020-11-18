@@ -33,8 +33,6 @@ function eliminar_item(id, tipo) {
     });
 }
 
-
-
 function validarTipoPublicacion(tipo) {
     if (tipo == "Imagen") {
         document.getElementById("divImagen").style.display = '';

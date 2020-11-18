@@ -34,7 +34,7 @@
                                     <input type="hidden" name="funcion" value="agregarCarrito">
                                     <div class="thumbnail" style="width: 90%">
                                         <!--se inserta la imagen del producto-->
-                                        <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-width: 70%" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>                                    
+                                        <a onclick="modal_ver_producto(<?php echo $fila['id']; ?>)" ><img style="max-height: 160px" src="Recursos/img-products/<?php echo $fila['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $fila['descripcion_prod'] ?>"></a>                                    
                                         <div class="caption">
                                             <!--se inserta la información del producto-->                                
                                             <h3  class="text-center"><?php echo $fila['nombre_prod'] ?></h3>
