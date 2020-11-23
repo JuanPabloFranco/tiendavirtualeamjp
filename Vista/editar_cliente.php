@@ -1,6 +1,8 @@
 <?php
 session_start();
 $vecCliente = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id, nit, nombre_completo, direccion, telefono, email, usuario, clave FROM cliente WHERE id=" . $_SESSION['id_user']));
+
+if (!$_SESSION['nombreUsuario'] ==""&&$_SESSION['tipo'] == "Cliente") {
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -79,3 +81,12 @@ $vecCliente = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id, nit, nombre_co
         </section>
     </body>
 </html>
+
+
+<?php
+ } else{
+    
+        include 'Vista/inicio.php';
+    
+ }
+?>

@@ -1,3 +1,6 @@
+<?php
+if (!$_SESSION['nombreUsuario'] ==""&&$_SESSION['tipo'] == "Administrador") {
+?>
 <html lang="es">
 
 <head>
@@ -561,3 +564,11 @@
 </body>
 
 </html>
+
+<?php
+ } else{
+    
+        include 'Vista/inicio.php';
+    
+ }
+?>

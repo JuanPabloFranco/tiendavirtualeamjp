@@ -1,3 +1,6 @@
+<?php
+ if (!$_SESSION['nombreUsuario'] =="") {
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>    
@@ -181,3 +184,10 @@
         </section>    <?php include './inc/footer.php'; ?>
     </body>
 </html>
+<?php
+ } else{
+    
+        include 'Vista/inicio.php';
+    
+ }
+?>
