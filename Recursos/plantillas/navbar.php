@@ -23,7 +23,7 @@ error_reporting(E_PARSE);
     </div>
 </section>
 <!--Menu dispositivos de escritorio-->
-<nav id="navbar-auto-hidden">
+<nav id="navbar-auto-hidden" class="nav1">
     <div class="row hidden-xs"><!-- Menu -->
         <div class="col-xs-2">
             <figure class="logo-navbar"></figure>
@@ -33,7 +33,7 @@ error_reporting(E_PARSE);
                 <div class="contenedor-tr" id="botones"> 
                     <a class="table-cell-td" href="index.php?page=inicio">Inicio</a>
                     <a href="index.php?page=buscar_producto" class="table-cell-td">Buscar  <i class="fa fa-search"></i></a>
-                    <a href="index.php?page=product" class="table-cell-td">Productos</a>                     
+                    <a href="index.php?page=product&&pagina=1" class="table-cell-td">Productos</a>                     
                     <?php
                     if (!$_SESSION['nombreAdmin'] == "") {
                         if ($_SESSION['tipo'] == "Vendedor") {
@@ -55,7 +55,7 @@ error_reporting(E_PARSE);
                         <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" data-toggle="tooltip" data-placement="bottom" title="Ver carrito de compras(<?php echo count($_SESSION['producto']) ?>)">
                             <i class="fa fa-shopping-cart">(<?php echo count($_SESSION['producto']) ?>)</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
                         </a>
-                        <a href="index.php?page=pedido" class="table-cell-td">Pedidos</a>
+                        <a href="index.php?page=pedido&&pagina=1" class="table-cell-td">Pedidos</a>
 
                         <a href="#" class="table-cell-td" data-toggle="modal" data-target=".modal-logout">
                             <i class="fa fa-user"></i>&nbsp;&nbsp; <?php echo $_SESSION['nombreUsuario']; ?>
@@ -63,7 +63,7 @@ error_reporting(E_PARSE);
                         <?php
                     } else {
                         ?>
-                        <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" data-toggle="tooltip" data-placement="bottom" title="Ver carrito de compras(<?php echo count($_SESSION['producto']) ?>)">
+                        <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" id="carrito-button-nav" data-toggle="tooltip" data-placement="bottom" >
                             <i class="fa fa-shopping-cart">(<?php echo count($_SESSION['producto']) ?>)</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
                         </a>                   
                         <a href="#" class="table-cell-td" data-toggle="modal" data-target=".modal-login">
@@ -114,7 +114,7 @@ error_reporting(E_PARSE);
     <div class="modal-dialog modal-sm">
         <div class="modal-content" id="modal-form-login">
             <div class="modal-header">                
-                <h4 class="modal-title text-center text-primary" id="myModalLabel">Iniciar sesión en <?php echo EMPRESA; ?></h4>
+                <h4 class="modal-title text-center text-primary" id="myModalLabel">Iniciar sesión en <?php echo EMPRESA . " " . NEMPRESA; ?></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form action="DAO/login.php" method="post" role="form" style="margin: 20px;" class="FormCatElec" data-form="login">

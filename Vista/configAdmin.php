@@ -566,9 +566,7 @@ if (!$_SESSION['nombreUsuario'] ==""&&$_SESSION['tipo'] == "Administrador") {
 </html>
 
 <?php
- } else{
-    
-        include 'Vista/inicio.php';
-    
+ } else{    
+        include 'Vista/inicio.php';    
  }
 ?>

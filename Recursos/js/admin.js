@@ -104,10 +104,10 @@ function limpiarCamposCliente() {
 
 $(document).ready(function () {
     //Incluye el archivo de la lista de productos en el carrito al div correspondiente
-    $('#carrito-compras-tienda').load("DAO/carritoDAO.php");
+    $('#carrito-compras-tienda').load("DAO/carritoDAO.php");    
     //Animacion boton carrito
     $(".carrito-button-nav").click(function () {
-        $("#container-carrito-compras").animate({height: 'toggle'}, 200);
+        $("#container-carrito-compras").animate({height: 'toggle'}, 200);        
     });
 
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin

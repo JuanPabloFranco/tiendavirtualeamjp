@@ -49,8 +49,6 @@
                                             ?>
                                             <tr style='text-align: center'><td colspan='3' >TOTAL</td><td>$<?php echo $suma; ?> + Domicilio</td></tr>
                                         </table>
-                                        <?php
-                                        ?>
                                         <div class="form-group">
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-home"></i></div>
                                                 <input class="form-control all-elements-tooltip" type="text" value="<?php echo $_SESSION['direccion'] ?>" placeholder="Ingrese la dirección de entrega" required name="direccion_venta" data-toggle="tooltip" data-placement="top" title="Ingrese la dirección de entrega" >
