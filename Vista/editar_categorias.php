@@ -6,7 +6,7 @@ $CategoriasInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nombre,codi
 <div class="modal-dialog modal-lm">
     <div class="modal-content center-all-contens" id="update_Categorias">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title" id="myModalLabel">Editar Categorias</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
@@ -22,12 +22,12 @@ $CategoriasInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nombre,codi
                     <div class="form-group">
                         <label>Nombre</label>
                         <input class="form-control" type="text" id="txtNombreCategorias" name="nombre"
-                            placeholder="Nombre de la categoria" required="" value="<?php echo $CategoriasInfo[1]; ?>">
+                               placeholder="Nombre de la categoria" required="" value="<?php echo $CategoriasInfo[1]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
                         <input class="form-control" id="txtDescripcionCategorias" type="text" name="descripcion"
-                            placeholder="Descripcion de la categoria" required="" value="<?php echo $CategoriasInfo[3]; ?>">
+                               placeholder="Descripcion de la categoria" required="" value="<?php echo $CategoriasInfo[3]; ?>">
                     </div>
                     <p class="text-center"><button type="submit" class="btn btn-primary">Actualizar</button></p>
                     <br>
@@ -36,40 +36,42 @@ $CategoriasInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nombre,codi
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <p class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                </p>
             </div>
         </div>
     </div>
 </div>
 <script>
-$(document).ready(function() {
-    // cambiar datos de la categoria
-    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
-    //al hacer submit al formulario que se encuentra dentro del div  llamado buscar_prod
-    $('#update_Categorias form').submit(function(e) {
-        e.preventDefault();
-        var informacion = $('#update_Categorias form').serialize();
-        var metodo = $('#update_Categorias form').attr('method');
-        var peticion = $('#update_Categorias form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function() {
-                $("#respuesta_Categorias").html(
-                    'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
-                );
-            },
-            error: function() {
-                $("#respuesta_Categorias").html("Ha ocurrido un error en el sistema");
-            },
-            success: function(data) {
-                $("#respuesta_Categorias").html(data);
-                $('#editarCategorias').modal('hide'); // cerrar
-            }
+    $(document).ready(function () {
+        // cambiar datos de la categoria
+        //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+        //al hacer submit al formulario que se encuentra dentro del div  llamado buscar_prod
+        $('#update_Categorias form').submit(function (e) {
+            e.preventDefault();
+            var informacion = $('#update_Categorias form').serialize();
+            var metodo = $('#update_Categorias form').attr('method');
+            var peticion = $('#update_Categorias form').attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $("#respuesta_Categorias").html(
+                            'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
+                            );
+                },
+                error: function () {
+                    $("#respuesta_Categorias").html("Ha ocurrido un error en el sistema");
+                },
+                success: function (data) {
+                    $("#respuesta_Categorias").html(data);
+                    $('#editarCategorias').modal('hide'); // cerrar
+                }
 
+            });
+            return false;
         });
-        return false;
     });
-});
 </script>

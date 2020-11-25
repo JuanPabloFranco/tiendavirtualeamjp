@@ -6,7 +6,7 @@ $Proveedor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nit,nombre_prove
 <div class="modal-dialog modal-lm">
     <div class="modal-content center-all-contens" id="update-proveedor">       
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title" id="myModalLabel">Editar Proveedor</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                                                                    
             </div>
@@ -41,7 +41,9 @@ $Proveedor = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,nit,nombre_prove
                 </form>
             </div>                
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <p class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                </p>
             </div>
         </div>     
     </div>

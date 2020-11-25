@@ -102,11 +102,10 @@ if ($consultaCostoDomicilio[0] == null) {
             }
             ?>
         </div>
-        <?php
-
-        ?>
-        <p class="text-center">
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-        </p>
+        <div class="modal-footer">
+            <p class="text-center">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+            </p>
+        </div>
     </div>
 </div>

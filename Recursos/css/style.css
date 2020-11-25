@@ -270,3 +270,11 @@ footer{
     border-radius: 4px;
     padding: 10px;
 }
+
+/* ========================================= Modal styles ======================================*/
+
+.headerModal{
+    background-color: #2d4789;
+    color: white;
+    font-family: inherit;
+}

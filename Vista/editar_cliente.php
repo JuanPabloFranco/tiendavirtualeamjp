@@ -1,8 +1,8 @@
 <?php
 session_start();
-$vecCliente = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id, nit, nombre_completo, direccion, telefono, email, usuario, clave FROM cliente WHERE id=" . $_SESSION['id_user']));
 
 if (!$_SESSION['nombreUsuario'] ==""&&$_SESSION['tipo'] == "Cliente") {
+    $vecCliente = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id, nit, nombre_completo, direccion, telefono, email, usuario, clave FROM cliente WHERE id=" . $_SESSION['id_user']));
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -81,12 +81,8 @@ if (!$_SESSION['nombreUsuario'] ==""&&$_SESSION['tipo'] == "Cliente") {
         </section>
     </body>
 </html>
-
-
 <?php
- } else{
-    
-        include 'Vista/inicio.php';
-    
+ } else{    
+        include 'Vista/inicio.php';    
  }
 ?>

@@ -4,11 +4,11 @@ $id = $_GET['id'];
 $DespachoInfo = mysqli_fetch_row(ejecutarSQL::consultar("SELECT id,id_domiciliario,id_factura,recibe,estado_despacho,costo_domicilio FROM despacho WHERE id_factura=$id"));
 
 if (empty($DespachoInfo)) {
-?>
+    ?>
     <div class="modal-dialog modal-lm">
         <div class="modal-content center-all-contens" id="Add_despacho">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header headerModal">
                     <h4 class="modal-title" id="myModalLabel">Registrar Despacho</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
@@ -47,15 +47,17 @@ if (empty($DespachoInfo)) {
                         <div id="respuesta_Despacho" style="width: 100%; text-align: center; margin: 0;"></div>
                     </form>
                 </div>
-                <p class="text-center">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-                </p>
+                <div class="modal-footer">
+                    <p class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
-<?php
-} else {   ?>
+    <?php } else {
+    ?>
     <div class="modal-dialog modal-lm">
         <div class="modal-content center-all-contens" id="update_despacho">
             <div class="modal-content">
@@ -135,16 +137,16 @@ if (empty($DespachoInfo)) {
             </div>
         </div>
     </div>
-<?php
+    <?php
 }
 ?>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // cambiar datos de la categoria
         //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
         //al hacer submit al formulario que se encuentra dentro del div  llamado buscar_prod
-        $('#Add_despacho form').submit(function(e) {
+        $('#Add_despacho form').submit(function (e) {
             e.preventDefault();
             var informacion = $('#Add_despacho form').serialize();
             var metodo = $('#Add_despacho form').attr('method');
@@ -153,15 +155,15 @@ if (empty($DespachoInfo)) {
                 type: metodo,
                 url: peticion,
                 data: informacion,
-                beforeSend: function() {
+                beforeSend: function () {
                     $("#respuesta_Despacho").html(
-                        'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
-                    );
+                            'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
+                            );
                 },
-                error: function() {
+                error: function () {
                     $("#respuesta_Despacho").html("Ha ocurrido un error en el sistema");
                 },
-                success: function(data) {
+                success: function (data) {
                     $("#respuesta_Despacho").html("Se actualizó con exito");
                     $('#Add_despacho').modal('hide'); // cerrar
                 }
@@ -169,7 +171,7 @@ if (empty($DespachoInfo)) {
             return false;
         });
 
-        $('#update_despacho form').submit(function(e) {
+        $('#update_despacho form').submit(function (e) {
             e.preventDefault();
             var informacion = $('#update_despacho form').serialize();
             var metodo = $('#update_despacho form').attr('method');
@@ -178,15 +180,15 @@ if (empty($DespachoInfo)) {
                 type: metodo,
                 url: peticion,
                 data: informacion,
-                beforeSend: function() {
+                beforeSend: function () {
                     $("#respuesta_Despacho").html(
-                        'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
-                    );
+                            'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
+                            );
                 },
-                error: function() {
+                error: function () {
                     $("#respuesta_Despacho").html("Ha ocurrido un error en el sistema");
                 },
-                success: function(data) {
+                success: function (data) {
                     $("#respuesta_Despacho").html("Se actualizó con exito");
                     $('#update_despacho').modal('hide'); // cerrar
                 }

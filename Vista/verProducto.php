@@ -11,20 +11,23 @@ $productoinfo = ejecutarSQL::consultar("SELECT producto.id, producto.nombre_prod
                 while ($fila = mysqli_fetch_array($productoinfo)) {
                     ?>
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel"><?php echo $fila['nombre_prod']; ?></h4>
+                        <h4 class="modal-title" id="myModalLabel"><b><?php echo $fila['nombre_prod']; ?></b></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                                                                    
                     </div>
-                    <div class="modal-body center-all-contens text-center" style="width: 95%" > 
-                        <img class = "img-responsive" src = "Recursos/img-products/<?php echo $fila['imagen'] ?>">
-                        <?php
-                        if ($fila['descripcion_prod'] <> "") {
-                            echo '<h4>' . $fila['descripcion_prod'] . '</h4>';
-                        }
-                        ?>
+                    <div class="modal-body center-all-contens text-center" style="width: 98%" >                         
+                        <h4><strong style="color: #2d4789">Producto <?php echo $fila['estado_prod_bodega'] ?></strong></h4>
+                        <img style="width: 90%" src = "Recursos/img-products/<?php echo $fila['imagen'] ?>">
+                        <div style='white-space: pre-wrap'>
+                            <?php
+                            if ($fila['descripcion_prod'] <> "") {
+                                echo '<h4>' . $fila['descripcion_prod'] . '</h4>';
+                            }
+                            ?>
+                        </div>
                         <h4><strong>Precio: </strong>$<?php echo $fila['precio_venta'] ?></h4>
                         <h4><strong>Marca: </strong><?php echo $fila['marca'] ?></h4>                        
                         <h4><strong>Categoria: </strong><?php echo $fila['nombre'] ?></h4>
-                        <h4><strong style="color: #2d4789">Producto <?php echo $fila['estado_prod_bodega'] ?></strong></h4>
+
                         <?php
                         if ($fila['estado_prod_bodega'] == "Disponible") {
                             ?>
@@ -36,8 +39,8 @@ $productoinfo = ejecutarSQL::consultar("SELECT producto.id, producto.nombre_prod
                     <?php
                 }
                 ?>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <div class="modal-footer center-all-contens">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </div> 
         </form>        

@@ -21,8 +21,7 @@
                 <div class="row" >
                     <?php
                     // Consulta para traer los ultimos 8 productos registrados en bodega
-                    $consulta = ejecutarSQL::consultar("SELECT producto.id, nombre_prod, marca, precio_venta, estado_prod, imagen, cantidad, estado_prod_bodega FROM producto JOIN bodega ON bodega.id_producto=producto.id WHERE (estado_prod_bodega='Disponible' OR estado_prod_bodega='Agotado') AND (estado_prod='Disponible') ORDER BY bodega.id asc limit 8");
-                    $consulta = ejecutarSQL::consultar("SELECT producto.id, nombre_prod, marca, precio_venta, estado_prod, imagen, cantidad, estado_prod_bodega FROM producto JOIN bodega ON bodega.id_producto=producto.id WHERE (estado_prod_bodega='Disponible' OR estado_prod_bodega='Agotado') AND (estado_prod='Disponible') ORDER BY bodega.id asc limit 8");
+                    $consulta = ejecutarSQL::consultar("SELECT producto.id, nombre_prod, marca, precio_venta, estado_prod, imagen, cantidad, estado_prod_bodega FROM producto JOIN bodega ON bodega.id_producto=producto.id WHERE (estado_prod_bodega='Disponible' OR estado_prod_bodega='Agotado') ORDER BY bodega.id DESC limit 8");
                     $totalproductos = mysqli_num_rows($consulta);
                     mysqli_close($consulta);
                     if ($totalproductos > 0) {

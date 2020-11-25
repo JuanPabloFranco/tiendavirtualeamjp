@@ -8,31 +8,26 @@ if ($consultaCostoDomicilio[0] == null) {
     $consultaCostoDomicilio[0] = 0;
 }
 ?>
-
 <div class="modal-dialog modal-lg">
     <div class="modal-content center-all-contens" id="divPedido">
         <h2 class="text-center">PEDIDO No. <?php echo $vecId[0] ?></h2>
-
         <div class="thumbnail" style="width: 100%">
             <h3 class="text-center"><?php echo $vecId[1] ?></h3>
             <h5 style="text-align: center"><b>Cliente: </b><?php echo $vecId[2] ?></h5>
             <p>
-                <h5 style="text-align: center"><b>Cédula o Nit:</b><?php echo $vecId[3] ?></h5>
+            <h5 style="text-align: center"><b>Cédula o Nit:</b><?php echo $vecId[3] ?></h5>
             </p>
             <p>
-                <h5 style="text-align: center"><b>Teléfono: </b><?php echo $vecId[4]; ?></h5>
+            <h5 style="text-align: center"><b>Teléfono: </b><?php echo $vecId[4]; ?></h5>
             </p>
             <p>
-                <h5 style="text-align: center"><b>Dirección: </b><?php echo $vecId[5]; ?></h5>
+            <h5 style="text-align: center"><b>Dirección: </b><?php echo $vecId[5]; ?></h5>
             </p>
-
             <table class="table table-bordered">
                 <?php
                 $totalPedido = 0;
                 $consultaPedVP = ejecutarSQL::consultar("SELECT pedido.precio, pedido.cantidad, producto.nombre_prod, producto.imagen,producto.descripcion_prod FROM pedido, producto,factura
                      WHERE pedido.id_factura=factura.id AND pedido.id_producto=producto.id AND estado_prod<>'Entregado' AND factura.id=" . $vecId[0]);
-
-
                 ?>
                 <tr style="text-align: center">
                     <td colspan="2">
@@ -50,7 +45,7 @@ if ($consultaCostoDomicilio[0] == null) {
                 </tr>
                 <?php
                 while ($filaPedVP = mysqli_fetch_array($consultaPedVP)) {
-                ?>
+                    ?>
                     <tr style="text-align: center">
                         <td style="max-width: 40px"><img style="max-width: 50px" src="Recursos/img-products/<?php echo $filaPedVP['imagen'] ?>" data-toggle="popover" data-trigger="hover" data-content="<?php echo $filaPedVP['descripcion_prod'] ?>"></td>
                         <td>
@@ -66,7 +61,7 @@ if ($consultaCostoDomicilio[0] == null) {
                             <p>$<?php echo ($filaPedVP['precio'] * $filaPedVP['cantidad']) ?></p>
                         </td>
                     </tr>
-                <?php
+                    <?php
                     $totalPedido = $totalPedido + ($filaPedVP['precio'] * $filaPedVP['cantidad']);
                 }
                 $total = $totalPedido + $consultaCostoDomicilio[0];
@@ -76,7 +71,7 @@ if ($consultaCostoDomicilio[0] == null) {
                         <p>Costo Domicilio</p>
                     </td>
                     <td colspan="3">
-                        <p>$ <?php echo  $consultaCostoDomicilio[0]   ?></p>
+                        <p>$ <?php echo $consultaCostoDomicilio[0] ?></p>
                     </td>
                 </tr>
             </table>
@@ -85,9 +80,9 @@ if ($consultaCostoDomicilio[0] == null) {
             <?php
             if ($vecId[7] <> "0") {
                 if ($vecId[6] == "Efectivo") {
-            ?>
+                    ?>
                     <h4 style="text-align: center">Cambio de $<?php echo $vecId[7] . " = ($" . ($vecId[7] - $total) . ")" ?></h4>
-                <?php
+                    <?php
                 }
             }
             $sqlTotal = "UPDATE factura SET total=" . $total . " WHERE id=" . $_GET['id'];
@@ -97,19 +92,15 @@ if ($consultaCostoDomicilio[0] == null) {
             if (!empty($vecRep)) {
                 ?>
                 <h5 style="text-align: center"><b>Domiciliario Asignado: </b><?php echo $vecRep[0]; ?></h5>
-            <?php
-            } else { ?>
-
+            <?php } else {
+                ?>
                 <h5 style="text-align: center"><b>Domiciliario Asignado: </b> No tiene domiciliario </h5>
-
-            <?php   }            ?>
-
+            <?php } ?>
         </div>
-        <?php
-
-        ?>
-        <p class="text-center">
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-        </p>
+        <div class="modal-footer">
+            <p class="text-center">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+            </p>
+        </div>
     </div>
 </div>

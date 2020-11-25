@@ -6,7 +6,7 @@ $vecId = mysqli_fetch_row(ejecutarSQL::consultar($sql));
 ?>
 <div class="modal-dialog modal-lm">
     <div class="modal-content center-all-contens" id="change_factura">
-        <div class="modal-header">
+        <div class="modal-header headerModal">
             <h4 class="modal-title" id="myModalLabel">Actualizar Pedido No. <?php echo $_GET['id'] ?></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
@@ -47,9 +47,11 @@ $vecId = mysqli_fetch_row(ejecutarSQL::consultar($sql));
                 <div id="respuesta_fact" style="width: 100%; text-align: center; margin: 0;"></div>
             </form>
         </div>
-        <p class="text-center">
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-        </p>
+        <div class="modal-footer">
+            <p class="text-center">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+            </p>
+        </div>
     </div>
 </div>
 <script>

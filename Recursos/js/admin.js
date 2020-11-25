@@ -384,31 +384,7 @@ $(document).ready(function () {
         });
         return false;
     });
-
-    //*Envio del formulario con Ajax para cambiar estado producto*/
-
-    $('#change-prod-form form').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#change-prod-form form').serialize();
-        var metodo = $('#change-prod-form form').attr('method');
-        var peticion = $('#change-prod-form form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res-form-change-prod").html('Cambiando estado del producto <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res-form-change-prod").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res-form-change-prod").html(data);
-            }
-
-        });
-        return false;
-    });
+    
     //*Envio del formulario con Ajax para cambiar estado producto a agotado*/
 
     $('#change-prod-ag-form form').submit(function (e) {
@@ -457,29 +433,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    /*Envio del formulario con Ajax para añadir categoria*/
-
-    $('#add-categori form').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#add-categori form').serialize();
-        var metodo = $('#add-categori form').attr('method');
-        var peticion = $('#add-categori form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res-form-add-categori").html('Añadiendo categoria <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res-form-add-categori").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res-form-add-categori").html(data);
-            }
-        });
-        return false;
-    });
+    
     /*Envio del formulario con Ajax para eliminar categoria*/
 
     $('#del-categori form').submit(function (e) {
@@ -503,29 +457,7 @@ $(document).ready(function () {
         });
         return false;
     });
-    /*Envio del formulario con Ajax para agregar proveedor*/
-
-    $('#add-provee form').submit(function (e) {
-        e.preventDefault();
-        var informacion = $('#add-provee form').serialize();
-        var metodo = $('#add-provee form').attr('method');
-        var peticion = $('#add-provee form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function () {
-                $("#res-form-add-prove").html('Agregando proveedor <br><img src="Recursos/img/enviando.gif" class="center-all-contens">');
-            },
-            error: function () {
-                $("#res-form-add-prove").html("Ha ocurrido un error en el sistema");
-            },
-            success: function (data) {
-                $("#res-form-add-prove").html(data);
-            }
-        });
-        return false;
-    });
+    
     /*Envio del formulario con Ajax para eliminar proveedor*/
 
     $('#del-prove form').submit(function (e) {

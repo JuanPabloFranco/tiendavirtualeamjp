@@ -6,10 +6,9 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
 <div class="modal-dialog modal-lm">
     <div class="modal-content center-all-contens" id="update_producto">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title" id="myModalLabel">Editar Producto</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body center-all-contens text-center" style="width: 95%">
                 <form action="DAO/productoDAO.php" method="post" role="form">
@@ -35,10 +34,9 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                             $categoriac2 = ejecutarSQL::consultar("SELECT * FROM categoria");
                             while ($catec2 = mysqli_fetch_array($categoriac2)) {
                                 if ($catec2['id'] == $Producto[5]) {
-                                    echo '<option selected="selected" value="'. $catec2['id'] .'">'. $catec2['nombre'] .'</option>';
+                                    echo '<option selected="selected" value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
                                 } else {
                                     echo '<option value="' . $catec2['id'] . '">' . $catec2['nombre'] . '</option>';
-                                    
                                 }
                             }
                             ?>
@@ -47,7 +45,7 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                     <div class="form-group">
                         <label>Marca</label>
                         <input class="form-control" type="text" id="txtMarcaProducto" name="marca"
-                            placeholder="Marca del Producto" required="" value="<?php echo $Producto[3]; ?>">
+                               placeholder="Marca del Producto" required="" value="<?php echo $Producto[3]; ?>">
                     </div>
                     <div class="form-group">
                         <label>Proveedor</label>
@@ -57,19 +55,19 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                             $proveedoresc2 = ejecutarSQL::consultar("SELECT id, nombre_proveedor FROM proveedor ");
                             while ($provc2 = mysqli_fetch_array($proveedoresc2)) {
                                 if ($provc2['id'] == $Producto[6]) {
-                                   echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
+                                    echo '<option selected="selected" value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
                                 } else {
                                     echo '<option value="' . $provc2['id'] . '">' . $provc2['nombre_proveedor'] . '</option>';
-
                                 }
-                            }?>
+                            }
+                            ?>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Descripcion</label>
                         <input class="form-control" type="text" id="txtDescripcionProducto" name="descripcion_prod"
-                            placeholder="Descripcion del producto" required="" value="<?php echo $Producto[7]; ?>">
+                               placeholder="Descripcion del producto" required="" value="<?php echo $Producto[7]; ?>">
                     </div>
 
                     <p class="text-center"><button type="submit" class="btn btn-primary">Actualizar</button></p>
@@ -78,41 +76,43 @@ $Producto = mysqli_fetch_row(ejecutarSQL::consultar("SELECT codigo_prod,nombre_p
                     <div id="respuesta_producto" style="width: 100%; text-align: center; margin: 0;"></div>
                 </form>
             </div>
-            <p class="text-center">
+            <div class="modal-footer">
+                <p class="text-center">
                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
                 </p>
+            </div>
         </div>
     </div>
 </div>
 <script>
-$(document).ready(function() {
-    // cambiar los datos del producto
-    //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
-    //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
-    $('#update_producto form').submit(function(e) {
-        e.preventDefault();
-        var informacion = $('#update_producto form').serialize();
-        var metodo = $('#update_producto form').attr('method');
-        var peticion = $('#update_producto form').attr('action');
-        $.ajax({
-            type: metodo,
-            url: peticion,
-            data: informacion,
-            beforeSend: function() {
-                $("#respuesta_producto").html(
-                    'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
-                );
-            },
-            error: function() {
-                $("#respuesta_producto").html("Ha ocurrido un error en el sistema");
-            },
-            success: function(data) {
-                $("#respuesta_producto").html("Se actualizo con exito");
-                $('#editarProducto').modal('hide'); // cerrar
-            }
+    $(document).ready(function () {
+        // cambiar los datos del producto
+        //Metodo ajax que realiza la consulta de la clase DAO y la imprime en el div seleccionado
+        //al hacer submit al formulario que se encuentra dentro del div llamado buscar_prod
+        $('#update_producto form').submit(function (e) {
+            e.preventDefault();
+            var informacion = $('#update_producto form').serialize();
+            var metodo = $('#update_producto form').attr('method');
+            var peticion = $('#update_producto form').attr('action');
+            $.ajax({
+                type: metodo,
+                url: peticion,
+                data: informacion,
+                beforeSend: function () {
+                    $("#respuesta_producto").html(
+                            'Actualizando<br><img src="Recursos/img/enviando.gif" class="center-all-contens">'
+                            );
+                },
+                error: function () {
+                    $("#respuesta_producto").html("Ha ocurrido un error en el sistema");
+                },
+                success: function (data) {
+                    $("#respuesta_producto").html("Se actualizo con exito");
+                    $('#editarProducto').modal('hide'); // cerrar
+                }
 
+            });
+            return false;
         });
-        return false;
     });
-});
 </script>

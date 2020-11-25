@@ -4,7 +4,7 @@ include '../Conexion/consulSQL.php';
 <form class="form-horizontal" method="post" name="guardar_producto" action="DAO/productoDAO.php" id="agregar_producto">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header headerModal">
                 <h4 class="modal-title" id="myModalLabel">Agregar Producto</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                                                
             </div>

@@ -20,7 +20,7 @@ include '../plantillas/datos.php';
         </thead>
         <tbody>
             <?php
-            $pedido = ejecutarSQL::consultar("SELECT factura.id,factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_entrega, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Entregado' AND factura.estado_factura<>'Anulada') ORDER BY id DESC");
+            $pedido = ejecutarSQL::consultar("SELECT factura.id,factura.total, factura.estado_factura, cliente.nombre_completo, factura.direccion_entrega, factura.metodo_pago FROM factura, cliente WHERE factura.id_cliente=cliente.id AND (factura.estado_factura<>'Finalizada' AND factura.estado_factura<>'Anulada') ORDER BY id DESC");
             $upp = 1;
             while ($peU = mysqli_fetch_array($pedido)) {
                 ?>
@@ -75,8 +75,6 @@ include '../plantillas/datos.php';
         $(".ver_pedido").click(function () { //      
             $('#VerPedido').load("Vista/verPedido.php?id=" + $(this).val());
         });
-
-
         //enviar valor al modal editar bodega
         $(".cambiarEstado").click(function () { //      
             $('#cambiarEstado').load("Vista/cambiarEstadoFactura.php?id=" + $(this).val());
