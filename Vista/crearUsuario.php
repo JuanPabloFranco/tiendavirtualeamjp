@@ -11,15 +11,15 @@ include '../Conexion/consulSQL.php';
             <form action="DAO/usuarioDAO.php" method="post" role="form">
                 <div class="form-group">
                     <label>Nombre Completo</label>
-                    <input class="form-control" type="text" id="txtNombreCUsuario" pattern="[A-Za-z ]+" name="nombre_completo" placeholder="Nombre Completo" maxlength="50" required="">
+                    <input class="form-control" type="text" id="txtNombreCUsuario" pattern="[A-Za-z ]{8,60}" name="nombre_completo" placeholder="Nombre Completo (Máx 60)" maxlength="60" required="" title="Minimo 8, Max 60 carácteres (Sin números)">
                 </div>
                 <div class="form-group">
                     <label>Nombre Usuario</label>
-                    <input class="form-control" type="text" id="txtNombreUsuario" pattern="^@?(\\w){1,15}$" name="Nombre" placeholder="Nombre" maxlength="20" required="">
+                    <input class="form-control" type="text" id="txtNombreUsuario" pattern="[A-Za-z0-9 ]{8,20}"  name="Nombre" placeholder="Sólo se permiten letras (mayúsculas y minúsculas) y números, Minimo 8, Max 20 carácteres" title="Sólo se permiten letras (mayúsculas y minúsculas) y números, Minimo 8, Max 20 carácteres" maxlength="20" required="">
                 </div>
                 <div class="form-group">
                     <label>Contraseña</label>
-                    <input class="form-control" type="password" id="txtPassUsuario" name="Clave" placeholder="Contraseña" required="">
+                    <input class="form-control" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="txtPassUsuario" name="Clave" placeholder="Introduzca una contraseña que debe contener 8 o más caracteres de al menos un número y una letra mayúscula y minúscula" required="" title="Debe contener 8 o más caracteres de al menos un número y una letra mayúscula y minúscula">
                 </div>
                 <div class="form-group">
                     <label>Tipo Usuario</label>

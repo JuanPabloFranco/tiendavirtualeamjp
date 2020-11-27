@@ -104,10 +104,16 @@ function limpiarCamposCliente() {
 
 $(document).ready(function () {
     //Incluye el archivo de la lista de productos en el carrito al div correspondiente
-    $('#carrito-compras-tienda').load("DAO/carritoDAO.php");    
+    $('#carrito-compras-tienda').load("DAO/carritoDAO.php");   
     //Animacion boton carrito
     $(".carrito-button-nav").click(function () {
         $("#container-carrito-compras").animate({height: 'toggle'}, 200);        
+    });
+    
+    $(".button-carrito").click(function(){ //Al hacer clic en el boton añadir al carrito
+        //Usando el css carga la pagina carrito creando la variable GET con el valor del boton
+        $('#carrito-compras-tienda').load("DAO/carritoDAO.php="+$(this).val());
+        $('.modal-carrito').modal('show'); // Muestra el modal diciendo que se agrego al carrito el producto
     });
 
     // Incluye el archivo de la tabla de categorias dentro del DIV correspondiente en configAdmin

@@ -52,7 +52,7 @@ error_reporting(E_PARSE);
                         <?php
                     } else if (!$_SESSION['nombreUser'] == "") {
                         ?>
-                        <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" data-toggle="tooltip" data-placement="bottom" title="Ver carrito de compras(<?php echo count($_SESSION['producto']) ?>)">
+                        <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" data-toggle="tooltip" data-placement="bottom" id="carrito-button-nav">
                             <i class="fa fa-shopping-cart">(<?php echo count($_SESSION['producto']) ?>)</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
                         </a>
                         <a href="index.php?page=pedido&&pagina=1" class="table-cell-td">Pedidos</a>
@@ -62,10 +62,10 @@ error_reporting(E_PARSE);
                         </a>
                         <?php
                     } else {
-                        ?>
+                        ?>                        
                         <a href="#" class="table-cell-td carrito-button-nav all-elements-tooltip" id="carrito-button-nav" data-toggle="tooltip" data-placement="bottom" >
-                            <i class="fa fa-shopping-cart">(<?php echo count($_SESSION['producto']) ?>)</i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
-                        </a>                   
+                            <div id="marcador_carrito"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></div>
+                        </a>           
                         <a href="#" class="table-cell-td" data-toggle="modal" data-target=".modal-login">
                             <i class="fa fa-user"></i>&nbsp;&nbsp;Login
                         </a>

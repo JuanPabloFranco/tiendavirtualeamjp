@@ -7,7 +7,7 @@
         <section id="container-pedido">
             <div class="container">
                 <div class="page-header">
-                   <h1>Confirmar pedido en  <small class="tittles-pages-logo"><?php echo EMPRESA ." ".NEMPRESA;?></small></h1>
+                    <h1>Confirmar pedido en  <small class="tittles-pages-logo"><?php echo EMPRESA . " " . NEMPRESA; ?></small></h1>
                 </div>         
                 <?php
                 if (empty($_SESSION['producto'])) {
@@ -67,7 +67,7 @@
                                                 Transferencia Electrónica
                                             </label>
                                         </div>
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA;?></p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA; ?></p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p>
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -81,10 +81,10 @@
                                         <input type="hidden" name="claveUser" value="<?php echo $_SESSION['claveUser'] ?>">
                                         <input type="hidden"  name="clien-number" value="log">
                                         <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
-                                        <?php                                        
+                                        <?php
                                     } else { // Si el usuario no ha iniciado sesion
                                         ?>
-                                        <p>Para confirmar tu compra debes haber iniciar sesión o introducir tu nombre de usuario y contraseña con la cual te registraste en <span class="tittles-pages-logo"> <?php echo EMPRESA ." ".NEMPRESA;?></span>, Verifica la dirección, elije un método de pago y presiona el botón confirmar<br>
+                                        <p>Para confirmar tu compra debes haber iniciar sesión o introducir tu nombre de usuario y contraseña con la cual te registraste en <span class="tittles-pages-logo"> <?php echo EMPRESA . " " . NEMPRESA; ?></span>, Verifica la dirección, elije un método de pago y presiona el botón confirmar<br>
                                         <table class="table table-bordered">
                                             <tr style='text-align: center'><td><b>PRODUCTO</b></td><td><b>CANTIDAD</b></td><td><b>PRECIO</b></td><td><b>SUBTOTAL</b></td></tr>
                                             <?php
@@ -119,7 +119,7 @@
                                                 Transferencia Electrónica
                                             </label>
                                         </div>                                
-                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA;?></p>                                            
+                                        <p class="text-center" id="titleTransferencia" style="display: none"><img src="Recursos/img/logo-bancolombia.png" style="max-width: 20%; text-align: center" >  Transferencia electrónica a la cuenta de ahorros No. <?php ECHO CUENTA; ?></p>                                            
                                         <div class="form-group" id="divCcambio">
                                             <p>¿Cambio de?  <i class="fa fa-money"></i></p> 
                                             <div class="input-group"><div class="input-group-addon"><i class="fa fa-usd"></i></div>
@@ -139,6 +139,7 @@
                                                 <input class="form-control all-elements-tooltip" type="password" placeholder="Introduzca su contraseña" required name="claveUser" data-toggle="tooltip" data-placement="top" title="Introduzca su contraseña">
                                             </div>
                                         </div>
+                                        <p class="text-center"><a>Si no tienes usuario registrate aquí</a></button></p>                                        
                                         <p class="text-center"><button class="btn btn-success" type="submit">Confirmar</button></p>
                                         <input type="hidden"  name="clien-number" value="notlog"><br>
                                         <?php
